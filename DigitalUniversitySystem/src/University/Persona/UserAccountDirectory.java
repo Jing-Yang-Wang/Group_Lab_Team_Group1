@@ -15,15 +15,15 @@ import java.util.ArrayList;
  * @author kal bugrara
  */
 //MH 10/18 - Swapped this from student to all profiles so it can handle the login process
-
+//MH 10/18 - Removed department so it is business level
 public class UserAccountDirectory {
-    Department department;
+    //Department department;
     //ArrayList<UserAccount> studentlist;
     ArrayList<UserAccount> useraccountlist;
 
-    public UserAccountDirectory(Department d) {
-
-        department = d;
+    //public UserAccountDirectory(Department d) {
+    public UserAccountDirectory() {
+        //department = d;
         //studentlist = new ArrayList();
         useraccountlist = new ArrayList();
 

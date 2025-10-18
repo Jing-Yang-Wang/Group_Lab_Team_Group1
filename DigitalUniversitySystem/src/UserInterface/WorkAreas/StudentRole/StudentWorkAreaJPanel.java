@@ -10,8 +10,8 @@
  */
 package UserInterface.WorkAreas.StudentRole;
 
-import Business.Business;
-import Business.Profiles.StudentProfile;
+import University.Business;
+import University.Persona.Student.StudentProfile;
 import javax.swing.JPanel;
 
 /**

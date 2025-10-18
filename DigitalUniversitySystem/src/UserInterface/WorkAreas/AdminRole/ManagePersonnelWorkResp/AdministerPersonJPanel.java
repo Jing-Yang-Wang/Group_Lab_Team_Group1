@@ -5,7 +5,7 @@
  */
 package UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp;
 
-import Business.Business;
+import University.Business;
 
 import javax.swing.JPanel;
 

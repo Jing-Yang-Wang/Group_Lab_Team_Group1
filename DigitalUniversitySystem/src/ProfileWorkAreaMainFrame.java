@@ -3,14 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business;
 
-import Business.Profiles.EmployeeProfile;
-import Business.Profiles.Profile;
-import Business.Profiles.StudentProfile;
+//MH 10/18 - Updated to work with new classes.  Also repointed some code from business to department
 
-import Business.UserAccounts.UserAccount;
-import Business.UserAccounts.UserAccountDirectory;
+import University.Business;
+import University.ConfigureABusiness;
+
+import University.Department.Department;
+import University.Persona.Profile;
+import University.Persona.UserAccount;
+import University.Persona.UserAccountDirectory;
+
+import University.Persona.Employee.EmployeeProfile;
+import University.Persona.Faculty.FacultyProfile;
+import University.Persona.Student.StudentProfile;
+
 
 import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
@@ -24,15 +31,15 @@ import javax.swing.JPanel;
 public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
     Business business;
+    //Department department;
 
     /**
      * Creates new form PricingMainFrame
      */
 
     public ProfileWorkAreaMainFrame() {
-        initComponents();
+        initComponents();                
         business = ConfigureABusiness.initialize();
-        
 
     }
 
@@ -60,6 +67,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1200, 800));
 
         actionsidejpanel.setBackground(new java.awt.Color(0, 153, 153));
         actionsidejpanel.setMinimumSize(new java.awt.Dimension(200, 200));
@@ -119,6 +127,9 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 153, 255));
         jLabel3.setText("Education Going Digital .... Info 5100 ");
+        jLabel3.setMaximumSize(new java.awt.Dimension(600, 400));
+        jLabel3.setMinimumSize(new java.awt.Dimension(600, 400));
+        jLabel3.setName(""); // NOI18N
         CardSequencePanel.add(jLabel3, "card2");
 
         SplitHomeArea.setRightComponent(CardSequencePanel);
@@ -135,6 +146,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         String un = UserNameTextField.getText();
         String pw = PasswordTextField.getText();
 
+        //MH 10/18 - At department currently, likelt need to move
         UserAccountDirectory uad = business.getUserAccountDirectory();
         UserAccount useraccount = uad.AuthenticateUser(un, pw);
         if (useraccount == null) {
@@ -166,14 +178,14 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         }
 
- /*      if (profile instanceof FacultyProfile) {
+       if (profile instanceof FacultyProfile) {
             facultyworkarea = new FacultyWorkAreaJPanel(business, CardSequencePanel);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("faculty", facultyworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }
-*/
+
 
     }//GEN-LAST:event_LoginButtonActionPerformed
 

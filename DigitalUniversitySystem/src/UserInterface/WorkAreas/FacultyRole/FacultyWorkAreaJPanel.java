@@ -10,7 +10,7 @@
  */
 package UserInterface.WorkAreas.FacultyRole;
 
-import Business.Business;
+import University.Business;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
 import javax.swing.JPanel;
 

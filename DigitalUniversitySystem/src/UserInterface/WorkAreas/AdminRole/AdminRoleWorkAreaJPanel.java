@@ -10,7 +10,7 @@
  */
 package UserInterface.WorkAreas.AdminRole;
 
-import Business.Business;
+import University.Business;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.ManageUserAccountsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
 

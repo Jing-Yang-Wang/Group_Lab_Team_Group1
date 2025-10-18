@@ -8,6 +8,7 @@ package University.Persona.Student;
 import University.CourseSchedule.CourseLoad;
 import University.CourseSchedule.SeatAssignment;
 import University.Persona.Student.EmploymentHistory.EmploymentHistroy;
+import University.Persona.Profile;
 import University.Persona.Person;
 import java.util.ArrayList;
 
@@ -15,15 +16,17 @@ import java.util.ArrayList;
  *
  * @author kal bugrara
  */
-public class StudentProfile {
 
+//MH 10/18 - Updated so it extend the profile.
+public class StudentProfile extends Profile {
     Person person;
     Transcript transcript;
     EmploymentHistroy employmenthistory;
 
     public StudentProfile(Person p) {
 
-        person = p;
+        super(p);
+        //person = p;
         transcript = new Transcript(this);
         employmenthistory = new EmploymentHistroy();
     }
@@ -58,7 +61,7 @@ public class StudentProfile {
     }
     
     //MH 10/18 - Added so we get the role
-    //@Override
+    @Override
     public String getRole() {
         return "Student";
     }

@@ -7,20 +7,22 @@ package University.Persona.Faculty;
 
 import University.Persona.Person;
 import University.CourseSchedule.CourseOffer;
+import University.Persona.Profile;
 import java.util.ArrayList;
 
 /**
  *
  * @author kal bugrara
  */
-public class FacultyProfile {
-
+//MH 10/18 - Updated so it extend the profile.
+public class FacultyProfile extends Profile {
     Person person;
     ArrayList <FacultyAssignment> facultyassignments; 
     
     public FacultyProfile(Person p) {
 
-        person = p;
+        super(p);
+        //person = p;
         facultyassignments = new ArrayList();
     }
     public  double getProfAverageOverallRating(){
@@ -59,7 +61,7 @@ public class FacultyProfile {
     }
     
     //MH 10/18 - Added so we have a defined role.
-    //@Override
+    @Override
     public String getRole() {
         return "Faculty";
     }

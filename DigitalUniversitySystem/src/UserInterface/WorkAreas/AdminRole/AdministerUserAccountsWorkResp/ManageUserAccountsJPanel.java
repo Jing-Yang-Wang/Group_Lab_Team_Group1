@@ -5,9 +5,9 @@
  */
 package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
-import Business.Business;
-import Business.UserAccounts.UserAccount;
-import Business.UserAccounts.UserAccountDirectory;
+import University.Business;
+import University.Persona.UserAccount;
+import University.Persona.UserAccountDirectory;
 
 
 import javax.swing.JPanel;

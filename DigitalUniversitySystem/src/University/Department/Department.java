@@ -12,10 +12,12 @@ import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
 import University.example.Degree.Degree;
 import University.Employer.EmployerDirectory;
+import University.Persona.Employee.EmployeeDirectory;
 import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.PersonDirectory;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
+import University.Persona.UserAccountDirectory;
 import java.util.HashMap;
 
 /**
@@ -28,7 +30,11 @@ public class Department {
     CourseCatalog coursecatalog;
     PersonDirectory persondirectory;
     StudentDirectory studentdirectory;
+    //MH 10/18 - Added for login process
     FacultyDirectory facultydirectory;
+    EmployeeDirectory employeedirectory;
+    //UserAccountDirectory useraccountdirectory;
+    
     EmployerDirectory employerdirectory;
     Degree degree;
 
@@ -39,6 +45,11 @@ public class Department {
         mastercoursecatalog = new HashMap<>();
         coursecatalog = new CourseCatalog(this);
         studentdirectory = new StudentDirectory(this); //pass the department object so it stays linked to it
+        //MH 10/18 - Added for login process
+        facultydirectory = new FacultyDirectory(this);
+        employeedirectory = new EmployeeDirectory(this);
+        //useraccountdirectory = new UserAccountDirectory(this);
+        
         persondirectory = new PersonDirectory();
         degree = new Degree("MSIS");
         
@@ -47,18 +58,37 @@ public class Department {
         degree.addCoreCourse(c);
         
     }
-public void addElectiveCourse(Course c){
+    
+    
+    //MH 10/18 - Seems like this should live with the Business but leaving it here for now.
+    public EmployeeDirectory getEmployeeDirectory() {
+        return employeedirectory;
+    }
+    
+    public EmployerDirectory getEmployerDirectory() {
+        return employerdirectory;
+    }
+    
+    public void setEmployerdirectory(EmployerDirectory employerdirectory) {
+        this.employerdirectory = employerdirectory;
+    }
+    
+    public void addElectiveCourse(Course c){
         degree.addElectiveCourse(c);
         
     }
     public PersonDirectory getPersonDirectory() {
-
         return persondirectory;
-
+    }
+    
+    //MH 10/18 - I assume this should live here so I added it.  
+    public FacultyDirectory getFacultyDirectory() {
+        return facultydirectory;
     }
 
+    
     public StudentDirectory getStudentDirectory() {
-    return studentdirectory;
+        return studentdirectory;
     }
 
     public CourseSchedule newCourseSchedule(String semester) {
@@ -107,4 +137,8 @@ public void addElectiveCourse(Course c){
         co.assignEmptySeat(cl);
 
     }
+
+    //public UserAccountDirectory getUserAccountDirectory() {
+    //    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    //}
 }
