@@ -126,6 +126,10 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
         OrderScroll1 = new javax.swing.JScrollPane();
         tblHeader = new javax.swing.JTable();
         Next4 = new javax.swing.JButton();
+        lblCourse2 = new javax.swing.JLabel();
+        cbCourse1 = new javax.swing.JComboBox<>();
+        cbCourse2 = new javax.swing.JComboBox<>();
+        lblCourse3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -151,7 +155,7 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Manage Students");
         add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 28);
+        jLabel2.setBounds(21, 20, 370, 28);
 
         tblDetail.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -179,7 +183,7 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
 
         lblCourse.setText("Class Grade");
         add(lblCourse);
-        lblCourse.setBounds(430, 60, 70, 20);
+        lblCourse.setBounds(440, 60, 70, 20);
 
         Next2.setText("Save");
         Next2.addActionListener(new java.awt.event.ActionListener() {
@@ -199,21 +203,21 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
         add(Next3);
         Next3.setBounds(320, 260, 120, 23);
         add(tbSN);
-        tbSN.setBounds(510, 60, 64, 22);
+        tbSN.setBounds(520, 60, 64, 22);
 
-        lblCourse1.setText("Course");
+        lblCourse1.setText("Semester");
         add(lblCourse1);
-        lblCourse1.setBounds(20, 60, 37, 16);
+        lblCourse1.setBounds(20, 60, 48, 16);
 
         tblHeader.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Student", "Grade"
+                "Semester", "Student", "Course", "Faculty", "Grade"
             }
         ));
         OrderScroll1.setViewportView(tblHeader);
@@ -229,6 +233,30 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
         });
         add(Next4);
         Next4.setBounds(460, 260, 120, 23);
+
+        lblCourse2.setText("Faculty");
+        add(lblCourse2);
+        lblCourse2.setBounds(300, 60, 38, 16);
+
+        cbCourse1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCourse1ActionPerformed(evt);
+            }
+        });
+        add(cbCourse1);
+        cbCourse1.setBounds(350, 60, 72, 22);
+
+        cbCourse2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCourse2ActionPerformed(evt);
+            }
+        });
+        add(cbCourse2);
+        cbCourse2.setBounds(210, 60, 72, 22);
+
+        lblCourse3.setText("Course");
+        add(lblCourse3);
+        lblCourse3.setBounds(160, 60, 37, 16);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
@@ -265,6 +293,14 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_Next4ActionPerformed
 
+    private void cbCourse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCourse1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCourse1ActionPerformed
+
+    private void cbCourse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCourse2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCourse2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
@@ -275,9 +311,13 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane OrderScroll;
     private javax.swing.JScrollPane OrderScroll1;
     private javax.swing.JComboBox<String> cbCourse;
+    private javax.swing.JComboBox<String> cbCourse1;
+    private javax.swing.JComboBox<String> cbCourse2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblCourse;
     private javax.swing.JLabel lblCourse1;
+    private javax.swing.JLabel lblCourse2;
+    private javax.swing.JLabel lblCourse3;
     private javax.swing.JTextField tbSN;
     private javax.swing.JTable tblDetail;
     private javax.swing.JTable tblHeader;
