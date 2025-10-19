@@ -34,6 +34,8 @@ public class Department {
     FacultyDirectory facultydirectory;
     EmployeeDirectory employeedirectory;
     //UserAccountDirectory useraccountdirectory;
+    //MH 10/18 - For getting all Course Scedules
+    CourseSchedule courseSchedule;
     
     EmployerDirectory employerdirectory;
     Degree degree;
@@ -141,4 +143,8 @@ public class Department {
     //public UserAccountDirectory getUserAccountDirectory() {
     //    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     //}
+    
+    public CourseSchedule getCourseSchedule() {
+        return courseSchedule;
+    }
 }

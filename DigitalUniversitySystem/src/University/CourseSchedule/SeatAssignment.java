@@ -16,6 +16,7 @@ public class SeatAssignment {
     Seat seat;
     boolean like; //true means like and false means not like
     CourseLoad courseload;
+    
     public SeatAssignment(CourseLoad cl, Seat s){
         seat = s;
         courseload = cl;
@@ -24,6 +25,7 @@ public class SeatAssignment {
     public boolean getLike(){
         return like;
     }
+    
     public void assignSeatToStudent(CourseLoad cl){
         courseload = cl;
     }
@@ -32,17 +34,21 @@ public class SeatAssignment {
         return seat.getCourseCredits();
        
     }
+    
     public Seat getSeat(){
         return seat;
     }
+    
     public CourseOffer getCourseOffer(){
         
         return seat.getCourseOffer();
     }
+    
     public Course getAssociatedCourse(){
         
         return getCourseOffer().getSubjectCourse();
     }
+    
     public float GetCourseStudentScore(){
         return getCreditHours()*grade;
     }

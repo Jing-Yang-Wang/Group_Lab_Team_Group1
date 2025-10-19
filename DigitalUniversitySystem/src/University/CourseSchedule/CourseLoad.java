@@ -19,6 +19,7 @@ public class CourseLoad {
         seatassignments = new ArrayList();
         semester = s;
     }
+    
     public SeatAssignment newSeatAssignment(CourseOffer co){
         
         Seat seat = co.getEmptySeat(); // seat linked to courseoffer
@@ -28,8 +29,7 @@ public class CourseLoad {
         return sa;
     }
     
-    public void registerStudent(SeatAssignment sa){
-        
+    public void registerStudent(SeatAssignment sa){        
         
         sa.assignSeatToStudent(this);
         seatassignments.add(sa);
@@ -42,8 +42,9 @@ public class CourseLoad {
         }
         return sum;
     }
-        public ArrayList<SeatAssignment> getSeatAssignments(){
-            return seatassignments;
-        }
+    
+    public ArrayList<SeatAssignment> getSeatAssignments(){
+        return seatassignments;
+    }
             
 }

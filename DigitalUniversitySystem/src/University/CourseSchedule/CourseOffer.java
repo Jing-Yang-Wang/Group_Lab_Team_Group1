@@ -83,9 +83,11 @@ public class CourseOffer {
         }
         return sum;
     }
+    
     public Course getSubjectCourse(){
         return course;
     }
+    
     public int getCreditHours(){
         return course.getCredits();
     }
