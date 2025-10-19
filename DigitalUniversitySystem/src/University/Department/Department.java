@@ -10,7 +10,7 @@ import University.CourseCatalog.CourseCatalog;
 import University.CourseSchedule.CourseLoad;
 import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
-import University.example.Degree.Degree;
+import University.Degree.Degree;
 import University.Employer.EmployerDirectory;
 import University.Persona.Employee.EmployeeDirectory;
 import University.Persona.Faculty.FacultyDirectory;
