@@ -12,6 +12,7 @@ import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
 import University.CourseSchedule.SeatAssignment;
 import University.Department.Department;
+import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
 import java.util.ArrayList;
@@ -26,8 +27,13 @@ import javax.swing.table.TableColumnModel;
  *
  * @author kal bugrara
  * @author Michael Hynes
+ * Student Management:
+    ▪ View list of enrolled students per course.
+    ▪ Access each student’s progress report and transcript summary.
+    ▪ View and grade each assignment and compute final letter grade automatically.
+    ▪ Rank students based on total grade percentage and show class GPA.
  */
-public class ManageStudentsJPanel extends javax.swing.JPanel {
+public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ManageSuppliersJPanel
@@ -36,15 +42,15 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
     Business business;
     Department department;
     StudentDirectory studentDirectory;
+    FacultyProfile faculty;
 
 
-    public ManageStudentsJPanel(Business bz, //Department d, 
-            JPanel jp) {
+    public FacultyManageStudentsJPanel(Business bz, FacultyProfile f, JPanel jp) {
         CardSequencePanel = jp;
         this.business = bz;
         //this.department = d;
         //initComponents();
-
+        this.faculty = f;
     }
 
     public void populateTable() {

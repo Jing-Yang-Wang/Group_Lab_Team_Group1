@@ -58,4 +58,8 @@ public class CourseSchedule {
         return sum;
     }
 
+    //MH 10/19 - Added for "Faculty Use Case"
+    public ArrayList<CourseOffer> getSchedule() {
+        return schedule;
+    }
 }
