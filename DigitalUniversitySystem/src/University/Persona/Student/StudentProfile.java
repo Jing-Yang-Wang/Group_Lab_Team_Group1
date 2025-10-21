@@ -20,8 +20,34 @@ import java.util.ArrayList;
 //MH 10/18 - Updated so it extend the profile.
 public class StudentProfile extends Profile {
     Person person;
+    private String academicStatus;
     Transcript transcript;
     EmploymentHistroy employmenthistory;
+    
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public String getAcademicStatus() {
+        return academicStatus;
+    }
+
+    public void setAcademicStatus(String academicStatus) {
+        this.academicStatus = academicStatus;
+    }
+
+    public EmploymentHistroy getEmploymenthistory() {
+        return employmenthistory;
+    }
+
+    public void setEmploymenthistory(EmploymentHistroy employmenthistory) {
+        this.employmenthistory = employmenthistory;
+    }
+   
 
     public StudentProfile(Person p) {
 
@@ -32,7 +58,7 @@ public class StudentProfile extends Profile {
     }
 
     public boolean isMatch(String id) {
-        return person.getPersonId().equals(id);
+        return person.getUniversityID().equals(id);
     }
 
     public Transcript getTranscript() {

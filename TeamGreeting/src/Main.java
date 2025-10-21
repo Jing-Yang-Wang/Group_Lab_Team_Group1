@@ -9,12 +9,9 @@
  */
 public class Main {
     public static void main(String[] args) {
-        
-        System.out.println("======Team Greeting======");
         Member1.main(args);
         Member2.main(args);
         Member3.main(args);
         Member4.main(args);
-        
     }   
 }

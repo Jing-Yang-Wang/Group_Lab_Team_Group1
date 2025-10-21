@@ -10,19 +10,46 @@ package University.Persona;
  * @author kal bugrara
  */
 public class Person {
+
+    private String universityID; 
+    private String name;
+    private String email;
+  
+
     
-    String id;
-    public Person (String id){
-        
-        this.id = id;
-    }
-    public String getPersonId(){
-        return id;
+    public Person(String email) {
+        this.universityID = email;
     }
 
-        public boolean isMatch(String id){
-        if(getPersonId().equals(id)) return true;
-        return false;
+    // Getter / Setter
+    public String getUniversityID() {
+        return universityID;
     }
+
+    public void setUniversityID(String universityID) {
+        this.universityID = universityID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    // 判断是否匹配某个 ID
+    public boolean isMatch(String id) {
+        return this.universityID.equals(id);
+    }
+
     
 }

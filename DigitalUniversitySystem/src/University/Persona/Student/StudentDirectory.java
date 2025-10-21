@@ -18,11 +18,22 @@ public class StudentDirectory {
     Department department;
     ArrayList<StudentProfile> studentlist;
 
+    public ArrayList<StudentProfile> getStudentlist() {
+        return studentlist;
+    }
+
+    public void setStudentlist(ArrayList<StudentProfile> studentlist) {
+        this.studentlist = studentlist;
+    }
+
     public StudentDirectory(Department d) {
 
         department = d;
         studentlist = new ArrayList();
 
+    }
+    public void deletestudent(StudentProfile p){
+        studentlist.remove(p);
     }
 
     public StudentProfile newStudentProfile(Person p) {

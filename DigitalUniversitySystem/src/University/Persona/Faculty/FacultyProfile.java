@@ -18,6 +18,40 @@ import java.util.ArrayList;
 public class FacultyProfile extends Profile {
     Person person;
     ArrayList <FacultyAssignment> facultyassignments; 
+    String department;
+    String course;
+    String telephone;
+    public ArrayList<FacultyAssignment> getFacultyassignments() {
+        return facultyassignments;
+    }
+
+    public void setFacultyassignments(ArrayList<FacultyAssignment> facultyassignments) {
+        this.facultyassignments = facultyassignments;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
     
     public FacultyProfile(Person p) {
 
@@ -53,7 +87,7 @@ public class FacultyProfile extends Profile {
     }
 
     public boolean isMatch(String id) {
-        if (person.getPersonId().equals(id)) {
+        if (person.getUniversityID().equals(id)) {
             return true;
         }
         return false;

@@ -38,5 +38,30 @@ public class PersonDirectory {
         }
             return null; //not found after going through the whole list
          }
-    
+
+
+  
+    public void addPerson(Person p) {
+        personlist.add(p);
+    }
+
+    public boolean emailExists(String email) {
+        for (Person person : personlist) {
+            if (person.getEmail().equals(email)) { 
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean universityIDExists(String universityID) {
+        for (Person person : personlist) {
+            if (person.getUniversityID().equals(universityID)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
+

@@ -151,7 +151,7 @@ public class Department {
     
     //MH 10/20 - Getting department from FacultyProfile
     public Department getDepartmentIfContainsFaculty(FacultyProfile facultyProfile) {
-        String id = facultyProfile.getPerson().getPersonId();
+        String id = facultyProfile.getPerson().getUniversityID();
         // See if the FacultyProfile exists in department
         FacultyProfile foundProfile = this.facultydirectory.findTeachingFaculty(id);
         //Return the department if found

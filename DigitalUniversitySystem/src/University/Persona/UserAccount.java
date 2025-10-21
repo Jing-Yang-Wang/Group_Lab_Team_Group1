@@ -38,7 +38,7 @@ public class UserAccount {
 
     
     public String getPersonId(){
-        return profile.getPerson().getPersonId();
+        return profile.getPerson().getUniversityID();
     }
     
     public boolean isMatch(String id){

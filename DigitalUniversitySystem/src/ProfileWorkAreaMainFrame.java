@@ -16,13 +16,11 @@ import University.Persona.UserAccountDirectory;
 
 import University.Persona.Employee.EmployeeProfile;
 import University.Persona.Faculty.FacultyProfile;
-import University.Persona.Registrar.RegistrarProfile;
 import University.Persona.Student.StudentProfile;
 
 
 import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
-import UserInterface.WorkAreas.RegistrarRole.RegistrarWorkAreaJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import javax.swing.JPanel;
 
@@ -128,7 +126,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 153, 255));
-        jLabel3.setText("Education Going Digital .... Info 5100 ");
+        jLabel3.setText("       Education Going Digital University System   Info 5100 ");
         jLabel3.setMaximumSize(new java.awt.Dimension(600, 400));
         jLabel3.setMinimumSize(new java.awt.Dimension(600, 400));
         jLabel3.setName(""); // NOI18N
@@ -157,7 +155,6 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         StudentWorkAreaJPanel studentworkareajpanel;
         FacultyWorkAreaJPanel facultyworkarea;
         AdminRoleWorkAreaJPanel adminworkarea;
-        RegistrarWorkAreaJPanel registrarWorkAreaJPanel;
         String r = useraccount.getRole();
         Profile profile = useraccount.getAssociatedPersonProfile();
 
@@ -187,16 +184,6 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             facultyworkarea = new FacultyWorkAreaJPanel(business, fpp, CardSequencePanel);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("faculty", facultyworkarea);
-            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
-        }
-       
-       if (profile instanceof RegistrarProfile) {
-           
-            RegistrarProfile rp = (RegistrarProfile) profile;         
-            registrarWorkAreaJPanel = new RegistrarWorkAreaJPanel(business,rp, CardSequencePanel);
-            CardSequencePanel.removeAll();
-            CardSequencePanel.add("Registrar", registrarWorkAreaJPanel);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }

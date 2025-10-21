@@ -35,14 +35,32 @@ import java.util.ArrayList;
 public class Business {       
     //MH 10/18 - Needed for the login process
     UserAccountDirectory useraccountdirectory;
+    // Xieming 10/21  We can put all directories here to store can easily invoke
+    PersonDirectory persondirectory;
+
+    EmployeeDirectory employeedirectory;
+    StudentDirectory studentdirectory;
+    FacultyDirectory facultyDirectory;
+    
+    
+    
     
     //MH 10/20 - Added because a university is made up of departments
     private ArrayList<Department> departmentList;
     
+    
+    
     public Business() {
         this.useraccountdirectory = new UserAccountDirectory();
         //MH 10/20 - Added because a university is made up of departments
-        this.departmentList = new ArrayList<>();
+        this.departmentList = new ArrayList<>();   
+        
+        // Xieming 10/21 add the directories       
+        this.persondirectory=new PersonDirectory();
+        
+        
+        
+        
     }
        
     public UserAccountDirectory getUserAccountDirectory() {
@@ -94,4 +112,57 @@ public class Business {
     public void addDepartment(Department department) {
         this.departmentList.add(department);
     }
+    
+    
+    
+     public UserAccountDirectory getUseraccountdirectory() {
+        return useraccountdirectory;
+    }
+
+    public void setUseraccountdirectory(UserAccountDirectory useraccountdirectory) {
+        this.useraccountdirectory = useraccountdirectory;
+    }
+
+    public PersonDirectory getPersondirectory() {
+        return persondirectory;
+    }
+
+    public void setPersondirectory(PersonDirectory persondirectory) {
+        this.persondirectory = persondirectory;
+    }
+
+    public ArrayList<Department> getDepartmentList() {
+        return departmentList;
+    }
+    
+    
+    public EmployeeDirectory getEmployeedirectory() {
+        return employeedirectory;
+    }
+
+    public void setEmployeedirectory(EmployeeDirectory employeedirectory) {
+        this.employeedirectory = employeedirectory;
+    }
+
+    public StudentDirectory getStudentdirectory() {
+        return studentdirectory;
+    }
+
+    public void setStudentdirectory(StudentDirectory studentdirectory) {
+        this.studentdirectory = studentdirectory;
+    }
+
+    public FacultyDirectory getFacultyDirectory() {
+        return facultyDirectory;
+    }
+
+    public void setFacultyDirectory(FacultyDirectory facultyDirectory) {
+        this.facultyDirectory = facultyDirectory;
+    }
+
+    // Xieming 10/21  We can put all directories here to store can easily invoke
+    public void setDepartmentList(ArrayList<Department> departmentList) {
+        this.departmentList = departmentList;
+    }
+    
 }
