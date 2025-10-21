@@ -16,11 +16,13 @@ import University.Persona.UserAccountDirectory;
 
 import University.Persona.Employee.EmployeeProfile;
 import University.Persona.Faculty.FacultyProfile;
+import University.Persona.Registrar.RegistrarProfile;
 import University.Persona.Student.StudentProfile;
 
 
 import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
+import UserInterface.WorkAreas.RegistrarRole.RegistrarWorkAreaJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import javax.swing.JPanel;
 
@@ -155,6 +157,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         StudentWorkAreaJPanel studentworkareajpanel;
         FacultyWorkAreaJPanel facultyworkarea;
         AdminRoleWorkAreaJPanel adminworkarea;
+        RegistrarWorkAreaJPanel registrarWorkAreaJPanel;
         String r = useraccount.getRole();
         Profile profile = useraccount.getAssociatedPersonProfile();
 
@@ -184,6 +187,16 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             facultyworkarea = new FacultyWorkAreaJPanel(business, fpp, CardSequencePanel);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("faculty", facultyworkarea);
+            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
+        }
+       
+       if (profile instanceof RegistrarProfile) {
+           
+            RegistrarProfile rp = (RegistrarProfile) profile;         
+            registrarWorkAreaJPanel = new RegistrarWorkAreaJPanel(business,rp, CardSequencePanel);
+            CardSequencePanel.removeAll();
+            CardSequencePanel.add("Registrar", registrarWorkAreaJPanel);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }
