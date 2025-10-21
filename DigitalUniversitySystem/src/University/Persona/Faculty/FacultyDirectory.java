@@ -54,6 +54,10 @@ public class FacultyDirectory {
             }
         }
             return null; //not found after going through the whole list
-         }
+    }
     
+    //MH 10/20 - Added to get department
+    public Department getDepartment() {
+        return department;
+    }
 }

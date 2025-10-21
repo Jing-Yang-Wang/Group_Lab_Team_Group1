@@ -22,7 +22,7 @@ public class FacultyProfile extends Profile {
     public FacultyProfile(Person p) {
 
         super(p);
-        //person = p;
+        this.person = p;
         facultyassignments = new ArrayList();
     }
     public  double getProfAverageOverallRating(){
@@ -44,8 +44,7 @@ public class FacultyProfile extends Profile {
     public FacultyAssignment AssignAsTeacher(CourseOffer co){
         
         FacultyAssignment fa = new FacultyAssignment(this, co);
-        facultyassignments.add(fa);
-        
+        facultyassignments.add(fa);        
         return fa;
     }
     

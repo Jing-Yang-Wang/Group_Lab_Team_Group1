@@ -25,6 +25,7 @@ import University.Persona.UserAccountDirectory;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
 import University.Persona.UserAccount;
+import java.util.ArrayList;
 
 
 /**
@@ -35,8 +36,13 @@ public class Business {
     //MH 10/18 - Needed for the login process
     UserAccountDirectory useraccountdirectory;
     
+    //MH 10/20 - Added because a university is made up of departments
+    private ArrayList<Department> departmentList;
+    
     public Business() {
         this.useraccountdirectory = new UserAccountDirectory();
+        //MH 10/20 - Added because a university is made up of departments
+        this.departmentList = new ArrayList<>();
     }
        
     public UserAccountDirectory getUserAccountDirectory() {
@@ -50,27 +56,42 @@ public class Business {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        /*
         Business business = new Business();
         Department department = new Department("Information Systems");
-        CourseCatalog coursecatalog = department.getCourseCatalog();
         
-        Course course = coursecatalog.newCourse("app eng", "info 5100", 4);
-        
+        CourseCatalog coursecatalog = department.getCourseCatalog();        
+        Course course = coursecatalog.newCourse("app eng", "info 5100", 4);        
         CourseSchedule courseschedule = department.newCourseSchedule("Fall2020");
 
         CourseOffer courseoffer = courseschedule.newCourseOffer("info 5100");
         if (courseoffer==null)return;
         courseoffer.generatSeats(10);
+        
         PersonDirectory pd = department.getPersonDirectory();
         Person person = pd.newPerson("0112303");
+        
         StudentDirectory sd = department.getStudentDirectory();
         StudentProfile student = sd.newStudentProfile(person);
-        CourseLoad courseload = student.newCourseLoad("Fall2020"); 
-//        
+        
+        CourseLoad courseload = student.newCourseLoad("Fall2020"); //        
         courseload.newSeatAssignment(courseoffer); //register student in class
         
         int total = department.calculateRevenuesBySemester("Fall2020");
+        
+        //MH 10/20 - Added because a university is made up of departments
+        business.addDepartment(department);      
         //System.out.print("Total: " + total);        
-
-    }    
+*/
+    }   
+    
+    //MH 10/20 - Added because a university is made up of departments
+    public ArrayList<Department> getAllDepartments() {
+        return departmentList;
+    }
+    
+    //MH 10/20 - Added because a university is made up of departments
+    public void addDepartment(Department department) {
+        this.departmentList.add(department);
+    }
 }

@@ -14,6 +14,7 @@ import University.Degree.Degree;
 import University.Employer.EmployerDirectory;
 import University.Persona.Employee.EmployeeDirectory;
 import University.Persona.Faculty.FacultyDirectory;
+import University.Persona.Faculty.FacultyProfile;
 import University.Persona.PersonDirectory;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
@@ -146,5 +147,18 @@ public class Department {
     
     public CourseSchedule getCourseSchedule() {
         return courseSchedule;
+    }
+    
+    //MH 10/20 - Getting department from FacultyProfile
+    public Department getDepartmentIfContainsFaculty(FacultyProfile facultyProfile) {
+        String id = facultyProfile.getPerson().getPersonId();
+        // See if the FacultyProfile exists in department
+        FacultyProfile foundProfile = this.facultydirectory.findTeachingFaculty(id);
+        //Return the department if found
+        if (foundProfile != null && foundProfile.equals(facultyProfile)) {
+            return this;  
+        } else {
+            return null; 
+        }
     }
 }

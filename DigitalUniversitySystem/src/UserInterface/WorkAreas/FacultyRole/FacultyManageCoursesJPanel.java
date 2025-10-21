@@ -12,6 +12,7 @@ import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
 import University.CourseSchedule.SeatAssignment;
 import University.Department.Department;
+import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
@@ -39,16 +40,28 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     JPanel CardSequencePanel;
     Business business;
     Department department;
-    FacultyProfile faculty;
+    FacultyDirectory facultyDirectory;
+    FacultyProfile facultyProfile;
+    
     //String semester = "Fall2020";
 
     public FacultyManageCoursesJPanel(Business bz, FacultyProfile f, JPanel jp) {
-        initComponents();        
+        initComponents();   
         CardSequencePanel = jp;
-        this.business = bz;
-        //this.department = ;
-        this.faculty = f;
-        //this.department = bz.
+        this.facultyProfile = f;       
+        this.business = bz;              
+                 
+        //this.department = department.getDepartmentIfContainsFaculty(facultyProfile);
+        
+        Department targetDepartment = null;
+        for (Department dept : business.getAllDepartments()) {
+            Department result = dept.getDepartmentIfContainsFaculty(this.facultyProfile);
+            if (result != null) {
+                targetDepartment = result;
+                break; 
+            }
+        }
+        this.department = targetDepartment;
         
         populateCombobox();
         populateTable();
@@ -86,17 +99,11 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             return;
         }
         
-        for (CourseOffer co : courseSchedule.getSchedule()) {       
-            FacultyProfile assignedFaculty = co.getFacultyProfile();  
+        for (CourseOffer co : courseSchedule.getSchedule()) {     
+            Object[] row = new Object[3];                
+            row[0] = co.getCourseNumber();                
 
-            //Make sure the faculty matches
-            if (assignedFaculty != null && assignedFaculty.equals(faculty)) {
-
-                Object[] row = new Object[3];                
-                row[0] = co.getCourseNumber();                
-
-                model.addRow(row);                      
-            }
+            model.addRow(row);                      
         }                
     }
     
@@ -235,7 +242,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         CardSequencePanel.removeAll();
 
-        FacultyWorkAreaJPanel aos = new FacultyWorkAreaJPanel(business, faculty, CardSequencePanel);
+        FacultyWorkAreaJPanel aos = new FacultyWorkAreaJPanel(business, facultyProfile, CardSequencePanel);
 
         CardSequencePanel.add("faculty", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
