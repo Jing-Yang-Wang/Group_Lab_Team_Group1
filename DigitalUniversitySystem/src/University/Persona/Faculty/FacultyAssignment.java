@@ -15,6 +15,7 @@ public class FacultyAssignment {
     double tracerating;
     CourseOffer courseoffer;
     FacultyProfile facultyprofile;
+    
     public FacultyAssignment(FacultyProfile fp, CourseOffer co){
         courseoffer = co;
         facultyprofile = fp;
@@ -30,6 +31,11 @@ public class FacultyAssignment {
        }
     public FacultyProfile getFacultyProfile(){
         return facultyprofile;
+    }
+
+    //MH 10/20 - Added because it was missing.
+    public CourseOffer getCourseOffer() {
+        return courseoffer;
     }
     
 }

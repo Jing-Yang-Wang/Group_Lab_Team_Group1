@@ -7,6 +7,7 @@ package University.CourseSchedule;
 
 import University.CourseCatalog.Course;
 import University.CourseCatalog.CourseCatalog;
+import University.Persona.Faculty.FacultyProfile;
 import java.util.ArrayList;
 
 /**
@@ -61,5 +62,26 @@ public class CourseSchedule {
     //MH 10/19 - Added for "Faculty Use Case"
     public ArrayList<CourseOffer> getSchedule() {
         return schedule;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+    
+    //MH 10/20 - Added so we can get data by faculty profile
+    public ArrayList<CourseOffer> filterScheduleByFaculty(FacultyProfile facultyProfile) {
+        ArrayList<CourseOffer> filteredOffers = new ArrayList<>();
+        
+        if (facultyProfile == null) {
+            return filteredOffers; 
+        }
+
+        //Look for matches
+        for (CourseOffer co : schedule) {
+            if (co.getFacultyProfile() != null && co.getFacultyProfile().equals(facultyProfile)) {
+                filteredOffers.add(co);
+            }
+        }
+        return filteredOffers;
     }
 }

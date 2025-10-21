@@ -35,7 +35,7 @@ public class CourseOffer {
     }
 
     public String getCourseNumber() {
-        return course.getCOurseNumber();
+        return course.getCourseNumber();
     }
 
     public void generatSeats(int n) {
@@ -90,6 +90,11 @@ public class CourseOffer {
     
     public int getCreditHours(){
         return course.getCredits();
+    }
+    
+    //MH 10/20 - Added so I can display capacity.
+    public int getSeatCount() {
+        return seatlist.size();
     }
 
 }

@@ -16,6 +16,8 @@ public class Course {
     int credits;
     int price = 1500; //per credit hour
 
+
+
     public Course(String n, String numb, int ch) {
         name = n;
         number = numb;
@@ -23,7 +25,7 @@ public class Course {
 
     }
 
-    public String getCOurseNumber() {
+    public String getCourseNumber() {
         return number;
     }
 
@@ -35,6 +37,15 @@ public class Course {
     public int getCredits() {
         return credits;
     
-}
+    }
     
+    //MH 10/20 - Added because I need to display
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+  
 }

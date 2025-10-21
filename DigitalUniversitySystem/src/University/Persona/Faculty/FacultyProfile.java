@@ -65,4 +65,14 @@ public class FacultyProfile extends Profile {
         return "Faculty";
     }
 
+    //MH 10/20 - Added because they were missing.
+    public Person getPerson() {
+        return person;
+    }
+
+    public ArrayList<FacultyAssignment> getFacultyAssignments() {
+        return facultyassignments;
+    }
+
+    
 }

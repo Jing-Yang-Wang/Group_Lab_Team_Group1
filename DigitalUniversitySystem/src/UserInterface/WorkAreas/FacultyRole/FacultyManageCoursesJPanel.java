@@ -12,6 +12,7 @@ import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
 import University.CourseSchedule.SeatAssignment;
 import University.Department.Department;
+import University.Persona.Faculty.FacultyAssignment;
 import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentDirectory;
@@ -41,18 +42,16 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     Business business;
     Department department;
     FacultyDirectory facultyDirectory;
-    FacultyProfile facultyProfile;
-    
-    //String semester = "Fall2020";
+    FacultyProfile facultyProfile;    
+    String semester = "Fall2020";
 
     public FacultyManageCoursesJPanel(Business bz, FacultyProfile f, JPanel jp) {
         initComponents();   
         CardSequencePanel = jp;
         this.facultyProfile = f;       
         this.business = bz;              
-                 
-        //this.department = department.getDepartmentIfContainsFaculty(facultyProfile);
         
+        //Get the faculty department
         Department targetDepartment = null;
         for (Department dept : business.getAllDepartments()) {
             Department result = dept.getDepartmentIfContainsFaculty(this.facultyProfile);
@@ -63,50 +62,55 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         }
         this.department = targetDepartment;
         
-        populateCombobox();
+        //populateCombobox();
         populateTable();
     }
 
     
-    public void populateCombobox() {        
-        //Get semesters
-        cbSemesterSearch.addItem("Fall2020");
-        cbSemesterSearch.setSelectedIndex(0);       
+    //MH 10/20 - Removed semester because of time limitations
+    //public void populateCombobox() {        
+    //    //Get semesters
+    //    cbSemesterSearch.addItem("Fall2020");
+    //    cbSemesterSearch.setSelectedIndex(0);       
                 
-    }
+    //}
     
     public void populateTable() {
         //GOAL: View and update assigned course details (title, description, schedule, capacity) 
-        //Also, display info on syllabus & open/close course enrollment
-        
-        //Course - Course Offer, co.getCourseNumber()    
-        //Title - 
-        //Description - 
-        //Schedlue -
-        //Capacity - 
-        //Syllabus -
-        //Open/close course enrollment - 
+        //Display info on syllabus & open/close course enrollment
+        //Get courses assigned to the faculty      
         
         //Setup our table
         DefaultTableModel model = (DefaultTableModel)tblHeader.getModel();
         model.setRowCount(0);               
         
-        //Get courses assigned to the faculty
-        String semester = cbSemesterSearch.getSelectedItem().toString().trim();
-        CourseSchedule courseSchedule = department.getCourseSchedule(semester);
+        //String semester = cbSemesterSearch.getSelectedItem().toString().trim();
+        //CourseSchedule courseSchedule = department.getCourseCatalog().getCourseList();
         
-        if (courseSchedule == null) {
-            return;
-        }
+        //if (courseSchedule == null) {
+        //    return;
+        //}
+        //for (CourseOffer co : courseSchedule.getSchedule()) { 
         
-        for (CourseOffer co : courseSchedule.getSchedule()) {     
-            Object[] row = new Object[3];                
-            row[0] = co.getCourseNumber();                
+        //filterScheduleByFaculty
+        
+        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); // <-- Direct Field Access
+        for (FacultyAssignment fa : assignments) {
+            CourseOffer co = fa.getCourseOffer();
+               
+                
+                Course c = co.getSubjectCourse();
 
-            model.addRow(row);                      
-        }                
-    }
-    
+                Object[] row = new Object[4]; 
+                row[0] = co.getCourseNumber();                
+                row[1] = c.getName();
+                //row[2] = //Schedlue
+                row[3] = String.valueOf(co.getSeatCount());
+                //row[4] = //Syllabus
+
+                model.addRow(row);                      
+            } 
+        }    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -118,11 +122,6 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         lblTitle = new javax.swing.JLabel();
-        lblSemesterSearch = new javax.swing.JLabel();
-        cbSemesterSearch = new javax.swing.JComboBox<>();
-        lblCourseSearch = new javax.swing.JLabel();
-        tbCourseSearch = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
         OrderScroll1 = new javax.swing.JScrollPane();
         tblHeader = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
@@ -140,42 +139,15 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         add(lblTitle);
         lblTitle.setBounds(21, 20, 370, 28);
 
-        lblSemesterSearch.setText("Semester");
-        add(lblSemesterSearch);
-        lblSemesterSearch.setBounds(20, 60, 48, 16);
-
-        cbSemesterSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbSemesterSearchActionPerformed(evt);
-            }
-        });
-        add(cbSemesterSearch);
-        cbSemesterSearch.setBounds(70, 60, 72, 22);
-
-        lblCourseSearch.setText("Course");
-        add(lblCourseSearch);
-        lblCourseSearch.setBounds(160, 60, 37, 16);
-        add(tbCourseSearch);
-        tbCourseSearch.setBounds(210, 60, 64, 22);
-
-        btnSearch.setText("Search");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
-            }
-        });
-        add(btnSearch);
-        btnSearch.setBounds(460, 60, 120, 23);
-
         tblHeader.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Semester", "Course", "Title", "Description", "Schedule", "Capacity", "Syllabus?"
+                "Number (Title?)", "Name (Desc?)", "Schedule", "Capacity", "Syllabus?"
             }
         ));
         OrderScroll1.setViewportView(tblHeader);
@@ -252,15 +224,6 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnOpenEnrollmentActionPerformed
 
-    private void cbSemesterSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSemesterSearchActionPerformed
-        // TODO add your handling code here:
-        //populateTable();
-    }//GEN-LAST:event_cbSemesterSearchActionPerformed
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSearchActionPerformed
-
     private void btnCloseEnrollmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseEnrollmentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCloseEnrollmentActionPerformed
@@ -285,13 +248,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnDownloadSyllabus;
     private javax.swing.JButton btnOpenEnrollment;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUploadSyllabus;
-    private javax.swing.JComboBox<String> cbSemesterSearch;
-    private javax.swing.JLabel lblCourseSearch;
-    private javax.swing.JLabel lblSemesterSearch;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JTextField tbCourseSearch;
     private javax.swing.JTable tblHeader;
     // End of variables declaration//GEN-END:variables
 
