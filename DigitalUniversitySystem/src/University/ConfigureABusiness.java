@@ -30,6 +30,17 @@ public class ConfigureABusiness {
         Business business = new Business();        
         Department department = new Department("Information Systems");
 
+<<<<<<< Updated upstream
+=======
+        CourseOffer courseoffer = courseschedule.newCourseOffer("info 5100");
+        courseoffer.generatSeats(10);
+        
+        int total = department.calculateRevenuesBySemester("Fall2020");
+        
+        //MH 10/20 - Added because a university is made up of departments
+        business.getCollege().addDepartment(department); 
+        
+>>>>>>> Stashed changes
 // Create Persons
         PersonDirectory persondirectory = department.getPersonDirectory();      
         Person person001 = persondirectory.newPerson("John Smith");

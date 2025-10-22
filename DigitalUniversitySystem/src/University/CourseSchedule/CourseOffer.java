@@ -19,10 +19,14 @@ public class CourseOffer {
     Course course;
     ArrayList<Seat> seatlist;
     FacultyAssignment facultyassignment;
+    //MH 10/21 - Added place to hold syllabus & enrollment status.  Putting it here since it can be different for each offer.
+    String syllabus;
+    Boolean enrollmentOpen; //false = Closed, true = Open
 
     public CourseOffer(Course c) {
         course = c;
         seatlist = new ArrayList();
+        this.enrollmentOpen = false; // Default to open
     }
      
     public void AssignAsTeacher(FacultyProfile fp) {
@@ -92,4 +96,21 @@ public class CourseOffer {
         return course.getCredits();
     }
 
+    public String getSyllabus() {
+        return syllabus;
+    }
+
+    public void setSyllabus(String syllabus) {
+        this.syllabus = syllabus;
+    }
+
+    public Boolean getEnrollmentOpen() {
+        return enrollmentOpen;
+    }
+
+    public void setEnrollmentOpen(Boolean enrollmentOpen) {
+        this.enrollmentOpen= enrollmentOpen;
+    }
+
+    
 }

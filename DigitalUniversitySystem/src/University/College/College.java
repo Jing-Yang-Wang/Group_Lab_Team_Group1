@@ -14,8 +14,21 @@ import java.util.ArrayList;
  */
 public class College {
     ArrayList<Department> departments;
+    String name; // MH 10/21 - Was missing
     
     public College(String name){
         departments = new ArrayList();
+        this.name = name; // MH 10/21 - Was missing     
+    }
+        
+    // MH 10/21 - dded to better manage departments in the college
+    public ArrayList<Department> getDepartments() {
+        return this.departments;
+    }
+    
+    public void addDepartment(Department d) {
+        if (d != null) {
+            this.departments.add(d);
+        }
     }
 }

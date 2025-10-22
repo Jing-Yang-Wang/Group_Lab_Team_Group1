@@ -9,6 +9,7 @@
 package University;
 
 //MH 10/18 - Additional classes added.
+import University.College.College;
 import University.CourseCatalog.Course;
 import University.CourseCatalog.CourseCatalog;
 import University.CourseSchedule.CourseLoad;
@@ -34,9 +35,41 @@ import University.Persona.UserAccount;
 public class Business {       
     //MH 10/18 - Needed for the login process
     UserAccountDirectory useraccountdirectory;
+<<<<<<< Updated upstream
     
     public Business() {
         this.useraccountdirectory = new UserAccountDirectory();
+=======
+    // Xieming 10/21  We can put all directories here to store can easily invoke
+    PersonDirectory persondirectory;
+
+    EmployeeDirectory employeedirectory;
+    StudentDirectory studentdirectory;
+    FacultyDirectory facultyDirectory;
+    
+    
+    
+    
+    //MH 10/20 - Added because a university is made up of departments
+    //private ArrayList<Department> departmentList;
+    //MH 10/21 - Swapped to college to store departments   
+    College college;
+    
+    
+    public Business() {
+        this.useraccountdirectory = new UserAccountDirectory();
+        //MH 10/20 - Added because a university is made up of departments
+        //this.departmentList = new ArrayList<>();   
+        //MH 10/21 - Swapped to college to store departments  
+        this.college = new College("University System");
+        
+        // Xieming 10/21 add the directories       
+        this.persondirectory=new PersonDirectory();
+        
+        
+        
+        
+>>>>>>> Stashed changes
     }
        
     public UserAccountDirectory getUserAccountDirectory() {
@@ -71,6 +104,81 @@ public class Business {
         
         int total = department.calculateRevenuesBySemester("Fall2020");
         //System.out.print("Total: " + total);        
+<<<<<<< Updated upstream
 
     }    
+=======
+*/
+    }   
+         
+     public UserAccountDirectory getUseraccountdirectory() {
+        return useraccountdirectory;
+    }
+
+    public void setUseraccountdirectory(UserAccountDirectory useraccountdirectory) {
+        this.useraccountdirectory = useraccountdirectory;
+    }
+
+    public PersonDirectory getPersondirectory() {
+        return persondirectory;
+    }
+
+    public void setPersondirectory(PersonDirectory persondirectory) {
+        this.persondirectory = persondirectory;
+    }
+
+    //MH 10/21 - Removed since this is now at the college 
+    //public ArrayList<Department> getDepartmentList() {
+    //    return departmentList;
+    //}
+    
+    public EmployeeDirectory getEmployeedirectory() {
+        return employeedirectory;
+    }
+
+    public void setEmployeedirectory(EmployeeDirectory employeedirectory) {
+        this.employeedirectory = employeedirectory;
+    }
+
+    public StudentDirectory getStudentdirectory() {
+        return studentdirectory;
+    }
+
+    public void setStudentdirectory(StudentDirectory studentdirectory) {
+        this.studentdirectory = studentdirectory;
+    }
+
+    public FacultyDirectory getFacultyDirectory() {
+        return facultyDirectory;
+    }
+
+    public void setFacultyDirectory(FacultyDirectory facultyDirectory) {
+        this.facultyDirectory = facultyDirectory;
+    }
+
+    // Xieming 10/21  We can put all directories here to store can easily invoke
+    //MH 10/21 - Removed since this is now at the college 
+    //public void setDepartmentList(ArrayList<Department> departmentList) {
+    //    this.departmentList = departmentList;
+    //}
+    
+    //MH 10/21 - Added college to store departments  
+    public College getCollege() {
+        return this.college;
+    }
+    
+    public ArrayList<Department> getAllDepartments() {
+        // Delegate the call to the College's new getter method
+        return this.college.getDepartments();
+    }    
+    //MH 10/20 - Added because a university is made up of departments
+    //public ArrayList<Department> getAllDepartments() {
+    //    return departmentList;
+    //}
+    //MH 10/20 - Added because a university is made up of departments
+    //public void addDepartment(Department department) {
+    //    this.departmentList.add(department);
+    //}
+>>>>>>> Stashed changes
 }
+
