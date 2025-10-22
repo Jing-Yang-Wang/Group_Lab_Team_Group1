@@ -49,6 +49,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     FacultyProfile facultyProfile;    
     String semester = "Fall2020"; //TO DO - Add code to get this
     String selectedCourseNumber;
+    //int selectedCourseOfferId;
 
     public FacultyManageCoursesJPanel(Business bz, FacultyProfile f, JPanel jp) {
         initComponents();   
@@ -79,19 +80,17 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         cbSchedule.setSelectedIndex(0);                   
     }
     
-    public void populateTable() {
-        //GOAL: View and update assigned course details (title, description, schedule, capacity) 
-        //Display info on syllabus & open/close course enrollment
-        //Get courses assigned to the faculty      
-        
+    public void populateTable() {        
         //Setup our table
         DefaultTableModel model = (DefaultTableModel)tblHeader.getModel();
         model.setRowCount(0);  
         
-        //Hide the syllabus column
+        //Hide the syllabus & course offer id column
         TableColumnModel tcm = tblHeader.getColumnModel(); 
-        TableColumn column = tcm.getColumn(4);
-        column.setWidth(0); 
+        TableColumn column3 = tcm.getColumn(3);
+        column3.setWidth(0); 
+        TableColumn column7 = tcm.getColumn(7);
+        column7.setWidth(0);
         
         //String semester = cbSemesterSearch.getSelectedItem().toString().trim();
         //CourseSchedule courseSchedule = department.getCourseCatalog().getCourseList();
@@ -105,12 +104,11 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         
         ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); // <-- Direct Field Access
         for (FacultyAssignment fa : assignments) {
-            CourseOffer co = fa.getCourseOffer();
-            
+            CourseOffer co = fa.getCourseOffer();            
 
                 Course c = co.getSubjectCourse();
 
-                Object[] row = new Object[6]; 
+                Object[] row = new Object[7]; 
                 row[0] = co.getCourseNumber();                
                 row[1] = c.getName();
                 row[2] = semester;
@@ -324,6 +322,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             String capacity = tblHeader.getValueAt(selectedRow, 3).toString();
             String syllabus = tblHeader.getValueAt(selectedRow, 4).toString();
             String enrollmentOpen = tblHeader.getValueAt(selectedRow, 5).toString();
+            String courseOfferID = tblHeader.getValueAt(selectedRow, 6).toString();
         
             //Set Fields
             tbNumber.setText(courseNumber);
@@ -333,6 +332,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             
             //Save selected Course Number for update code
             selectedCourseNumber = courseNumber;
+            //selectedCourseOfferId = Integer.parseInt(courseOfferID);
             
         } else {
             JOptionPane.showMessageDialog(null, "Please select a course offer to update!", "Warning", JOptionPane.WARNING_MESSAGE);           
@@ -348,7 +348,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         ) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Data Required", JOptionPane.ERROR_MESSAGE);
             return; 
-        }   
+        }        
         
         int capacity;
         Boolean enrollmentOpen;
@@ -370,10 +370,25 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             return;
         }
         
-        Course c = department.getCourseCatalog().getCourseByNumber(selectedCourseNumber);
-        c.setNumber(number);
-        c.setName(name);
+        Course c = department.getCourseCatalog().getCourseByNumber(selectedCourseNumber);      
+        CourseOffer co = department.getCourseSchedule(semester).getCourseOfferByNumber(selectedCourseNumber);
+        int seats;
         
+        //See if they tried to reduce the capacity
+        if (capacity < co.getSeatCount()) {
+            JOptionPane.showMessageDialog(null, "You can not reduce capacity.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;          
+        } else {
+            seats = capacity - co.getSeatCount();
+        }
+        
+        //Write data
+        c.setNumber(number);
+        c.setName(name);      
+        co.setEnrollmentOpen(enrollmentOpen);
+        co.setSyllabus(syllabus);   
+        co.generatSeats(seats);        
+        JOptionPane.showMessageDialog(this, "Data has been updated!", "Data Saved", JOptionPane.INFORMATION_MESSAGE);
         
     }//GEN-LAST:event_btnSaveActionPerformed
 

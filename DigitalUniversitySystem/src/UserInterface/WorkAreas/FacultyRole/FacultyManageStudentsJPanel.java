@@ -12,6 +12,7 @@ import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
 import University.CourseSchedule.SeatAssignment;
 import University.Department.Department;
+import University.Persona.Faculty.FacultyAssignment;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
@@ -42,36 +43,46 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
     Business business;
     Department department;
     StudentDirectory studentDirectory;
-    FacultyProfile faculty;
+    FacultyProfile facultyProfile;
 
 
     public FacultyManageStudentsJPanel(Business bz, FacultyProfile f, JPanel jp) {
+        initComponents();
         CardSequencePanel = jp;
         this.business = bz;
         //this.department = d;
-        //initComponents();
-        this.faculty = f;
+        this.facultyProfile = f;
     }
-
-    public void populateTable() {
-        //GOAL: Get students with a class, the class, semester, faculty for the class, and the class grade.
-        //Grade - SeatAssignment.grade
-        //Class - SeatAssignment.getAssociatedCourse()        
-        //Student - CourseLoad.Transcript.StudentProfile
-        //Semester - CourseLoad.Semester
-        //Faculty
+    
+    
+     public void populateCombobox() {        
+        //Get semesters
+        cbSchedule.addItem("Fall2020");
+        cbSchedule.setSelectedIndex(0);     
         
+        //Get Courses
+        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); 
+        for (FacultyAssignment fa : assignments) {
+            CourseOffer co = fa.getCourseOffer();   
+            cbCourse.addItem(co.getCourseNumber());             
+        }
+        cbCourse.setSelectedIndex(0); 
+    }
+    
+    public void populateTable() {        
         //Setup our table
         DefaultTableModel model = (DefaultTableModel)tblHeader.getModel();
         model.setRowCount(0);
-               
-        //Get an arrey of SeatAssignments
-        /*
-        ArrayList<SeatAssignment> allSeatAssignments = department. //Get to SeatAssignment, help me here
-        if (seatAssignment == null) {
-            return;
-        }
-    
+                      
+        //Get an arrey of SeatAssignments    
+        String number = cbCourse.getSelectedItem().toString().trim();
+        CourseOffer co = department.getCourseSchedule().getCourseOfferByNumber(number);
+        
+        //ArrayList<SeatAssignment> allSeatAssignments = co.get
+       // if (allSeatAssignments == null) {
+       //     return;
+       // }
+    /*
         for (SeatAssignment s : seatAssignments) {
         */
         /*    
@@ -106,9 +117,9 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
                 model.addRow(row);  
             }
         } */
-    //}
-  
     }
+  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -123,19 +134,17 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         OrderScroll = new javax.swing.JScrollPane();
         tblDetail = new javax.swing.JTable();
-        cbCourse = new javax.swing.JComboBox<>();
-        lblCourse = new javax.swing.JLabel();
+        cbSchedule = new javax.swing.JComboBox<>();
+        lblClassGrade = new javax.swing.JLabel();
         Next2 = new javax.swing.JButton();
         Next3 = new javax.swing.JButton();
         tbSN = new javax.swing.JTextField();
-        lblCourse1 = new javax.swing.JLabel();
+        lblSchedule = new javax.swing.JLabel();
         OrderScroll1 = new javax.swing.JScrollPane();
         tblHeader = new javax.swing.JTable();
         Next4 = new javax.swing.JButton();
-        lblCourse2 = new javax.swing.JLabel();
-        cbCourse1 = new javax.swing.JComboBox<>();
-        cbCourse2 = new javax.swing.JComboBox<>();
-        lblCourse3 = new javax.swing.JLabel();
+        cbCourse = new javax.swing.JComboBox<>();
+        lblCourse = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -179,17 +188,17 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         add(OrderScroll);
         OrderScroll.setBounds(20, 300, 560, 130);
 
-        cbCourse.addActionListener(new java.awt.event.ActionListener() {
+        cbSchedule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCourseActionPerformed(evt);
+                cbScheduleActionPerformed(evt);
             }
         });
-        add(cbCourse);
-        cbCourse.setBounds(70, 60, 72, 22);
+        add(cbSchedule);
+        cbSchedule.setBounds(70, 60, 72, 22);
 
-        lblCourse.setText("Class Grade");
-        add(lblCourse);
-        lblCourse.setBounds(440, 60, 70, 20);
+        lblClassGrade.setText("Class Grade");
+        add(lblClassGrade);
+        lblClassGrade.setBounds(440, 60, 70, 20);
 
         Next2.setText("Save");
         Next2.addActionListener(new java.awt.event.ActionListener() {
@@ -211,9 +220,9 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         add(tbSN);
         tbSN.setBounds(520, 60, 64, 22);
 
-        lblCourse1.setText("Semester");
-        add(lblCourse1);
-        lblCourse1.setBounds(20, 60, 48, 16);
+        lblSchedule.setText("Semester");
+        add(lblSchedule);
+        lblSchedule.setBounds(20, 60, 48, 16);
 
         tblHeader.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -240,37 +249,27 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         add(Next4);
         Next4.setBounds(460, 260, 120, 23);
 
-        lblCourse2.setText("Faculty");
-        add(lblCourse2);
-        lblCourse2.setBounds(300, 60, 38, 16);
-
-        cbCourse1.addActionListener(new java.awt.event.ActionListener() {
+        cbCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCourse1ActionPerformed(evt);
+                cbCourseActionPerformed(evt);
             }
         });
-        add(cbCourse1);
-        cbCourse1.setBounds(350, 60, 72, 22);
+        add(cbCourse);
+        cbCourse.setBounds(210, 60, 72, 22);
 
-        cbCourse2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCourse2ActionPerformed(evt);
-            }
-        });
-        add(cbCourse2);
-        cbCourse2.setBounds(210, 60, 72, 22);
-
-        lblCourse3.setText("Course");
-        add(lblCourse3);
-        lblCourse3.setBounds(160, 60, 37, 16);
+        lblCourse.setText("Course");
+        add(lblCourse);
+        lblCourse.setBounds(160, 60, 37, 16);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:
-        CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
- //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
+        CardSequencePanel.removeAll();
 
+        FacultyWorkAreaJPanel aos = new FacultyWorkAreaJPanel(business, facultyProfile, CardSequencePanel);
+
+        CardSequencePanel.add("faculty", aos);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_BackActionPerformed
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
@@ -282,10 +281,10 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_NextActionPerformed
 
-    private void cbCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCourseActionPerformed
+    private void cbScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbScheduleActionPerformed
         // TODO add your handling code here:
         //populateTable();
-    }//GEN-LAST:event_cbCourseActionPerformed
+    }//GEN-LAST:event_cbScheduleActionPerformed
 
     private void Next2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Next2ActionPerformed
         // TODO add your handling code here:
@@ -299,13 +298,9 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_Next4ActionPerformed
 
-    private void cbCourse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCourse1ActionPerformed
+    private void cbCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCourseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbCourse1ActionPerformed
-
-    private void cbCourse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCourse2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbCourse2ActionPerformed
+    }//GEN-LAST:event_cbCourseActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -317,13 +312,11 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane OrderScroll;
     private javax.swing.JScrollPane OrderScroll1;
     private javax.swing.JComboBox<String> cbCourse;
-    private javax.swing.JComboBox<String> cbCourse1;
-    private javax.swing.JComboBox<String> cbCourse2;
+    private javax.swing.JComboBox<String> cbSchedule;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblClassGrade;
     private javax.swing.JLabel lblCourse;
-    private javax.swing.JLabel lblCourse1;
-    private javax.swing.JLabel lblCourse2;
-    private javax.swing.JLabel lblCourse3;
+    private javax.swing.JLabel lblSchedule;
     private javax.swing.JTextField tbSN;
     private javax.swing.JTable tblDetail;
     private javax.swing.JTable tblHeader;
