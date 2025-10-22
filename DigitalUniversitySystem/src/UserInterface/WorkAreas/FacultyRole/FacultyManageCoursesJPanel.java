@@ -17,10 +17,14 @@ import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
+import java.awt.CardLayout;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 
 /**
@@ -43,7 +47,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     Department department;
     FacultyDirectory facultyDirectory;
     FacultyProfile facultyProfile;    
-    String semester = "Fall2020";
+    String semester = "Fall2020"; //TO DO - Add code to get this
 
     public FacultyManageCoursesJPanel(Business bz, FacultyProfile f, JPanel jp) {
         initComponents();   
@@ -62,18 +66,17 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         }
         this.department = targetDepartment;
         
-        //populateCombobox();
+        resetUpdateSection();
+        populateCombobox();
         populateTable();
     }
 
-    
-    //MH 10/20 - Removed semester because of time limitations
-    //public void populateCombobox() {        
-    //    //Get semesters
-    //    cbSemesterSearch.addItem("Fall2020");
-    //    cbSemesterSearch.setSelectedIndex(0);       
-                
-    //}
+    //TO DO - Make this dynamic
+    public void populateCombobox() {        
+        //Get semesters
+        cbSchedule.addItem("Fall2020");
+        cbSchedule.setSelectedIndex(0);                   
+    }
     
     public void populateTable() {
         //GOAL: View and update assigned course details (title, description, schedule, capacity) 
@@ -82,7 +85,12 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         
         //Setup our table
         DefaultTableModel model = (DefaultTableModel)tblHeader.getModel();
-        model.setRowCount(0);               
+        model.setRowCount(0);  
+        
+        //Hide the syllabus column
+        TableColumnModel tcm = tblHeader.getColumnModel(); 
+        TableColumn column = tcm.getColumn(4);
+        column.setWidth(0); 
         
         //String semester = cbSemesterSearch.getSelectedItem().toString().trim();
         //CourseSchedule courseSchedule = department.getCourseCatalog().getCourseList();
@@ -97,21 +105,42 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); // <-- Direct Field Access
         for (FacultyAssignment fa : assignments) {
             CourseOffer co = fa.getCourseOffer();
-               
-                
+            
+
                 Course c = co.getSubjectCourse();
 
-                Object[] row = new Object[4]; 
+                Object[] row = new Object[6]; 
                 row[0] = co.getCourseNumber();                
                 row[1] = c.getName();
-                //row[2] = //Schedlue
+                row[2] = semester;
                 row[3] = String.valueOf(co.getSeatCount());
-                //row[4] = //Syllabus
+                row[4] = co.getSyllabus();
+                row[5] = co.getEnrollmentOpen();
 
                 model.addRow(row);                      
             } 
         }    
     
+    
+    public void resetUpdateSection() {
+        // --- Labels ---
+        lblCapacity.setVisible(false);
+        lblEnrollment.setVisible(false);
+        lblName.setVisible(false);
+        lblNumber.setVisible(false);
+        lblSchedule.setVisible(false);
+        lblSyllabus.setVisible(false);
+        
+        // --- Radio Buttons ---
+        rbClosed.setVisible(false);
+        rbOpen.setVisible(false);
+        
+        // --- Text Fields ---
+        tbCapacity.setVisible(false);
+        tbName.setVisible(false);
+        tbNumber.setVisible(false);
+        tbSyllabus.setVisible(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,15 +150,26 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgEnrollment = new javax.swing.ButtonGroup();
         lblTitle = new javax.swing.JLabel();
         OrderScroll1 = new javax.swing.JScrollPane();
         tblHeader = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
-        btnOpenEnrollment = new javax.swing.JButton();
-        btnCloseEnrollment = new javax.swing.JButton();
-        btnUploadSyllabus = new javax.swing.JButton();
-        btnDownloadSyllabus = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        lblNumber = new javax.swing.JLabel();
+        tbNumber = new javax.swing.JTextField();
+        lblName = new javax.swing.JLabel();
+        tbName = new javax.swing.JTextField();
+        lblSchedule = new javax.swing.JLabel();
+        lblCapacity = new javax.swing.JLabel();
+        tbCapacity = new javax.swing.JTextField();
+        lblSyllabus = new javax.swing.JLabel();
+        tbSyllabus = new javax.swing.JTextField();
+        lblEnrollment = new javax.swing.JLabel();
+        rbOpen = new javax.swing.JRadioButton();
+        rbClosed = new javax.swing.JRadioButton();
         btnSave = new javax.swing.JButton();
+        cbSchedule = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -141,13 +181,13 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
         tblHeader.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Number (Title?)", "Name (Desc?)", "Schedule", "Capacity", "Syllabus?"
+                "Number/Title", "Name/Desc.", "Schedule", "Capacity", "Syllabus", "Enrollment"
             }
         ));
         OrderScroll1.setViewportView(tblHeader);
@@ -164,41 +204,66 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         add(btnBack);
         btnBack.setBounds(20, 260, 74, 23);
 
-        btnOpenEnrollment.setText("Open Enrollment");
-        btnOpenEnrollment.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpenEnrollmentActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
-        add(btnOpenEnrollment);
-        btnOpenEnrollment.setBounds(180, 260, 120, 23);
+        add(btnUpdate);
+        btnUpdate.setBounds(460, 260, 120, 23);
 
-        btnCloseEnrollment.setText("Close Enrollment");
-        btnCloseEnrollment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCloseEnrollmentActionPerformed(evt);
-            }
-        });
-        add(btnCloseEnrollment);
-        btnCloseEnrollment.setBounds(320, 260, 120, 23);
+        lblNumber.setText("Number/Title");
+        add(lblNumber);
+        lblNumber.setBounds(30, 300, 80, 16);
+        add(tbNumber);
+        tbNumber.setBounds(120, 300, 70, 22);
 
-        btnUploadSyllabus.setText("Upload Syllabus");
-        btnUploadSyllabus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUploadSyllabusActionPerformed(evt);
-            }
-        });
-        add(btnUploadSyllabus);
-        btnUploadSyllabus.setBounds(180, 300, 120, 23);
+        lblName.setText("Name/Desc.");
+        add(lblName);
+        lblName.setBounds(30, 340, 80, 16);
+        add(tbName);
+        tbName.setBounds(120, 340, 70, 22);
 
-        btnDownloadSyllabus.setText("Download Syllabus");
-        btnDownloadSyllabus.addActionListener(new java.awt.event.ActionListener() {
+        lblSchedule.setText("Schedule");
+        add(lblSchedule);
+        lblSchedule.setBounds(30, 380, 80, 16);
+
+        lblCapacity.setText("Capacity");
+        add(lblCapacity);
+        lblCapacity.setBounds(30, 420, 80, 16);
+        add(tbCapacity);
+        tbCapacity.setBounds(120, 420, 70, 22);
+
+        lblSyllabus.setText("Syllabus");
+        add(lblSyllabus);
+        lblSyllabus.setBounds(210, 300, 60, 16);
+        add(tbSyllabus);
+        tbSyllabus.setBounds(280, 300, 300, 110);
+
+        lblEnrollment.setText("Enrollment");
+        add(lblEnrollment);
+        lblEnrollment.setBounds(210, 430, 60, 16);
+
+        bgEnrollment.add(rbOpen);
+        rbOpen.setText("Open");
+        rbOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDownloadSyllabusActionPerformed(evt);
+                rbOpenActionPerformed(evt);
             }
         });
-        add(btnDownloadSyllabus);
-        btnDownloadSyllabus.setBounds(320, 300, 120, 23);
+        add(rbOpen);
+        rbOpen.setBounds(280, 430, 70, 21);
+
+        bgEnrollment.add(rbClosed);
+        rbClosed.setText("Closed");
+        rbClosed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbClosedActionPerformed(evt);
+            }
+        });
+        add(rbClosed);
+        rbClosed.setBounds(350, 430, 70, 21);
 
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -208,6 +273,14 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         });
         add(btnSave);
         btnSave.setBounds(460, 440, 120, 23);
+
+        cbSchedule.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbScheduleActionPerformed(evt);
+            }
+        });
+        add(cbSchedule);
+        cbSchedule.setBounds(120, 380, 72, 22);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -220,36 +293,86 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnOpenEnrollmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenEnrollmentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnOpenEnrollmentActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:        
+        int selectedRow = tblHeader.getSelectedRow();
+        
+        if (selectedRow >=0) {
+            //AI generated to save me time
+            // --- Labels ---
+            lblCapacity.setVisible(true);
+            lblEnrollment.setVisible(true);
+            lblName.setVisible(true);
+            lblNumber.setVisible(true);
+            lblSchedule.setVisible(true);
+            lblSyllabus.setVisible(true);
 
-    private void btnCloseEnrollmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseEnrollmentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCloseEnrollmentActionPerformed
+            // --- Radio Buttons ---
+            rbClosed.setVisible(true);
+            rbOpen.setVisible(true);
 
-    private void btnDownloadSyllabusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadSyllabusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDownloadSyllabusActionPerformed
-
-    private void btnUploadSyllabusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadSyllabusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUploadSyllabusActionPerformed
+            // --- Text Fields ---
+            tbCapacity.setVisible(true);
+            tbName.setVisible(true);
+            tbNumber.setVisible(true);
+            tbSyllabus.setVisible(true);
+            
+            //Get values from the slected row
+            String courseNumber = tblHeader.getValueAt(selectedRow, 0).toString();
+            String courseName = tblHeader.getValueAt(selectedRow, 1).toString();
+            String capacity = tblHeader.getValueAt(selectedRow, 3).toString();
+            String syllabus = tblHeader.getValueAt(selectedRow, 4).toString();
+            String enrollmentStatus = tblHeader.getValueAt(selectedRow, 5).toString();
+        
+            //Set Fields
+            tbNumber.setText(courseNumber);
+            tbName.setText(courseName);
+            tbCapacity.setText(capacity);
+            tbSyllabus.setText(syllabus);
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a course offer to update!", "Warning", JOptionPane.WARNING_MESSAGE);           
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void rbClosedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbClosedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbClosedActionPerformed
+
+    private void rbOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOpenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbOpenActionPerformed
+
+    private void cbScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbScheduleActionPerformed
+        // TODO add your handling code here:
+        //populateTable();
+    }//GEN-LAST:event_cbScheduleActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane OrderScroll1;
+    private javax.swing.ButtonGroup bgEnrollment;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnCloseEnrollment;
-    private javax.swing.JButton btnDownloadSyllabus;
-    private javax.swing.JButton btnOpenEnrollment;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnUploadSyllabus;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cbSchedule;
+    private javax.swing.JLabel lblCapacity;
+    private javax.swing.JLabel lblEnrollment;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblNumber;
+    private javax.swing.JLabel lblSchedule;
+    private javax.swing.JLabel lblSyllabus;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JRadioButton rbClosed;
+    private javax.swing.JRadioButton rbOpen;
+    private javax.swing.JTextField tbCapacity;
+    private javax.swing.JTextField tbName;
+    private javax.swing.JTextField tbNumber;
+    private javax.swing.JTextField tbSyllabus;
     private javax.swing.JTable tblHeader;
     // End of variables declaration//GEN-END:variables
 
