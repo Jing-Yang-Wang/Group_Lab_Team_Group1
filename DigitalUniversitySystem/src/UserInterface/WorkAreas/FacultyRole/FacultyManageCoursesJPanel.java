@@ -48,6 +48,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     FacultyDirectory facultyDirectory;
     FacultyProfile facultyProfile;    
     String semester = "Fall2020"; //TO DO - Add code to get this
+    String selectedCourseNumber;
 
     public FacultyManageCoursesJPanel(Business bz, FacultyProfile f, JPanel jp) {
         initComponents();   
@@ -57,7 +58,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         
         //Get the faculty department
         Department targetDepartment = null;
-        for (Department dept : business.getAllDepartments()) {
+        for (Department dept : business.getCollege().getDepartments()) {
             Department result = dept.getDepartmentIfContainsFaculty(this.facultyProfile);
             if (result != null) {
                 targetDepartment = result;
@@ -322,13 +323,16 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             String courseName = tblHeader.getValueAt(selectedRow, 1).toString();
             String capacity = tblHeader.getValueAt(selectedRow, 3).toString();
             String syllabus = tblHeader.getValueAt(selectedRow, 4).toString();
-            String enrollmentStatus = tblHeader.getValueAt(selectedRow, 5).toString();
+            String enrollmentOpen = tblHeader.getValueAt(selectedRow, 5).toString();
         
             //Set Fields
             tbNumber.setText(courseNumber);
             tbName.setText(courseName);
             tbCapacity.setText(capacity);
             tbSyllabus.setText(syllabus);
+            
+            //Save selected Course Number for update code
+            selectedCourseNumber = courseNumber;
             
         } else {
             JOptionPane.showMessageDialog(null, "Please select a course offer to update!", "Warning", JOptionPane.WARNING_MESSAGE);           
@@ -337,6 +341,40 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+        if (
+            tbNumber.getText().isBlank() ||
+            tbName.getText().isBlank() ||
+            tbCapacity.getText().isBlank() 
+        ) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Data Required", JOptionPane.ERROR_MESSAGE);
+            return; 
+        }   
+        
+        int capacity;
+        Boolean enrollmentOpen;
+           
+        String number = tbNumber.getText();        
+        String name = tbName.getText();    
+        String syllabus = tbSyllabus.getText();                
+        if (rbOpen.isSelected()) {
+            enrollmentOpen = true;
+        } else {
+            enrollmentOpen = false;
+        };
+        
+        //Check datatypes
+        try {
+            capacity = Integer.parseInt(tbCapacity.getText().trim());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please check the Capacity.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Course c = department.getCourseCatalog().getCourseByNumber(selectedCourseNumber);
+        c.setNumber(number);
+        c.setName(name);
+        
+        
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void rbClosedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbClosedActionPerformed

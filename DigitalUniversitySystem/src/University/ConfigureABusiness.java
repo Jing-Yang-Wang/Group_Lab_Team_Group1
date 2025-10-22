@@ -48,7 +48,7 @@ public class ConfigureABusiness {
         int total = department.calculateRevenuesBySemester("Fall2020");
         
         //MH 10/20 - Added because a university is made up of departments
-        business.addDepartment(department); 
+        business.getCollege().addDepartment(department); 
         
 // Create Persons
         //MH 10/20 - Fixed issue with the persondirectory

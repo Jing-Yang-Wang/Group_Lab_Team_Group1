@@ -14,8 +14,28 @@ import java.util.ArrayList;
  */
 public class College {
     ArrayList<Department> departments;
+    String name;
     
     public College(String name){
         departments = new ArrayList();
+        this.name = name;
     }
+
+    public ArrayList<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(ArrayList<Department> departments) {
+        this.departments = departments;
+    }
+    
+    // Xieming 10/21  We can put all directories here to store can easily invoke
+    //MH - I moved this here because departments are in college.  NOTE: This is a dup of above setDepartments!
+    public void setDepartmentList(ArrayList<Department> departmentList) {
+        this.departments = departmentList;
+    }
+    
+    public void addDepartment(Department department) {
+        this.departments.add(department);
+    }    
 }
