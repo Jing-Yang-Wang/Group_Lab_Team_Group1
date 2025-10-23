@@ -8,6 +8,7 @@ package UserInterface.WorkAreas.FacultyRole;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.*;
 import University.Business;
 import University.CourseCatalog.Course;
+import University.CourseSchedule.Assignment;
 import University.CourseSchedule.CourseLoad;
 import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
@@ -49,6 +50,8 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
     FacultyProfile facultyProfile;
     SeatAssignment seatAssignment;
     int selectedRow;
+    int selectedSeatNumber;
+    ArrayList<Assignment> currentAssignments;
 
     public FacultyManageStudentsJPanel(Business bz, FacultyProfile f, JPanel jp) {
         initComponents();
@@ -109,7 +112,7 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         ArrayList<SeatAssignment> allSeatAssignments = co.getSeatAssignments();
         if (allSeatAssignments == null) {
              return;
-        }    
+        }           
         
         //Sort for ranking
         //AI helped with this, I did not know sort code
@@ -121,14 +124,12 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         });  
         
         for (SeatAssignment sa : allSeatAssignments) {        
-            Object[] row = new Object[3];
-            
-            //Transcript.getStudent()
-            //sa.getCourseLoad()
-            
+            Object[] row = new Object[4];
+                        
             row[0] = "";  //Student
             row[1] = rank; //Rank
-            row[2] =  String.valueOf(sa.GetCourseStudentScore());  //GPA
+            row[2] = String.valueOf(sa.GetCourseStudentScore());  //GPA
+            row[3] = sa.getSeat().getNumber();
 
             model.addRow(row);    
             rank = rank +1;
@@ -145,28 +146,83 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel)tblDetail.getModel();
         model.setRowCount(0);
         
-        /*
-        //Get an arrey of SeatAssignments    
+        int assignmentCount = 0;
+        float totalGrade = 0;
+   
+        //Get an arrey of Assignments    
         String semester = cbSchedule.getSelectedItem().toString().trim();
         String number = cbCourse.getSelectedItem().toString().trim();
         CourseOffer co = department.getCourseSchedule(semester).getCourseOfferByNumber(number);
-       
+        SeatAssignment sa = co.getSeatAssignmentBySeatNumber(selectedSeatNumber); 
         
         //From seat assignments get students
-        ArrayList<SeatAssignment> allSeatAssignments = co.getSeatAssignments();
-        if (allSeatAssignments == null) {
+        ArrayList<Assignment> allAssignments = sa.getAssignmentlist();
+        if (allAssignments == null) {
              return;
-        }    
-
-        for (SeatAssignment sa : allSeatAssignments) {        
+        }
+        //Save this for later
+        this.currentAssignments = allAssignments;
+        
+        
+        for (Assignment a : allAssignments) {        
             Object[] row = new Object[3];
             
-            row[0] = "Assignment goes here";  //Assignment
-            row[1] = "Score"; //Score
+            row[0] = a.getName();  //Assignment
+            row[1] = a.getGrade(); //Score
 
-            model.addRow(row);            
+            model.addRow(row);   
+            
+            assignmentCount = assignmentCount + 1;
+            totalGrade = totalGrade + a.getGrade(); 
         } 
-        */
+        
+        float studentGrade = totalGrade / assignmentCount;
+        //AI - Helped with the format
+        String formattedGrade = String.format("%.2f", studentGrade);
+        tbStudentGPA.setText(formattedGrade);
+    }
+    
+    private void saveDetail() {
+        DefaultTableModel model = (DefaultTableModel) tblDetail.getModel();
+        
+        int assignmentCount = 0;
+        float totalGrade = 0;
+        
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Assignment a = currentAssignments.get(i);
+            
+            //Set name
+            String name = tblDetail.getValueAt(i, 0).toString().trim();
+            a.setName(name);         
+            
+            //Set grade
+            Object gradeValue = tblDetail.getValueAt(i, 1);           
+            //AI - Helped with the float conversion
+            float grade;                
+                if (gradeValue instanceof String) {
+                    grade = Float.parseFloat((String) gradeValue);
+                } else if (gradeValue instanceof Number) {
+                    grade = ((Number) gradeValue).floatValue();
+                } else {
+                    grade = Float.parseFloat(String.valueOf(gradeValue));
+                }                
+            a.setGrade(grade);
+            
+            assignmentCount = assignmentCount + 1;
+            totalGrade = totalGrade + grade; 
+        }
+        
+        float studentGrade = totalGrade / assignmentCount;
+        studentGrade = Math.round(studentGrade * 100.0f) / 100.0f;
+        String formattedGrade = String.format("%.2f", studentGrade);
+        tbStudentGPA.setText(formattedGrade);    
+        
+        //Update the students class GPA
+        String semester = cbSchedule.getSelectedItem().toString().trim();
+        String number = cbCourse.getSelectedItem().toString().trim();
+        CourseOffer co = department.getCourseSchedule(semester).getCourseOfferByNumber(number);
+        SeatAssignment sa = co.getSeatAssignmentBySeatNumber(selectedSeatNumber); 
+        sa.setGrade(studentGrade); //NEED TO FIX
     }
   
     public void resetUpdateSection() {
@@ -199,6 +255,8 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         spDetail = new javax.swing.JScrollPane();
         tblDetail = new javax.swing.JTable();
         btnSave = new javax.swing.JButton();
+        tbStudentGPA = new javax.swing.JTextField();
+        lblStudentGPA = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -243,15 +301,23 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
 
         tblHeader.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Student", "Rank", "GPA"
+                "Student", "Rank", "GPA", "Seat Number"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         spHeader.setViewportView(tblHeader);
 
         add(spHeader);
@@ -316,7 +382,16 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
             }
         });
         add(btnSave);
-        btnSave.setBounds(490, 440, 120, 23);
+        btnSave.setBounds(20, 440, 120, 23);
+
+        tbStudentGPA.setEditable(false);
+        tbStudentGPA.setOpaque(true);
+        add(tbStudentGPA);
+        tbStudentGPA.setBounds(540, 440, 64, 30);
+
+        lblStudentGPA.setText("Student GPA");
+        add(lblStudentGPA);
+        lblStudentGPA.setBounds(460, 440, 80, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
@@ -346,6 +421,7 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+        saveDetail();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnTranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTranscriptActionPerformed
@@ -365,10 +441,17 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(null, "Please select a student to view!", "Warning", JOptionPane.WARNING_MESSAGE);           
             return;
-        }
-        
+        }       
+       
         spDetail.setVisible(true);
         btnSave.setVisible(true);
+        
+        //Save selected seat number          
+        //AI - Needed help building the conversion from the table value
+        int seatNumber = (int) Double.parseDouble(tblHeader.getValueAt(selectedRow, 2).toString().trim());        
+        selectedSeatNumber = seatNumber;
+        
+        populateTableDetail();
     }//GEN-LAST:event_btnAssignmentsActionPerformed
 
     private void cbCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCourseActionPerformed
@@ -387,10 +470,12 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblClassGPA;
     private javax.swing.JLabel lblCourse;
     private javax.swing.JLabel lblSchedule;
+    private javax.swing.JLabel lblStudentGPA;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JScrollPane spDetail;
     private javax.swing.JScrollPane spHeader;
     private javax.swing.JTextField tbClassGPA;
+    private javax.swing.JTextField tbStudentGPA;
     private javax.swing.JTable tblDetail;
     private javax.swing.JTable tblHeader;
     // End of variables declaration//GEN-END:variables

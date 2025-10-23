@@ -134,4 +134,20 @@ public class CourseOffer {
         }
         return assignments;
     }
+    
+    //MH 10/23 - Added to get seat assignments
+    public SeatAssignment getSeatAssignmentBySeatNumber(int seatNumber) {
+        Seat targetSeat = null;
+        for (Seat s : seatlist) {
+            if (s.getNumber() == seatNumber) { 
+                targetSeat = s;
+                break;
+            }
+        }        
+        //If found, return seat assesment
+        if (targetSeat != null && targetSeat.isOccupied()) {
+            return targetSeat.getSeatAssignment();
+        }
+        return null;
+    }
 }
