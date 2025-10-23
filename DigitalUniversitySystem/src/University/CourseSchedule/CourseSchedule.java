@@ -67,6 +67,11 @@ public class CourseSchedule {
     public String getSemester() {
         return semester;
     }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+    
     
     //MH 10/20 - Added so we can get data by faculty profile
     public ArrayList<CourseOffer> filterScheduleByFaculty(FacultyProfile facultyProfile) {

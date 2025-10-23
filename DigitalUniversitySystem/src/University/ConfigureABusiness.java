@@ -25,6 +25,7 @@ import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
+import University.Persona.Student.Transcript;
 
 /**
  *
@@ -72,10 +73,10 @@ public class ConfigureABusiness {
         FacultyProfile fp1 = fd.newFacultyProfile(person002);
         FacultyAssignment fa1 = fp1.AssignAsTeacher(courseoffer);
 
+//Add students and assign to classes        
         StudentDirectory sd = department.getStudentDirectory();
-        StudentProfile sp1 = sd.newStudentProfile(person003);
-        
-        CourseLoad courseload = sp1.newCourseLoad("Fall2020"); //        
+        StudentProfile sp1 = sd.newStudentProfile(person003);        
+        CourseLoad courseload = sp1.newCourseLoad("Fall2020");       
         courseload.newSeatAssignment(courseoffer); //register student in class                
    
 // Create User accounts that link to specific profiles
