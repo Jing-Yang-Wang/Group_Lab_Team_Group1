@@ -5,28 +5,21 @@
  */
 package UserInterface.WorkAreas.FacultyRole;
 
-import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.*;
 import University.Business;
 import University.CourseCatalog.Course;
 import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
-import University.CourseSchedule.SeatAssignment;
 import University.Department.Department;
 import University.Persona.Faculty.FacultyAssignment;
-import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
-import University.Persona.Student.StudentDirectory;
-import University.Persona.Student.StudentProfile;
-import java.awt.CardLayout;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.swing.JOptionPane;
 
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
-//Git test
 
 /**
  *
@@ -46,11 +39,9 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     JPanel CardSequencePanel;
     Business business;
     Department department;
-    FacultyDirectory facultyDirectory;
     FacultyProfile facultyProfile;    
-    String semester = "Fall2020"; //TO DO - Add code to get this
     String selectedCourseNumber;
-    //int selectedCourseOfferId;
+    int selectedRow;
 
     public FacultyManageCoursesJPanel(Business bz, FacultyProfile f, JPanel jp) {
         initComponents();   
@@ -58,7 +49,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         this.facultyProfile = f;       
         this.business = bz;              
         
-        //Get the faculty department
+        //Get the faculty profile's department
         Department targetDepartment = null;
         for (Department dept : business.getCollege().getDepartments()) {
             Department result = dept.getDepartmentIfContainsFaculty(this.facultyProfile);
@@ -73,12 +64,13 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         populateCombobox();
         populateTable();
     }
-
-    //TO DO - Make this dynamic
-    public void populateCombobox() {        
+   
+    public void populateCombobox() { 
         //Get semesters
-        cbSchedule.addItem("Fall2020");
-        cbSchedule.setSelectedIndex(0);                   
+        Set<String> semesters = department.getAllSemesters();
+        for (String semester : semesters) {
+            cbSchedule.addItem(semester);
+        }
     }
     
     public void populateTable() {        
@@ -86,33 +78,24 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel)tblHeader.getModel();
         model.setRowCount(0);  
         
-        //Hide the syllabus & course offer id column
+        //Hide the syllabus
         TableColumnModel tcm = tblHeader.getColumnModel(); 
-        TableColumn column3 = tcm.getColumn(3);
-        column3.setWidth(0); 
-        TableColumn column7 = tcm.getColumn(7);
-        column7.setWidth(0);
-        
-        //String semester = cbSemesterSearch.getSelectedItem().toString().trim();
-        //CourseSchedule courseSchedule = department.getCourseCatalog().getCourseList();
-        
-        //if (courseSchedule == null) {
-        //    return;
-        //}
-        //for (CourseOffer co : courseSchedule.getSchedule()) { 
-        
-        //filterScheduleByFaculty
-        
+        TableColumn column = tcm.getColumn(4);
+        column.setMinWidth(0);
+        column.setMaxWidth(0);
+        column.setPreferredWidth(0);
+        column.setWidth(0); 
+               
         ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); // <-- Direct Field Access
-        for (FacultyAssignment fa : assignments) {
-            CourseOffer co = fa.getCourseOffer();            
-
+            for (FacultyAssignment fa : assignments) {
+                CourseOffer co = fa.getCourseOffer();         
                 Course c = co.getSubjectCourse();
+                CourseSchedule cs = department.findCourseScheduleByCourseOffer(co);
 
-                Object[] row = new Object[7]; 
+                Object[] row = new Object[6]; 
                 row[0] = co.getCourseNumber();                
                 row[1] = c.getName();
-                row[2] = semester;
+                row[2] = cs.getSemester();//semester;
                 row[3] = String.valueOf(co.getSeatCount());
                 row[4] = co.getSyllabus();
                 row[5] = co.getEnrollmentOpen();
@@ -120,7 +103,6 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                 model.addRow(row);                      
             } 
         }    
-    
     
     public void resetUpdateSection() {
         // --- Labels ---
@@ -131,15 +113,18 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         lblSchedule.setVisible(false);
         lblSyllabus.setVisible(false);
         
-        // --- Radio Buttons ---
+        // --- Radio Buttons & Buttons ---
         rbClosed.setVisible(false);
         rbOpen.setVisible(false);
+        btnSave.setVisible(false);
         
-        // --- Text Fields ---
+        // --- Text Fields & Combo Boxes ---
         tbCapacity.setVisible(false);
         tbName.setVisible(false);
         tbNumber.setVisible(false);
-        tbSyllabus.setVisible(false);
+        taSyllabus.setVisible(false);
+        spSyllabus.setVisible(false);
+        cbSchedule.setVisible(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -164,7 +149,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         lblCapacity = new javax.swing.JLabel();
         tbCapacity = new javax.swing.JTextField();
         lblSyllabus = new javax.swing.JLabel();
-        tbSyllabus = new javax.swing.JTextField();
+        spSyllabus = new javax.swing.JScrollPane();
+        taSyllabus = new javax.swing.JTextArea();
         lblEnrollment = new javax.swing.JLabel();
         rbOpen = new javax.swing.JRadioButton();
         rbClosed = new javax.swing.JRadioButton();
@@ -193,7 +179,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         OrderScroll1.setViewportView(tblHeader);
 
         add(OrderScroll1);
-        OrderScroll1.setBounds(20, 90, 560, 160);
+        OrderScroll1.setBounds(20, 90, 590, 160);
 
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -211,39 +197,44 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             }
         });
         add(btnUpdate);
-        btnUpdate.setBounds(460, 260, 120, 23);
+        btnUpdate.setBounds(490, 260, 120, 23);
 
         lblNumber.setText("Number/Title");
         add(lblNumber);
-        lblNumber.setBounds(30, 300, 80, 16);
+        lblNumber.setBounds(30, 300, 80, 30);
         add(tbNumber);
-        tbNumber.setBounds(120, 300, 70, 22);
+        tbNumber.setBounds(120, 300, 110, 30);
 
         lblName.setText("Name/Desc.");
         add(lblName);
-        lblName.setBounds(30, 340, 80, 16);
+        lblName.setBounds(30, 340, 80, 30);
         add(tbName);
-        tbName.setBounds(120, 340, 70, 22);
+        tbName.setBounds(120, 340, 110, 30);
 
         lblSchedule.setText("Schedule");
         add(lblSchedule);
-        lblSchedule.setBounds(30, 380, 80, 16);
+        lblSchedule.setBounds(30, 380, 80, 30);
 
         lblCapacity.setText("Capacity");
         add(lblCapacity);
-        lblCapacity.setBounds(30, 420, 80, 16);
+        lblCapacity.setBounds(30, 420, 80, 30);
         add(tbCapacity);
-        tbCapacity.setBounds(120, 420, 70, 22);
+        tbCapacity.setBounds(120, 420, 50, 30);
 
         lblSyllabus.setText("Syllabus");
         add(lblSyllabus);
-        lblSyllabus.setBounds(210, 300, 60, 16);
-        add(tbSyllabus);
-        tbSyllabus.setBounds(280, 300, 300, 110);
+        lblSyllabus.setBounds(250, 300, 50, 16);
+
+        taSyllabus.setColumns(20);
+        taSyllabus.setRows(5);
+        spSyllabus.setViewportView(taSyllabus);
+
+        add(spSyllabus);
+        spSyllabus.setBounds(304, 296, 310, 110);
 
         lblEnrollment.setText("Enrollment");
         add(lblEnrollment);
-        lblEnrollment.setBounds(210, 430, 60, 16);
+        lblEnrollment.setBounds(240, 430, 60, 16);
 
         bgEnrollment.add(rbOpen);
         rbOpen.setText("Open");
@@ -253,7 +244,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             }
         });
         add(rbOpen);
-        rbOpen.setBounds(280, 430, 70, 21);
+        rbOpen.setBounds(310, 430, 70, 21);
 
         bgEnrollment.add(rbClosed);
         rbClosed.setText("Closed");
@@ -263,7 +254,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             }
         });
         add(rbClosed);
-        rbClosed.setBounds(350, 430, 70, 21);
+        rbClosed.setBounds(380, 430, 70, 21);
 
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -272,7 +263,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             }
         });
         add(btnSave);
-        btnSave.setBounds(460, 440, 120, 23);
+        btnSave.setBounds(490, 440, 120, 23);
 
         cbSchedule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,7 +271,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             }
         });
         add(cbSchedule);
-        cbSchedule.setBounds(120, 380, 72, 22);
+        cbSchedule.setBounds(120, 380, 110, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -295,49 +286,58 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:        
-        int selectedRow = tblHeader.getSelectedRow();
+        selectedRow = tblHeader.getSelectedRow();
         
-        if (selectedRow >=0) {
-            //AI generated to save me time
-            // --- Labels ---
-            lblCapacity.setVisible(true);
-            lblEnrollment.setVisible(true);
-            lblName.setVisible(true);
-            lblNumber.setVisible(true);
-            lblSchedule.setVisible(true);
-            lblSyllabus.setVisible(true);
-
-            // --- Radio Buttons ---
-            rbClosed.setVisible(true);
-            rbOpen.setVisible(true);
-
-            // --- Text Fields ---
-            tbCapacity.setVisible(true);
-            tbName.setVisible(true);
-            tbNumber.setVisible(true);
-            tbSyllabus.setVisible(true);
-            
-            //Get values from the slected row
-            String courseNumber = tblHeader.getValueAt(selectedRow, 0).toString();
-            String courseName = tblHeader.getValueAt(selectedRow, 1).toString();
-            String capacity = tblHeader.getValueAt(selectedRow, 3).toString();
-            String syllabus = tblHeader.getValueAt(selectedRow, 4).toString();
-            String enrollmentOpen = tblHeader.getValueAt(selectedRow, 5).toString();
-            String courseOfferID = tblHeader.getValueAt(selectedRow, 6).toString();
-        
-            //Set Fields
-            tbNumber.setText(courseNumber);
-            tbName.setText(courseName);
-            tbCapacity.setText(capacity);
-            tbSyllabus.setText(syllabus);
-            
-            //Save selected Course Number for update code
-            selectedCourseNumber = courseNumber;
-            //selectedCourseOfferId = Integer.parseInt(courseOfferID);
-            
-        } else {
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(null, "Please select a course offer to update!", "Warning", JOptionPane.WARNING_MESSAGE);           
+            return;
         }
+        
+        //AI generated to save me time
+        // --- Labels ---
+        lblCapacity.setVisible(true);
+        lblEnrollment.setVisible(true);
+        lblName.setVisible(true);
+        lblNumber.setVisible(true);
+        lblSchedule.setVisible(true);
+        lblSyllabus.setVisible(true);
+
+        // --- Radio Buttons & Buttons ---
+        rbClosed.setVisible(true);
+        rbOpen.setVisible(true);
+        btnSave.setVisible(true);
+
+        // --- Text Fields & Combo Boxes---
+        tbCapacity.setVisible(true);
+        tbName.setVisible(true);
+        tbNumber.setVisible(true);
+        taSyllabus.setVisible(true);
+        spSyllabus.setVisible(true);
+        cbSchedule.setVisible(true);
+
+        //Get values from the slected row
+        String courseNumber = tblHeader.getValueAt(selectedRow, 0).toString().trim();
+        String courseName = tblHeader.getValueAt(selectedRow, 1).toString().trim();
+        //Schedule
+        String capacity = tblHeader.getValueAt(selectedRow, 3).toString().trim();
+        String syllabus = tblHeader.getValueAt(selectedRow, 4).toString().trim();
+        String enrollmentOpen = tblHeader.getValueAt(selectedRow,5).toString().trim();
+        //String courseOfferID = tblHeader.getValueAt(selectedRow, 6).toString();
+
+        //Set Fields
+        tbNumber.setText(courseNumber);
+        tbName.setText(courseName);
+        tbCapacity.setText(capacity);
+        taSyllabus.setText(syllabus);
+        if (enrollmentOpen == "true") {
+            rbOpen.setSelected(true);
+        } else {
+            rbClosed.setSelected(true);
+        }
+
+        //Save selected Course Number for update code
+        selectedCourseNumber = courseNumber;
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -355,13 +355,14 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         Boolean enrollmentOpen;
            
         String number = tbNumber.getText();        
-        String name = tbName.getText();    
-        String syllabus = tbSyllabus.getText();                
+        String name = tbName.getText();   
+        String semester = cbSchedule.getSelectedItem().toString().trim();
+        String syllabus = taSyllabus.getText();                
         if (rbOpen.isSelected()) {
             enrollmentOpen = true;
         } else {
             enrollmentOpen = false;
-        };
+        }
         
         //Check datatypes
         try {
@@ -383,13 +384,21 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             seats = capacity - co.getSeatCount();
         }
         
+        //Get the course schedule
+        CourseSchedule cs = department.findCourseScheduleByCourseOffer(co);
+        
         //Write data
         c.setNumber(number);
         c.setName(name);      
         co.setEnrollmentOpen(enrollmentOpen);
         co.setSyllabus(syllabus);   
-        co.generatSeats(seats);        
+        co.generatSeats(seats);  
+        cs.setSemester(semester);
+        
+        //Reset everything
         JOptionPane.showMessageDialog(this, "Data has been updated!", "Data Saved", JOptionPane.INFORMATION_MESSAGE);
+        resetUpdateSection();
+        populateTable();
         
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -423,10 +432,11 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JRadioButton rbClosed;
     private javax.swing.JRadioButton rbOpen;
+    private javax.swing.JScrollPane spSyllabus;
+    private javax.swing.JTextArea taSyllabus;
     private javax.swing.JTextField tbCapacity;
     private javax.swing.JTextField tbName;
     private javax.swing.JTextField tbNumber;
-    private javax.swing.JTextField tbSyllabus;
     private javax.swing.JTable tblHeader;
     // End of variables declaration//GEN-END:variables
 

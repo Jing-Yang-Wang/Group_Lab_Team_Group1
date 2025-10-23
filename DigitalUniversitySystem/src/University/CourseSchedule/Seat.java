@@ -38,4 +38,10 @@ public class Seat {
     public int getCourseCredits(){
         return courseoffer.getCreditHours();
     }
+    
+    //MH 10.22 - Added because it was missing
+    public SeatAssignment getSeatAssignment() {
+        return seatassignment;
+    }
+    
 }

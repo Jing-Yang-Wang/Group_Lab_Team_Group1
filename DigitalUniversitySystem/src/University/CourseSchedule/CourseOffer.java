@@ -22,13 +22,12 @@ public class CourseOffer {
     //MH 10/21 - Added place to hold syllabus & enrollment status.  Putting it here since it can be different for each offer.
     String syllabus;
     Boolean enrollmentOpen; //false = Closed, true = Open
-    //int id; //Added to make sure these are unique, removed this because it looks like there is only one offer per course
 
     public CourseOffer(Course c) {
         course = c;
         seatlist = new ArrayList();
+        this.syllabus = "";
         this.enrollmentOpen = false; // Default to open
-        //this.id = id;
     }
      
     public void AssignAsTeacher(FacultyProfile fp) {
@@ -120,17 +119,19 @@ public class CourseOffer {
         return seatlist.size();
     }
 
-    //MH 10/21 - Added so I can get unique Course Offer
-    /*
-    public int getId() {
-        return id;
+    //MH 10/21 - Added so I get seats for seat assignments
+    public ArrayList<Seat> getSeatlist() {
+        return seatlist;
     }
-    
-     public boolean isMatchById(int id) {
-        if (getId() == id) {
-            return true;
+
+    public ArrayList<SeatAssignment> getSeatAssignments() {
+        ArrayList<SeatAssignment> assignments = new ArrayList<>();
+        for (Seat seat : seatlist) {
+
+            if (seat.isOccupied() && seat.getSeatAssignment() != null) {
+                assignments.add(seat.getSeatAssignment());
+            }
         }
-        return false;
+        return assignments;
     }
-    */
 }

@@ -20,6 +20,7 @@ import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
 import University.Persona.UserAccountDirectory;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  *
@@ -36,7 +37,8 @@ public class Department {
     EmployeeDirectory employeedirectory;
     //UserAccountDirectory useraccountdirectory;
     //MH 10/18 - For getting all Course Scedules
-    CourseSchedule courseSchedule;
+    //MH - 10/22 Removed because it is using the Hashmap
+    //CourseSchedule courseSchedule;
     
     EmployerDirectory employerdirectory;
     Degree degree;
@@ -145,9 +147,10 @@ public class Department {
     //    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     //}
     
-    public CourseSchedule getCourseSchedule() {
-        return courseSchedule;
-    }
+    //MH - 10/22 Removed because it is using the Hashmap
+    //public CourseSchedule getCourseSchedule() {
+    //    return courseSchedule;
+    //}
     
     //MH 10/20 - Getting department from FacultyProfile
     public Department getDepartmentIfContainsFaculty(FacultyProfile facultyProfile) {
@@ -160,5 +163,25 @@ public class Department {
         } else {
             return null; 
         }
+    }
+    
+    //MH 10/22 - Added so we can have a semester list
+    //AI helped me build this.  Was not sure how to get the key
+    public Set<String> getAllSemesters() {
+        return mastercoursecatalog.keySet();
+    }
+   
+    //MH 10/22 - Added so course offer can be used to update the schedule
+    public CourseSchedule findCourseScheduleByCourseOffer(CourseOffer courseOffer) {
+        for (CourseSchedule cs : mastercoursecatalog.values()) {
+                        
+            for (CourseOffer co : cs.getSchedule()) {
+
+                if (co.equals(courseOffer)) {
+                    return cs; 
+                }
+            }
+        }
+        return null; 
     }
 }

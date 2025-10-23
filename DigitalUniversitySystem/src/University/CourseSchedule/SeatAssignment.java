@@ -52,7 +52,10 @@ public class SeatAssignment {
     public float GetCourseStudentScore(){
         return getCreditHours()*grade;
     }
-    
-    
+
+    //MH 10/22 - Was missing
+    public CourseLoad getCourseLoad() {
+        return courseload;
+    }  
     
 }

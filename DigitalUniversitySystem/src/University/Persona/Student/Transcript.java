@@ -92,4 +92,10 @@ public class Transcript {
 
     }
 
+    //MH 10/22 - Was missing
+    public StudentProfile getStudent() {
+        return student;
+    }
+
+    
 }
