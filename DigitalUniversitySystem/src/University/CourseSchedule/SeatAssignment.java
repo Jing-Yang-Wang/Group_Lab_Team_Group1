@@ -6,6 +6,7 @@
 package University.CourseSchedule;
 
 import University.CourseCatalog.Course;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,10 +17,14 @@ public class SeatAssignment {
     Seat seat;
     boolean like; //true means like and false means not like
     CourseLoad courseload;
+    //MH 10/23 - Added so we can track student assignments
+    ArrayList<Assignment> assignmentlist;
     
     public SeatAssignment(CourseLoad cl, Seat s){
         seat = s;
         courseload = cl;
+        //MH 10/23 - Added so we can track student assignments
+        assignmentlist = new ArrayList<>(); 
     }
      
     public boolean getLike(){
@@ -56,6 +61,21 @@ public class SeatAssignment {
     //MH 10/22 - Was missing
     public CourseLoad getCourseLoad() {
         return courseload;
-    }  
+    } 
+
+    public ArrayList<Assignment> getAssignmentlist() {
+        return assignmentlist;
+    }
     
+    
+    //MH 10/23 - Added so we can track student assignments
+    public Assignment newAssignment(String assignmentName) {
+        Assignment newAssignment = new Assignment(this, assignmentName);
+        assignmentlist.add(newAssignment);
+        return newAssignment;
+    }
+
+    public void setGrade(float grade) {
+        this.grade = grade;
+    }   
 }
