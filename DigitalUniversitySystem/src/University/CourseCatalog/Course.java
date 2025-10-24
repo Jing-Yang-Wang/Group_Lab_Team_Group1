@@ -47,5 +47,11 @@ public class Course {
     public int getPrice() {
         return price;
     }
+    
+    // XM 10/23
+    @Override
+    public String toString() {
+        return name;
+    }
   
 }

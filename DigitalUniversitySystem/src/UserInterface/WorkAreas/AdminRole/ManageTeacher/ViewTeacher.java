@@ -4,7 +4,9 @@
  */
 package UserInterface.WorkAreas.AdminRole.ManageTeacher;
 
+import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
+import University.Persona.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,10 +20,15 @@ public class ViewTeacher extends javax.swing.JPanel {
     /**
      * Creates new form ViewTeacher
      */
-     private JPanel mainMenu;
+    private JPanel mainMenu;    
     private FacultyProfile facultyProfile;
-    public ViewTeacher() {
+    private UserAccount useraccount;
+    public ViewTeacher(JPanel mainMenu, FacultyProfile facultyProfile, UserAccount useraccount) {
         initComponents();
+        this.mainMenu = mainMenu;
+       
+        this.facultyProfile = facultyProfile;
+        this.useraccount = useraccount;
     }
 
     /**
@@ -98,6 +105,11 @@ public class ViewTeacher extends javax.swing.JPanel {
         });
 
         Combodepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "On Leave", "Graduated", "Probation" }));
+        Combodepartment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CombodepartmentActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Course");
 
@@ -225,7 +237,12 @@ public class ViewTeacher extends javax.swing.JPanel {
   
     facultyProfile.setDepartment((String) Combodepartment.getSelectedItem());
     facultyProfile.setCourse((String) ComboCourse.getSelectedItem());
-
+    
+    
+    java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        useraccount.setLastUpdate(now);
+        
+        
     JOptionPane.showMessageDialog(this, "Faculty information updated successfully!",
         "Success", JOptionPane.INFORMATION_MESSAGE);
 
@@ -248,6 +265,10 @@ public class ViewTeacher extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldEmailActionPerformed
 
+    private void CombodepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CombodepartmentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CombodepartmentActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboCourse;
@@ -268,21 +289,6 @@ public class ViewTeacher extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 
-
-private void displayStudentInfo() {
-   if (facultyProfile != null) {
-    fieldUniversityID.setText(facultyProfile.getPerson().getUniversityID());
-    fieldName.setText(facultyProfile.getPerson().getName());
-    fieldEmail.setText(facultyProfile.getPerson().getEmail());
-    fieldTelephone.setText(facultyProfile.getTelephone());
-    
-    
-    Combodepartment.setSelectedItem(facultyProfile.getDepartment());
-    ComboCourse.setSelectedItem(facultyProfile.getCourse());
-}
-
-        refreshTextFields();
-    }
 
 
     
@@ -312,6 +318,11 @@ private void setViewMode() {
 
 
 
+    }
 
 
-}
+
+
+
+
+

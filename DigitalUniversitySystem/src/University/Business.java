@@ -21,6 +21,7 @@ import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Person;
 import University.Persona.PersonDirectory;
+import University.Persona.Registrar.RegistrarDirectory;
 import University.Persona.UserAccountDirectory;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
@@ -41,6 +42,8 @@ public class Business {
     EmployeeDirectory employeedirectory;
     StudentDirectory studentdirectory;
     FacultyDirectory facultyDirectory;
+
+    
     
     
     
@@ -57,6 +60,10 @@ public class Business {
         
         // Xieming 10/21 add the directories       
         this.persondirectory=new PersonDirectory();
+        this.useraccountdirectory = new UserAccountDirectory();
+        this.persondirectory = new PersonDirectory();
+        
+        this.departmentList = new ArrayList<>();
         
         
         
@@ -159,10 +166,34 @@ public class Business {
     public void setFacultyDirectory(FacultyDirectory facultyDirectory) {
         this.facultyDirectory = facultyDirectory;
     }
+    
+    // Get StudentDirectory from the first department
+    public StudentDirectory getStudentDirectory() {
+        if (departmentList != null && !departmentList.isEmpty()) {
+            return departmentList.get(0).getStudentDirectory();
+        }
+        return null;
+    }
+    
+    // Get FacultyDirectory from the first department  
+    public FacultyDirectory getFacultyDirectoryFromDepartment() {
+        if (departmentList != null && !departmentList.isEmpty()) {
+            return departmentList.get(0).getFacultyDirectory();
+        }
+        return null;
+    }
 
     // Xieming 10/21  We can put all directories here to store can easily invoke
     public void setDepartmentList(ArrayList<Department> departmentList) {
         this.departmentList = departmentList;
     }
+    public RegistrarDirectory getRegistrardirectory() {
+        return registrardirectory;
+    }
+
+    public void setRegistrardirectory(RegistrarDirectory registrardirectory) {
+        this.registrardirectory = registrardirectory;
+    }
+    RegistrarDirectory registrardirectory;
     
 }

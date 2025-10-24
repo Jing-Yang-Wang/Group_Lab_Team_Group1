@@ -11,6 +11,7 @@ package University.Persona;
  */
 
 import University.Workareas.Workarea;
+import java.time.LocalDateTime;
 
 
 /**
@@ -23,6 +24,9 @@ public class UserAccount {
     Profile profile;
     String username;
     String password;
+ 
+    private LocalDateTime lastActivity;
+    private LocalDateTime lastUpdate;
     
     Workarea landingworkarea;
     
@@ -59,5 +63,19 @@ public class UserAccount {
     public Profile getAssociatedPersonProfile(){
         return profile;
     }
-    
+      public LocalDateTime getLastActivity() {
+        return lastActivity;
+    }
+
+    public void setLastActivity(LocalDateTime lastActivity) {
+        this.lastActivity = lastActivity;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }

@@ -46,7 +46,7 @@ public class Person {
         this.email = email;
     }
 
-    // 判断是否匹配某个 ID
+    
     public boolean isMatch(String id) {
         return this.universityID.equals(id);
     }

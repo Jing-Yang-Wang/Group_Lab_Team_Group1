@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
     Business business;
-    //Department department;
+    Department department;
 
     /**
      * Creates new form PricingMainFrame
@@ -40,6 +40,11 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
     public ProfileWorkAreaMainFrame() {
         initComponents();                
         business = ConfigureABusiness.initialize();
+        
+        // Initialize department from business
+        if (business != null && business.getAllDepartments() != null && !business.getAllDepartments().isEmpty()) {
+            department = business.getAllDepartments().get(0); // Get the first department
+        }
 
     }
 
@@ -157,7 +162,9 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         AdminRoleWorkAreaJPanel adminworkarea;
         String r = useraccount.getRole();
         Profile profile = useraccount.getAssociatedPersonProfile();
-
+        
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        useraccount.setLastActivity(now);
 
         if (profile instanceof EmployeeProfile) {
 
