@@ -18,19 +18,21 @@ import java.util.ArrayList;
  */
 
 //MH 10/18 - Updated so it extend the profile.
+//MH 10/24 - Fixed issue with how person was stored
 public class StudentProfile extends Profile {
-    Person person;
+    //Person person;
     private String academicStatus;
     Transcript transcript;
     EmploymentHistroy employmenthistory;
     
+    //MH 10/24 - Fixed issue with how person was stored
     public Person getPerson() {
-        return person;
+        return super.getPerson();
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
-    }
+    //public void setPerson(Person person) {
+    //    this.person = person;
+    //}
 
     public String getAcademicStatus() {
         return academicStatus;
@@ -58,7 +60,7 @@ public class StudentProfile extends Profile {
     }
 
     public boolean isMatch(String id) {
-        return person.getUniversityID().equals(id);
+        return super.getPerson().getUniversityID().equals(id);
     }
 
     public Transcript getTranscript() {
@@ -75,7 +77,7 @@ public class StudentProfile extends Profile {
         return transcript.getCurrentCourseLoad();
     }
 
-    public CourseLoad newCourseLoad(String s) {
+    public CourseLoad newCourseLoad(String s, StudentProfile sp1) {
 
         return transcript.newCourseLoad(s);
     }

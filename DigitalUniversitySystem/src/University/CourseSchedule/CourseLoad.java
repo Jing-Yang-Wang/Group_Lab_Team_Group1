@@ -5,6 +5,7 @@
  */
 package University.CourseSchedule;
 
+import University.Persona.Student.StudentProfile;
 import java.util.ArrayList;
 
 /**
@@ -14,10 +15,13 @@ import java.util.ArrayList;
 public class CourseLoad {
     String semester;
     ArrayList<SeatAssignment> seatassignments;
+    //MH 10/24 - Added so I can relate everything below back to the student
+    StudentProfile studentProfile;
     
-    public CourseLoad(String s){
+    public CourseLoad(String s, StudentProfile sp){
         seatassignments = new ArrayList();
         semester = s;
+        this.studentProfile = sp;
     }
     
     public SeatAssignment newSeatAssignment(CourseOffer co){
@@ -38,13 +42,19 @@ public class CourseLoad {
     public float getSemesterScore(){ //total score for a full semeter
         float sum = 0;
         for (SeatAssignment sa: seatassignments){
-            sum = sum + sa.GetCourseStudentScore();
+            sum = sum + sa.getCourseStudentScore();
         }
         return sum;
     }
     
     public ArrayList<SeatAssignment> getSeatAssignments(){
         return seatassignments;
+    }     
+
+    //MH 10/24 - Added so I can relate everything below back to the student
+    public StudentProfile getStudentProfile() {
+        return studentProfile;
     }
-            
+     
+    
 }

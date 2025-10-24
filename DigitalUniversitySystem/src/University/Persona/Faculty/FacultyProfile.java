@@ -15,8 +15,9 @@ import java.util.ArrayList;
  * @author kal bugrara
  */
 //MH 10/18 - Updated so it extend the profile.
+//MH 10/24 - Fixed issue with how person was stored
 public class FacultyProfile extends Profile {
-    Person person;
+    //Person person;
     ArrayList <FacultyAssignment> facultyassignments; 
     String department;
     String course;
@@ -56,7 +57,7 @@ public class FacultyProfile extends Profile {
     public FacultyProfile(Person p) {
 
         super(p);
-        this.person = p;
+        //this.person = p;
         facultyassignments = new ArrayList();
     }
     public  double getProfAverageOverallRating(){
@@ -87,7 +88,7 @@ public class FacultyProfile extends Profile {
     }
 
     public boolean isMatch(String id) {
-        if (person.getUniversityID().equals(id)) {
+        if (super.getPerson().getUniversityID().equals(id)) {
             return true;
         }
         return false;
@@ -101,7 +102,7 @@ public class FacultyProfile extends Profile {
 
     //MH 10/20 - Added because they were missing.
     public Person getPerson() {
-        return person;
+        return super.getPerson();
     }
 
     public ArrayList<FacultyAssignment> getFacultyAssignments() {
