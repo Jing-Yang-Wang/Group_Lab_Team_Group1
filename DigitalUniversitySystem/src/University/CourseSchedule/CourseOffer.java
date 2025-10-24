@@ -9,6 +9,8 @@ import University.CourseCatalog.Course;
 import University.Persona.Faculty.FacultyAssignment;
 import University.Persona.Faculty.FacultyProfile;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -36,7 +38,10 @@ public class CourseOffer {
     }
 
     public FacultyProfile getFacultyProfile() {
-        return facultyassignment.getFacultyProfile();
+        if (this.facultyassignment != null) {
+            return this.facultyassignment.getFacultyProfile(); 
+        }
+        return null;
     }
 
     public String getCourseNumber() {
@@ -149,5 +154,89 @@ public class CourseOffer {
             return targetSeat.getSeatAssignment();
         }
         return null;
+    }
+    
+    //MH 10/24 - Added to get seat counts
+    public int getEnrollmentCount() {
+        int enrolled = 0;
+
+        for (Seat s : seatlist) {
+            if (s.isOccupied()) {
+                enrolled++;
+            }
+        }    
+        return enrolled;
+    }
+    
+    //MH 10/24 - Added to get avg grade
+    public float getAverageCourseGrade() {
+        ArrayList<SeatAssignment> assignments = getSeatAssignments();
+
+        if (assignments.isEmpty()) {
+            return 0.0f;
+        }
+
+        float totalGradeSum = 0.0f;
+        for (SeatAssignment sa : assignments) {
+            totalGradeSum += sa.getGrade(); 
+        }
+
+        int enrollmentCount = assignments.size();
+        float averageGrade = totalGradeSum / (float)enrollmentCount;
+        //AI - Helped with rounding code
+        float roundedAverage = Math.round(averageGrade * 100.0f) / 100.0f;
+        return roundedAverage;
+    }
+      
+    //AI - Helped with this since it was a lot of detail
+    public Map<String, Integer> getGradeDistribution() {
+        // Initialize the distribution map with zero counts for common grades
+        Map<String, Integer> distribution = new HashMap<>();
+        distribution.put("A", 0);
+        distribution.put("A-", 0);
+        distribution.put("B+", 0);
+        distribution.put("B", 0);
+        distribution.put("B-", 0);
+        distribution.put("C+", 0);
+        distribution.put("C", 0);
+        distribution.put("C-", 0);
+        distribution.put("D", 0);
+        distribution.put("F", 0);
+
+        // Reuse existing logic to get all final grades
+        ArrayList<SeatAssignment> assignments = getSeatAssignments();
+
+        for (SeatAssignment sa : assignments) {
+            float grade = sa.getGrade(); // This is the final numeric grade (e.g., 4.0, 3.3, 2.0)
+            String letterGrade;
+
+            // Define the numeric to letter grade mapping (adjust these cutoffs as needed)
+            if (grade >= 4.0f) {
+                letterGrade = "A";
+            } else if (grade >= 3.7f) {
+                letterGrade = "A-";
+            } else if (grade >= 3.3f) {
+                letterGrade = "B+";
+            } else if (grade >= 3.0f) {
+                letterGrade = "B";
+            } else if (grade >= 2.7f) {
+                letterGrade = "B-";
+            } else if (grade >= 2.3f) {
+                letterGrade = "C+";
+            } else if (grade >= 2.0f) {
+                letterGrade = "C";
+            } else if (grade >= 1.7f) {
+                letterGrade = "C-";
+            } else if (grade >= 1.0f) {
+                letterGrade = "D";
+            } else {
+                letterGrade = "F";
+            }
+
+            // Increment the count for the determined letter grade
+            distribution.put(letterGrade, distribution.get(letterGrade) + 1);
+        }
+
+        return distribution;
     }
 }
