@@ -87,22 +87,22 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         column.setWidth(0); 
                
         ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); // <-- Direct Field Access
-            for (FacultyAssignment fa : assignments) {
-                CourseOffer co = fa.getCourseOffer();         
-                Course c = co.getSubjectCourse();
-                CourseSchedule cs = department.findCourseScheduleByCourseOffer(co);
+        for (FacultyAssignment fa : assignments) {
+            CourseOffer co = fa.getCourseOffer();         
+            Course c = co.getSubjectCourse();
+            CourseSchedule cs = department.findCourseScheduleByCourseOffer(co);
 
-                Object[] row = new Object[6]; 
-                row[0] = co.getCourseNumber();                
-                row[1] = c.getName();
-                row[2] = cs.getSemester();//semester;
-                row[3] = String.valueOf(co.getSeatCount());
-                row[4] = co.getSyllabus();
-                row[5] = co.getEnrollmentOpen();
+            Object[] row = new Object[6]; 
+            row[0] = co.getCourseNumber();                
+            row[1] = c.getName();
+            row[2] = cs.getSemester();//semester;
+            row[3] = String.valueOf(co.getSeatCount());
+            row[4] = co.getSyllabus();
+            row[5] = co.getEnrollmentOpen();
 
-                model.addRow(row);                      
-            } 
-        }    
+            model.addRow(row);                      
+        } 
+    }    
     
     public void resetUpdateSection() {
         // --- Labels ---

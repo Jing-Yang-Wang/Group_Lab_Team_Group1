@@ -5,23 +5,17 @@
  */
 package UserInterface.WorkAreas.FacultyRole;
 
-import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.*;
 import University.Business;
-import University.CourseCatalog.Course;
 import University.CourseSchedule.Assignment;
-import University.CourseSchedule.CourseLoad;
 import University.CourseSchedule.CourseOffer;
-import University.CourseSchedule.CourseSchedule;
 import University.CourseSchedule.SeatAssignment;
 import University.Department.Department;
 import University.Persona.Faculty.FacultyAssignment;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentDirectory;
-import University.Persona.Student.StudentProfile;
 import java.util.ArrayList;
 import java.util.Set;
 import javax.swing.JOptionPane;
-
 
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -46,7 +40,6 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
     JPanel CardSequencePanel;
     Business business;
     Department department;
-    StudentDirectory studentDirectory;
     FacultyProfile facultyProfile;
     SeatAssignment seatAssignment;
     int selectedRow;
@@ -127,7 +120,6 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         allSeatAssignments.sort((sa1, sa2) -> {
             float score1 = sa1.getGrade();
             float score2 = sa2.getGrade();
-            // Use Float.compare(score2, score1) for DESCENDING order (highest score first)
             return Float.compare(score2, score1);
         });  
         
@@ -137,7 +129,7 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
             row[0] = sa.getStudentProfile().getPerson().getName();  //Student
             row[1] = rank; //Rank
             row[2] = String.valueOf(sa.getGrade());  //GPA
-            row[3] = sa.getSeat().getNumber();
+            row[3] = sa.getSeat().getNumber();  //Seat Count (hidden)
 
             model.addRow(row);    
             rank = rank +1;

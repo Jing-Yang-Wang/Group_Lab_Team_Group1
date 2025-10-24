@@ -74,16 +74,16 @@ public class CourseSchedule {
     
     
     //MH 10/20 - Added so we can get data by faculty profile
-    public ArrayList<CourseOffer> filterScheduleByFaculty(FacultyProfile facultyProfile) {
+    public ArrayList<CourseOffer> filterScheduleByFaculty(FacultyProfile fp) {
         ArrayList<CourseOffer> filteredOffers = new ArrayList<>();
         
-        if (facultyProfile == null) {
+        if (fp == null) {
             return filteredOffers; 
         }
 
         //Look for matches
         for (CourseOffer co : schedule) {
-            if (co.getFacultyProfile() != null && co.getFacultyProfile().equals(facultyProfile)) {
+            if (co.getFacultyProfile() != null && co.getFacultyProfile().equals(fp)) {
                 filteredOffers.add(co);
             }
         }

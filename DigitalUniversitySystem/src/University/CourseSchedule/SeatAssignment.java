@@ -114,9 +114,9 @@ public class SeatAssignment {
     
     //MH 10/24 - Added so I can relate back to the student
     public StudentProfile getStudentProfile() {
-    if (this.courseload != null) {
-        return this.courseload.getStudentProfile(); 
+        if (this.courseload != null) {
+            return this.courseload.getStudentProfile(); 
+        }
+        return null; // Should not happen if objects are linked correctly
     }
-    return null; // Should not happen if objects are linked correctly
-}
 }
