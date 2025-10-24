@@ -27,7 +27,6 @@ import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
-import University.Persona.Student.Transcript;
 
 /**
  *
@@ -40,18 +39,19 @@ public class ConfigureABusiness {
         Department department = new Department("Information Systems");
         
   // Populate department   
-        //MH 10/20 - Moved this here to make sure it is called
-        CourseCatalog coursecatalog = department.getCourseCatalog();        
+        //MH 10/20 - Added because a university is made up of departments
+        //MH 10/20 - Moved this here to make sure it is called      
+        business.getCollege().addDepartment(department);  
+        CourseCatalog coursecatalog = department.getCourseCatalog();       
+      
         Course course = coursecatalog.newCourse("app eng", "info 5100", 4);        
         CourseSchedule courseschedule = department.newCourseSchedule("Fall2020");
 
         CourseOffer courseoffer = courseschedule.newCourseOffer("info 5100");
         courseoffer.generatSeats(10);
-        
+
         int total = department.calculateRevenuesBySemester("Fall2020");
-        
-        //MH 10/20 - Added because a university is made up of departments
-        business.getCollege().addDepartment(department); 
+       
         
 // Create Persons
         //MH 10/20 - Fixed issue with the persondirectory

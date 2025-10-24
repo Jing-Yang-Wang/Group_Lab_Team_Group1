@@ -12,7 +12,6 @@ import University.CourseSchedule.SeatAssignment;
 import University.Department.Department;
 import University.Persona.Faculty.FacultyAssignment;
 import University.Persona.Faculty.FacultyProfile;
-import University.Persona.Student.StudentDirectory;
 import java.util.ArrayList;
 import java.util.Set;
 import javax.swing.JOptionPane;
@@ -51,17 +50,7 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         CardSequencePanel = jp;
         this.facultyProfile = f;       
         this.business = bz;
-        
-        //Get the faculty profile's department
-        Department targetDepartment = null;
-        for (Department dept : business.getCollege().getDepartments()) {
-            Department result = dept.getDepartmentIfContainsFaculty(this.facultyProfile);
-            if (result != null) {
-                targetDepartment = result;
-                break; 
-            }
-        }
-        this.department = targetDepartment;
+        this.department = bz.getCollege().findDepartmentByFaculty(f);
         
         resetUpdateSection();
         populateCombobox();
