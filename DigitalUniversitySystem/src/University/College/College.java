@@ -6,6 +6,7 @@
 package University.College;
 
 import University.Department.Department;
+import University.Persona.Faculty.FacultyProfile;
 import java.util.ArrayList;
 
 /**
@@ -37,5 +38,16 @@ public class College {
     
     public void addDepartment(Department department) {
         this.departments.add(department);
-    }    
+    }  
+    
+    //MH 10/24 - Moved to here from the jframes
+    public Department findDepartmentByFaculty(FacultyProfile fp) {
+    for (Department dept : this.getDepartments()) { // Assuming getDepartments returns the list
+        Department result = dept.getDepartmentIfContainsFaculty(fp);
+        if (result != null) {
+            return result;
+        }
+    }
+    return null;
+}
 }

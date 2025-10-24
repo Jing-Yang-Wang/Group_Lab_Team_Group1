@@ -47,18 +47,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         initComponents();   
         CardSequencePanel = jp;
         this.facultyProfile = f;       
-        this.business = bz;              
-        
-        //Get the faculty profile's department
-        Department targetDepartment = null;
-        for (Department dept : business.getCollege().getDepartments()) {
-            Department result = dept.getDepartmentIfContainsFaculty(this.facultyProfile);
-            if (result != null) {
-                targetDepartment = result;
-                break; 
-            }
-        }
-        this.department = targetDepartment;
+        this.business = bz;             
+        this.department = bz.getCollege().findDepartmentByFaculty(f);
         
         resetUpdateSection();
         populateCombobox();

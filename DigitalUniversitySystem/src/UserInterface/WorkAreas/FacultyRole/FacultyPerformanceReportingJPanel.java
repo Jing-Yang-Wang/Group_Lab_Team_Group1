@@ -5,17 +5,13 @@
  */
 package UserInterface.WorkAreas.FacultyRole;
 
-import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.*;
 import University.Business;
 import University.CourseCatalog.Course;
 import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
-import University.CourseSchedule.SeatAssignment;
 import University.Department.Department;
 import University.Persona.Faculty.FacultyAssignment;
 import University.Persona.Faculty.FacultyProfile;
-import University.Persona.Student.StudentDirectory;
-import University.Persona.Student.StudentProfile;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -29,8 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -61,17 +55,7 @@ public class FacultyPerformanceReportingJPanel extends javax.swing.JPanel {
         CardSequencePanel = jp;
         this.facultyProfile = f;       
         this.business = bz;
-        
-        //Get the faculty profile's department
-        Department targetDepartment = null;
-        for (Department dept : business.getCollege().getDepartments()) {
-            Department result = dept.getDepartmentIfContainsFaculty(this.facultyProfile);
-            if (result != null) {
-                targetDepartment = result;
-                break; 
-            }
-        }
-        this.department = targetDepartment;
+        this.department = bz.getCollege().findDepartmentByFaculty(f);
         
         populateCombobox();
         populateTableHeader();  
@@ -92,13 +76,8 @@ public class FacultyPerformanceReportingJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
             
         //Get an arrey of Courses    
-        String semester = cbSchedule.getSelectedItem().toString().trim();
-        //ArrayList<CourseOffer> allCourseOffers = department.getCourseSchedule(semester).filterScheduleByFaculty(facultyProfile);
-        //if (allCourseOffers == null) {
-       //      return;
-        //}         
-        
-        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); // <-- Direct Field Access
+        String semester = cbSchedule.getSelectedItem().toString().trim();           
+        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); 
         for (FacultyAssignment fa : assignments) {
             CourseOffer co = fa.getCourseOffer();         
             Course c = co.getSubjectCourse();

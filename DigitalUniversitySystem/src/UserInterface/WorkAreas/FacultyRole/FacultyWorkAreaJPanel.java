@@ -216,7 +216,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         CardSequencePanel.removeAll();
 
-        FacultyTuitionInsightJPanel aos = new FacultyTuitionInsightJPanel(business, CardSequencePanel);
+        FacultyTuitionInsightJPanel aos = new FacultyTuitionInsightJPanel(business, faculty, CardSequencePanel);
 
         CardSequencePanel.add("Tuition/Enrollment Insight", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);             
