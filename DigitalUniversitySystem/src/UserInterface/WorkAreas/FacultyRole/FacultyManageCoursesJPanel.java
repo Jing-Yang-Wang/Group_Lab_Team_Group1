@@ -238,21 +238,11 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
         bgEnrollment.add(rbOpen);
         rbOpen.setText("Open");
-        rbOpen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbOpenActionPerformed(evt);
-            }
-        });
         add(rbOpen);
         rbOpen.setBounds(310, 430, 70, 21);
 
         bgEnrollment.add(rbClosed);
         rbClosed.setText("Closed");
-        rbClosed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbClosedActionPerformed(evt);
-            }
-        });
         add(rbClosed);
         rbClosed.setBounds(380, 430, 70, 21);
 
@@ -401,14 +391,6 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         populateTable();
         
     }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void rbClosedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbClosedActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbClosedActionPerformed
-
-    private void rbOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOpenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbOpenActionPerformed
 
     private void cbScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbScheduleActionPerformed
         // TODO add your handling code here:

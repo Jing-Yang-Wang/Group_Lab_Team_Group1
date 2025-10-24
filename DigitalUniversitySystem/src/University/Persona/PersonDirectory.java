@@ -21,9 +21,9 @@ public class PersonDirectory {
 
     }
 
-    public Person newPerson(String id) {
-
-        Person p = new Person(id);
+    //MH 10/24 - Fixed to populate all fields.
+    public Person newPerson(String id, String name, String email) {
+        Person p = new Person(id, name, email);
         personlist.add(p);
         return p;
     }

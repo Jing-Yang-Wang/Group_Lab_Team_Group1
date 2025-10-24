@@ -6,6 +6,7 @@
 package University.CourseSchedule;
 
 import University.CourseCatalog.Course;
+import University.Persona.Student.StudentProfile;
 import java.util.ArrayList;
 
 /**
@@ -54,7 +55,7 @@ public class SeatAssignment {
         return getCourseOffer().getSubjectCourse();
     }
     
-    public float GetCourseStudentScore(){
+    public float getCourseStudentScore(){
         return getCreditHours()*grade;
     }
 
@@ -75,7 +76,47 @@ public class SeatAssignment {
         return newAssignment;
     }
 
+    public float getGrade() {
+        return grade;
+    }
+
     public void setGrade(float grade) {
         this.grade = grade;
-    }   
+    }
+    
+    //MH 10/24 - Calc grade based on assignments
+    public float calculateGrade() {
+        if (assignmentlist == null || assignmentlist.isEmpty()) {
+            this.grade = 0.0f; // Default to 0 if there are no assignments
+            return 0.0f;
+        }
+
+        float totalGrade = 0;
+        int assignmentCount = 0;
+
+        for (Assignment a : assignmentlist) {
+            totalGrade += a.getGrade(); 
+            assignmentCount++;
+        }
+
+        // Calc average
+        //AI - Helped with the float code
+        float studentAverage = totalGrade / (float)assignmentCount;
+
+        // Round to two decimal places
+        float finalGrade = Math.round(studentAverage * 100.0f) / 100.0f;
+
+        // Update grade
+        this.grade = finalGrade; 
+
+        return finalGrade;
+    }
+    
+    //MH 10/24 - Added so I can relate back to the student
+    public StudentProfile getStudentProfile() {
+    if (this.courseload != null) {
+        return this.courseload.getStudentProfile(); 
+    }
+    return null; // Should not happen if objects are linked correctly
+}
 }

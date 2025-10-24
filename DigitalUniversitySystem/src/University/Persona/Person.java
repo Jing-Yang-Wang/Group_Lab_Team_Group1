@@ -13,12 +13,13 @@ public class Person {
 
     private String universityID; 
     private String name;
-    private String email;
-  
+    private String email;  
 
-    
-    public Person(String email) {
-        this.universityID = email;
+    //MH 10/24 - Fixed to populate all fields.
+    public Person(String id, String name, String email) {
+        this.universityID = id;
+        this.name = name;
+        this.email = email;
     }
 
     // Getter / Setter

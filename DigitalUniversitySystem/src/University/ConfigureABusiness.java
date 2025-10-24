@@ -55,17 +55,15 @@ public class ConfigureABusiness {
         
 // Create Persons
         //MH 10/20 - Fixed issue with the persondirectory
-        PersonDirectory pd = department.getPersonDirectory();
-        //Person person = pd.newPerson("0112303");      
-        //PersonDirectory persondirectory = department.getPersonDirectory();      
-        Person person001 = pd.newPerson("John Smith");
-        Person person002 = pd.newPerson("Gina Montana");
-        Person person003 = pd.newPerson("Adam Rollen");
-        Person person004 = pd.newPerson("Gina Elva");
-        Person person005 = pd.newPerson("Jim Dellon");
-        Person person006 = pd.newPerson("Anna Shnider");
-        Person person007 = pd.newPerson("Laura Brown");
-        Person person008 = pd.newPerson("Jack While");
+        PersonDirectory pd = department.getPersonDirectory();  
+        Person person001 = pd.newPerson("U001", "John Smith", "john.smith@university.edu");
+        Person person002 = pd.newPerson("U002", "Gina Montana", "gina.montana@university.edu");
+        Person person003 = pd.newPerson("U003", "Adam Rollen", "adam.rollen@university.edu");
+        Person person004 = pd.newPerson("U004", "Gina Elva", "gina.elva@university.edu");
+        Person person005 = pd.newPerson("U005", "Jim Dellon", "jim.dellon@university.edu");
+        Person person006 = pd.newPerson("U006", "Anna Shnider", "anna.shnider@university.edu");
+        Person person007 = pd.newPerson("U007", "Laura Brown", "laura.brown@university.edu");
+        Person person008 = pd.newPerson("U008", "Jack While", "jack.while@university.edu");
 
 // Create Admins to manage the business
         EmployeeDirectory employeedirectory = department.getEmployeeDirectory();
@@ -78,10 +76,9 @@ public class ConfigureABusiness {
 //Add students and assign to classes        
         StudentDirectory sd = department.getStudentDirectory();
         StudentProfile sp1 = sd.newStudentProfile(person003);        
-        CourseLoad courseload = sp1.newCourseLoad("Fall2020");      
-        //courseload.newSeatAssignment(courseoffer); //register student in class 
+        CourseLoad courseload = sp1.newCourseLoad("Fall2020", sp1);      
         
-          //MH 10/23 - Added assignments to the students class         
+        //MH 10/23 - Added assignments to the students class         
         SeatAssignment sa1 = courseload.newSeatAssignment(courseoffer);       
         Assignment sa1_a1 = sa1.newAssignment("Lab 1");
         sa1_a1.setGrade((float) 95.0); 
@@ -89,17 +86,19 @@ public class ConfigureABusiness {
         sa1_a2.setGrade(88.0f);
         Assignment sa1_a3 = sa1.newAssignment("Assignment 1");
         sa1_a3.setGrade(92.5f);
+        sa1.calculateGrade();
         
         StudentProfile sp2 = sd.newStudentProfile(person004);        
-        CourseLoad courseload2 = sp2.newCourseLoad("Fall2020");        
+        CourseLoad courseload2 = sp2.newCourseLoad("Fall2020", sp2);        
         
         SeatAssignment sa2 = courseload2.newSeatAssignment(courseoffer); //register student in class 
         Assignment sa2_a1 = sa2.newAssignment("Lab 1");
         sa2_a1.setGrade(90.0f); // Slightly different grade for variety
         Assignment sa2_a2 = sa2.newAssignment("Lab 2");
         sa2_a2.setGrade(85.0f);
-        Assignment sa2_a3 = sa2.newAssignment("ssignment 1");
+        Assignment sa2_a3 = sa2.newAssignment("Assignment 1");
         sa2_a3.setGrade(95.0f);
+        sa2.calculateGrade();
 
    
 // Create User accounts that link to specific profiles
