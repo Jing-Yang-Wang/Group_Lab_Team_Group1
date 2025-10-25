@@ -34,6 +34,8 @@ import University.Persona.UserAccount;
 public class Business {       
     //MH 10/18 - Needed for the login process
     UserAccountDirectory useraccountdirectory;
+    private StudentProfile defaultStudent;//用于保存默认测试学生
+    private Department department;  //管理所有学院
     
     public Business() {
         this.useraccountdirectory = new UserAccountDirectory();
@@ -73,4 +75,22 @@ public class Business {
         //System.out.print("Total: " + total);        
 
     }    
+
+    public StudentProfile getDefaultStudent() {
+        return defaultStudent;
+    }
+
+    public void setDefaultStudent(StudentProfile defaultStudent) {
+        this.defaultStudent = defaultStudent;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+    
+    
 }

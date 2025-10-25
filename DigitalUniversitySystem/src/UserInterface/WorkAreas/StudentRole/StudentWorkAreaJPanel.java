@@ -11,6 +11,7 @@
 package UserInterface.WorkAreas.StudentRole;
 
 import University.Business;
+import University.Department.Department;
 import University.Persona.Student.StudentProfile;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -24,11 +25,13 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     private JPanel userProcessContainer;
     private Business business;
     private StudentProfile student;
+    private Department department;
 
-    public StudentWorkAreaJPanel(JPanel upc, Business b, StudentProfile sp) {
+    public StudentWorkAreaJPanel(JPanel upc, Business b, StudentProfile sp, Department d) {
         this.userProcessContainer = upc;
         this.business = b;
         this.student = sp;
+        this.department = d;
         initComponents();
 
     }
@@ -183,45 +186,46 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCourseWorkManagementIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourseWorkManagementIdentifyResourceAssetsActionPerformed
-    CourseWorkManagementJPanel panel = new CourseWorkManagementJPanel(userProcessContainer,business,student);
+    StudentProfile s1 = business.getDefaultStudent();
+    CourseWorkManagementJPanel panel = new CourseWorkManagementJPanel(userProcessContainer,business,s1);
     userProcessContainer.add("CourseWorkManagementJPanel", panel);
     CardLayout layout = (CardLayout)userProcessContainer.getLayout();
-    layout.next(userProcessContainer);
+    layout.show(userProcessContainer,"CourseWorkManagementJPanel");
     }//GEN-LAST:event_btnCourseWorkManagementIdentifyResourceAssetsActionPerformed
 
     private void btnProfileManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileManagementActionPerformed
         ProfileManagementJPanel panel = new ProfileManagementJPanel(userProcessContainer,student);
         userProcessContainer.add("ProfileManagementJPanel", panel);
         CardLayout layout =(CardLayout)userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
+        layout.show(userProcessContainer,"ProfileManagementJPanel");
 }//GEN-LAST:event_btnProfileManagementActionPerformed
 
     private void btnGraduationAuditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraduationAuditActionPerformed
         GraduationAuditJPanel panel = new GraduationAuditJPanel(userProcessContainer, business, student);
         userProcessContainer.add("GraduationAuditJPanel", panel);
         CardLayout layout = (CardLayout)userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
+        layout.show(userProcessContainer,"GraduationAuditJPanel");
     }//GEN-LAST:event_btnGraduationAuditActionPerformed
 
     private void btnCourseRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourseRegistrationActionPerformed
-        CourseRegistrationJPanel panel = new CourseRegistrationJPanel(userProcessContainer, business, student);
+        CourseRegistrationJPanel panel = new CourseRegistrationJPanel(userProcessContainer, student, department);
         userProcessContainer.add("CourseRegistrationJPanel", panel);
         CardLayout layout = (CardLayout)userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
+        layout.show(userProcessContainer,"CourseRegistrationJPanel");
 }//GEN-LAST:event_btnCourseRegistrationActionPerformed
 
     private void btnTranscriptReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTranscriptReviewActionPerformed
-        TranscriptReviewJPanel panel = new TranscriptReviewJPanel(userProcessContainer, business, student);
+        TranscriptReviewJPanel panel = new TranscriptReviewJPanel(userProcessContainer, student);
         userProcessContainer.add("TranscriptReviewJPanel", panel);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
+        layout.show(userProcessContainer,"TranscriptReviewJPanel");
     }//GEN-LAST:event_btnTranscriptReviewActionPerformed
 
     private void btnFinancialManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinancialManagementActionPerformed
-        FinancialManagementJPanel panel = new FinancialManagementJPanel(userProcessContainer, business, student);
+        FinancialManagementJPanel panel = new FinancialManagementJPanel(userProcessContainer, student);
         userProcessContainer.add("FinancialManagementJPanel", panel);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
+        layout.show(userProcessContainer,"FinancialManagementJPanel");
     }//GEN-LAST:event_btnFinancialManagementActionPerformed
 
 

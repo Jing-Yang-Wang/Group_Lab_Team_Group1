@@ -204,6 +204,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;&lt;&lt;Back"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCourseOffer">
       <Properties>
@@ -217,11 +220,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Enroll"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEnrollActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDrop">
       <Properties>
         <Property name="text" type="java.lang.String" value="Drop"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDropActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>

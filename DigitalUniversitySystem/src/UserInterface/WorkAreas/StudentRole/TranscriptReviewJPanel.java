@@ -36,11 +36,13 @@ public class TranscriptReviewJPanel extends javax.swing.JPanel {
     //默认显示第一个学期
     if(cbxSemester.getItemCount()>0){//获取下拉框当前有多少个选项
         cbxSemester.setSelectedIndex(0);//让下拉框默认选中第一个选项
-        updateTranscriptTable();//根据选中学期加载成绩表
+        updateTranscriptTable(); 
     }
     
     //当下拉框切换时刷新表格
     cbxSemester.addActionListener(e -> updateTranscriptTable());
+    
+    
 }
     //填充学期下拉菜单
     private void populateSemesterComboBox(){
@@ -124,7 +126,6 @@ public class TranscriptReviewJPanel extends javax.swing.JPanel {
             txtAcademicStanding.setText("Probation");
         }
     
-
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -167,6 +168,11 @@ public class TranscriptReviewJPanel extends javax.swing.JPanel {
         lblSemester.setText("Semester:");
 
         cbxSemester.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxSemester.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxSemesterActionPerformed(evt);
+            }
+        });
 
         tblTranscript.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -290,9 +296,14 @@ public class TranscriptReviewJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        CardLayout layout = (CardLayout)userProcessContainer.getLayout();
-        layout.previous(userProcessContainer);
+    userProcessContainer.remove(this);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void cbxSemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSemesterActionPerformed
+    updateTranscriptTable();
+    }//GEN-LAST:event_cbxSemesterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

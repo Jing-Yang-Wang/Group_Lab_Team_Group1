@@ -6,7 +6,10 @@ package UserInterface.WorkAreas.StudentRole;
 
 import University.Business;
 import University.Persona.Student.StudentProfile;
+import java.awt.CardLayout;
 import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,11 +34,63 @@ public class CourseWorkManagementJPanel extends javax.swing.JPanel {
         populateTable();
     }
     
-    //初始化表格
-    private void populateTable(){
-        DefaultTableModel model = (DefaultTableModel)tblAssignments.getModel();
-        model.setRowCount(0);
+    //初始化表格***待补充
+    private void populateTable() {
+    DefaultTableModel model = (DefaultTableModel) tblAssignments.getModel();
+    model.setRowCount(0);
+
+    for (var cl : studentProfile.getTranscript().getAllCourseLoads()) {
+        for (var sa : cl.getSeatAssignments()) {
+            Object[] row = new Object[4];
+            row[0] = sa.getCourseOffer().getCourseNumber(); //课程编号
+            row[1] = sa.getAssignmentName();//作业名称
+            row[2] = sa.getStatus();//状态
+            row[3] = sa.getAssignmentScore(); //成绩
+
+            model.addRow(row);
+        }
     }
+}
+    //从学生的选课CourseLoad→SeatAssignment里，读取所有课程，显示在下拉菜单
+    private void populateComboBox() {
+    cmbCourse.removeAllItems();
+    //从学生的成绩单transcript中获取所有课程
+    for (var cl : studentProfile.getTranscript().getAllCourseLoads()) {
+        for (var sa : cl.getSeatAssignments()) {
+            String courseNumber = sa.getCourseOffer().getCourseNumber();
+            cmbCourse.addItem(courseNumber);
+        }
+    }
+    }
+    
+    //显示学生的GPA、已完成学分、通过率、学术状态。
+    private void populateProgress() {
+    double totalPoints = 0.0;
+    int totalCredits = 0;
+    int passedCourses = 0;
+    int totalCourses = 0;
+
+    for (var cl : studentProfile.getTranscript().getAllCourseLoads()) {
+        for (var sa : cl.getSeatAssignments()) {
+            totalCredits += sa.getCreditHours();
+            totalPoints += sa.getGrade() * sa.getCreditHours();
+            totalCourses++;
+            if (sa.getGrade() >= 2.0) passedCourses++; // 假设2.0以上算通过
+        }
+    }
+
+    double gpa = totalCredits > 0 ? totalPoints / totalCredits : 0.0;
+    double completionRate = totalCourses > 0 ? (double) passedCourses / totalCourses * 100 : 0.0;
+
+    txtTermGPA.setText(String.format("%.2f", gpa));
+    txtCreditsCompleted.setText(String.valueOf(totalCredits));
+    txtCompletionRate.setText(String.format("%.1f%%", completionRate));
+
+    if (gpa >= 3.7) txtAcademicStanding.setText("Excellent");
+    else if (gpa >= 3.0) txtAcademicStanding.setText("Good");
+    else if (gpa >= 2.0) txtAcademicStanding.setText("Average");
+    else txtAcademicStanding.setText("Probation");
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,6 +127,11 @@ public class CourseWorkManagementJPanel extends javax.swing.JPanel {
         lblTitle.setText("Coursework Management");
 
         btnBack.setText("<<<Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         lblAssignmentSubmission.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         lblAssignmentSubmission.setText("Assignment submission:");
@@ -79,8 +139,18 @@ public class CourseWorkManagementJPanel extends javax.swing.JPanel {
         cmbCourse.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnChooseFile.setText("Choose File");
+        btnChooseFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChooseFileActionPerformed(evt);
+            }
+        });
 
         btnSubmit.setText("Submit");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
 
         lblSubmittedAssignments.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         lblSubmittedAssignments.setText("Submitted Assignments:");
@@ -144,10 +214,9 @@ public class CourseWorkManagementJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(lblAcademicProgress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(lblAcademicStanding, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblCompletionRate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblCreditsCompleted, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblAcademicStanding, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblCompletionRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblCreditsCompleted, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(40, 40, 40)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(txtCreditsCompleted, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,6 +267,53 @@ public class CourseWorkManagementJPanel extends javax.swing.JPanel {
     private void txtCreditsCompletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCreditsCompletedActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCreditsCompletedActionPerformed
+
+    private void btnChooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseFileActionPerformed
+    JFileChooser fileChooser = new JFileChooser();
+    int returnValue = fileChooser.showOpenDialog(null);
+    if (returnValue == JFileChooser.APPROVE_OPTION) {
+        selectedFile = fileChooser.getSelectedFile();
+        JOptionPane.showMessageDialog(this, "File Selected: " + selectedFile.getName());
+    }
+
+    }//GEN-LAST:event_btnChooseFileActionPerformed
+
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+       if (selectedFile == null) {
+        JOptionPane.showMessageDialog(this, "Please choose a file first.");
+        return;
+    }
+    
+    String selectedCourseNumber = (String) cmbCourse.getSelectedItem();
+    if (selectedCourseNumber == null) {
+        JOptionPane.showMessageDialog(this, "Please select a course.");
+        return;
+    }
+    
+    // 直接从文件名创建作业名称（去掉扩展名）
+    String fileName = selectedFile.getName();
+    String assignmentName = fileName.contains(".") ? 
+        fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
+    
+    // 直接在表格中添加新行
+    DefaultTableModel model = (DefaultTableModel) tblAssignments.getModel();
+    Object[] newRow = new Object[4];
+    newRow[0] = selectedCourseNumber;
+    newRow[1] = assignmentName;
+    newRow[2] = "Submitted";
+    newRow[3] = "0.0"; // 等待评分
+    
+    model.addRow(newRow);
+    
+    JOptionPane.showMessageDialog(this, "Assignment submitted for " + selectedCourseNumber + "!");
+    selectedFile = null; // 重置文件选择
+    }//GEN-LAST:event_btnSubmitActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+    userProcessContainer.remove(this);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.previous(userProcessContainer);
+    }//GEN-LAST:event_btnBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

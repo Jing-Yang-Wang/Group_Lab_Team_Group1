@@ -1,4 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/StudentRole/StudentWorkAreaJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/StudentRole/CourseRegistrationJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/StudentRole/CourseWorkManagementJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/StudentRole/FinancialManagementJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/StudentRole/ProfileManagementJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/StudentRole/GraduationAuditJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/Department/Department.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/Persona/Student/StudentProfile.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/CourseSchedule/CourseSchedule.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/StudentRole/TranscriptReviewJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/AdminRole/AdminRoleWorkAreaJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/AdminRole/AdministerUserAccountsWorkResp/AdminUserAccount.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/AdminRole/ManagePersonnelWorkResp/AdministerPersonJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/UserInterface/WorkAreas/AdminRole/ManagePersonnelWorkResp/ManagePersonsJPanel.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/ConfigureABusiness.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/Persona/Person.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/CourseSchedule/SeatAssignment.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/Persona/Student/PaymentRecord.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/Persona/Student/Transcript.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/Business.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/ProfileWorkAreaMainFrame.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/CourseSchedule/CourseLoad.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/CourseSchedule/CourseOffer.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/CourseCatalog/CourseCatalog.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/Department/DepartmentAccount.java</file>
+            <file>file:/C:/Users/Eve%20Dou/Desktop/DigitalUniversitySystem/src/University/CourseCatalog/Course.java</file>
+        </group>
+    </open-files>
 </project-private>

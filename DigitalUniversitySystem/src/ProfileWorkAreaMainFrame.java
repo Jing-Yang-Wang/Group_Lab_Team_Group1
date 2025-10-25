@@ -169,14 +169,20 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         }
         
         if (profile instanceof StudentProfile) {
+       StudentProfile spp = (StudentProfile) profile;
 
-            StudentProfile spp = (StudentProfile) profile;
-            studentworkareajpanel = new StudentWorkAreaJPanel(CardSequencePanel, business, spp);
-            CardSequencePanel.removeAll();
-            CardSequencePanel.add("student", studentworkareajpanel);
-            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+       //从business获取department
+       Department department = business.getDepartment();
 
-        }
+        //注意这里要传入四个参数
+        studentworkareajpanel = new StudentWorkAreaJPanel(CardSequencePanel, business, spp, department);
+
+        CardSequencePanel.removeAll();
+        CardSequencePanel.add("student", studentworkareajpanel);
+
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+}
+
 
        if (profile instanceof FacultyProfile) {
             facultyworkarea = new FacultyWorkAreaJPanel(business, CardSequencePanel);

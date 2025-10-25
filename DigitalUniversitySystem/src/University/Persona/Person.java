@@ -11,6 +11,7 @@ package University.Persona;
  */
 public class Person {
     //扩展,增加姓名&邮箱
+    private static int counter = 1; 
     String id;
     String name;
     String email;
@@ -22,6 +23,7 @@ public class Person {
     }
     
     public Person (String name){
+        this.id = "P" + counter++;
         this.name = name;
     }
     

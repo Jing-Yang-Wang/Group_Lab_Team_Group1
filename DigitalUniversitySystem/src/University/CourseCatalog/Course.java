@@ -13,11 +13,11 @@ public class Course {
 
     private String number; //课程号
     private String name;
-    private double credits;
+    private int credits;
     private int price = 1500; //每学分价格
 
     //构造方法:初始化对象
-    public Course(String name, String number, double credits) {
+    public Course(String number, String name, int credits) {
         this.name = name;
         this.number = number;
         this.credits = credits;

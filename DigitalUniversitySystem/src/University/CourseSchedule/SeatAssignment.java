@@ -16,9 +16,37 @@ public class SeatAssignment {
     Seat seat;
     boolean like; //true means like and false means not like
     CourseLoad courseload;
+    double assignmentScore;
+    private String assignmentName;
+    private String status;
+    
+    public String getAssignmentName(){
+        return assignmentName;
+    }
+
+    public void setAssignmentName(String assignmentName) {
+        this.assignmentName = assignmentName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public CourseLoad getCourseload() {
+        return courseload;
+    }
+
+    public void setCourseload(CourseLoad courseload) {
+        this.courseload = courseload;
+    }
+
     
     //传入学生课表和座位→建立双向关系
-    public SeatAssignment(CourseLoad cl, Seat s){
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public SeatAssignment(CourseLoad cl, Seat s) {
         seat = s;
         courseload = cl;
     }
@@ -86,6 +114,20 @@ public class SeatAssignment {
             default:return 0.0f;
         }
     }
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
+
+    public double getAssignmentScore() {
+        return assignmentScore;
+    }
+
+    public void setAssignmentScore(double assignmentScore) {
+        this.assignmentScore = assignmentScore;
+    }
+    
+    
     
     @Override
     public String toString(){

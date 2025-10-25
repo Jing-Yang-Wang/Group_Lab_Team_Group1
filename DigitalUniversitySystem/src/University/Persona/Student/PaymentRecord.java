@@ -24,6 +24,14 @@ import java.util.Date;
         this.status = status;
     }
     
+     //新增简易构造方法（只输入说明和金额）
+    public PaymentRecord(String note, double amount){
+        this.date = new Date();// 自动填入当前时间
+        this.amount = amount;
+        this.note = note;
+        this.status = status;// 默认状态
+    }
+    
     //Getter方法（供外部读取信息）
 
     public Date getDate() {

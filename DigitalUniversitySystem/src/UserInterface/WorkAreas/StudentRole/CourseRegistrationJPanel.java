@@ -9,7 +9,9 @@ import University.CourseCatalog.CourseCatalog;
 import University.CourseSchedule.CourseOffer;
 import University.Department.Department;
 import University.Persona.Student.StudentProfile;
+import java.awt.CardLayout;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,7 +32,7 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
         this.department = department;
         
         populateAvailableCoursesTable(department.getAllCourseOffers());
-        populateRegisteredCoursesTable(studentProfile.getCourseList());
+        populateRegisteredCoursesTable();
     }
 
     //显示可选课程
@@ -42,7 +44,20 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
             Object[] row = new Object[4];
             row[0] = c.getCourseNumber();
             row[1] = c.getSubjectCourse().getCourseName();
-            row[2] = c.getFacultyProfile();
+            // 给每门课一个老师名字
+        if (c.getCourseNumber().equals("INFO5100")) {
+            row[2] = "Dr. Smith";
+        } else if (c.getCourseNumber().equals("INFO5200")) {
+            row[2] = "Prof. Johnson";
+        } else if (c.getCourseNumber().equals("INFO5300")) {
+            row[2] = "Dr. Williams";
+        } else if (c.getCourseNumber().equals("INFO5400")) {
+            row[2] = "Prof. Brown";
+        } else if (c.getCourseNumber().equals("INFO5500")) {
+            row[2] = "Dr. Davis";
+        } else {
+            row[2] = "Dr. Rae"; // 老师待分配
+        }
             row[3] = c.getCreditHours();
             
             model.addRow(row);
@@ -50,20 +65,44 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
     }
         
     //显示已注册课程
-    private void populateRegisteredCoursesTable(ArrayList<CourseOffer>registeredCourses){
+    private void populateRegisteredCoursesTable(){
         DefaultTableModel model = (DefaultTableModel)tblRegisteredCourse.getModel();
         model.setRowCount(0);
-        for(CourseOffer c : registeredCourses){
+        if (studentProfile.getRegisteredCourseOffers() != null) { 
+        for(CourseOffer c : studentProfile.getRegisteredCourseOffers()){
             Object[] row = new Object[4];
             row[0] = c.getCourseNumber();
             row[1] = c.getSubjectCourse().getCourseName();
-            row[2] = c.getFacultyProfile();
+            if (c.getCourseNumber().equals("INFO5100")) {
+            row[2] = "Dr. Smith";
+        } else if (c.getCourseNumber().equals("INFO5200")) {
+            row[2] = "Prof. Johnson";
+        } else if (c.getCourseNumber().equals("INFO5300")) {
+            row[2] = "Dr. Williams";
+        } else if (c.getCourseNumber().equals("INFO5400")) {
+            row[2] = "Prof. Brown";
+        } else if (c.getCourseNumber().equals("INFO5500")) {
+            row[2] = "Dr. Davis";
+        } else {
+            row[2] = "Dr. Rae"; // 老师待分配
+        }
             row[3] = c.getCreditHours();
             
             model.addRow(row);
         }
+        } 
     }
-        
+    
+    //计算当前已注册课程的总学分
+    private int calculateTotalCredits() {
+    int totalCredits = 0;
+    if (studentProfile.getRegisteredCourseOffers() != null) {
+        for (CourseOffer c : studentProfile.getRegisteredCourseOffers()) {
+            totalCredits += c.getCreditHours();
+        }
+    }
+    return totalCredits;
+    } 
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -146,13 +185,28 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblCourseOffer);
 
         btnBack.setText("<<<Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         lblCourseOffer.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         lblCourseOffer.setText("Available Course Offer:");
 
         btnEnroll.setText("Enroll");
+        btnEnroll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnrollActionPerformed(evt);
+            }
+        });
 
         btnDrop.setText("Drop");
+        btnDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDropActionPerformed(evt);
+            }
+        });
 
         tblRegisteredCourse.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -283,30 +337,130 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInstructorActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        String keyword = txtKeyword.getText();//读取输入框关键字
-        ArrayList<CourseOffer>resultList = new ArrayList<>();//创建一个空的ArrayList，用来存放符合条件的搜索结果
+        String keyword = txtKeyword.getText(); // 读取输入框关键字
+    ArrayList<CourseOffer> resultList = new ArrayList<>(); // 创建一个空的ArrayList，用来存放符合条件的搜索结果
     
-        //遍历系统中所有课程
-        for(CourseOffer c : department.getAllCourseOffers()){
-        //提前把每门课的基本信息取出来放到变量中，方便后面判断
+    // 遍历系统中所有课程
+    for (CourseOffer c : department.getAllCourseOffers()) {
+        // 提前把每门课的基本信息取出来放到变量中，方便后面判断
         String courseNumber = c.getCourseNumber();
         String courseName = c.getSubjectCourse().getCourseName();
-        String instructor = c.getFacultyProfile().getPerson().getName();
         
-        //根据searchType不同来匹配
-        if(searchType.equals("CourseNumber") && courseNumber.toLowerCase().contains(keyword.toLowerCase())){
-            resultList.add(c);
+        // 修复这里：使用和显示方法一样的教师数据
+        String instructor = "";
+        if (c.getCourseNumber().equals("INFO5100")) {
+            instructor = "Dr. Smith";
+        } else if (c.getCourseNumber().equals("INFO5200")) {
+            instructor = "Prof. Johnson";
+        } else if (c.getCourseNumber().equals("INFO5300")) {
+            instructor = "Dr. Williams";
+        } else if (c.getCourseNumber().equals("INFO5400")) {
+            instructor = "Prof. Brown";
+        } else if (c.getCourseNumber().equals("INFO5500")) {
+            instructor = "Dr. Davis";
+        } else {
+            instructor = "Dr. Rae";
         }
-        else if(searchType.equals("CourseName") && courseName.toLowerCase().contains(keyword.toLowerCase())){
+        
+        // 根据searchType不同来匹配
+        if (searchType.equals("CourseNumber") && courseNumber.toLowerCase().contains(keyword.toLowerCase())) {
             resultList.add(c);
-        }
-        else if(searchType.equals("Instructor") && instructor.toLowerCase().contains(keyword.toLowerCase())){
+        } else if (searchType.equals("CourseName") && courseName.toLowerCase().contains(keyword.toLowerCase())) {
+            resultList.add(c);
+        } else if (searchType.equals("Instructor") && instructor.toLowerCase().contains(keyword.toLowerCase())) {
             resultList.add(c);
         }
     }
-        //把搜索到的课程显示到表格中
-        populateAvailableCoursesTable(resultList);
+    
+    // 把搜索到的课程显示到表格中
+    populateAvailableCoursesTable(resultList);
+    
+    // 如果没有找到结果，显示提示
+    if (resultList.isEmpty() && !keyword.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No courses found for: " + keyword);
+    }
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
+      int selectedRow = tblCourseOffer.getSelectedRow();
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(this, "Please select a course to enroll!");
+        return;
+    }
+
+    String courseNumber = (String) tblCourseOffer.getValueAt(selectedRow, 0);
+    String courseName = (String) tblCourseOffer.getValueAt(selectedRow, 1);
+    String instructor = (String) tblCourseOffer.getValueAt(selectedRow, 2);
+    int credits = (Integer) tblCourseOffer.getValueAt(selectedRow, 3);
+
+    // 检查是否已存在 - 从表格中检查，而不是从studentProfile
+    DefaultTableModel registeredModel = (DefaultTableModel) tblRegisteredCourse.getModel();
+    for (int i = 0; i < registeredModel.getRowCount(); i++) {
+        if (registeredModel.getValueAt(i, 0).equals(courseNumber)) {
+            JOptionPane.showMessageDialog(this, "You already have this course!");
+            return;
+        }
+    }
+
+    // 计算总学分 - 从表格中计算
+    int totalCredits = 0;
+    for (int i = 0; i < registeredModel.getRowCount(); i++) {
+        totalCredits += (Integer) registeredModel.getValueAt(i, 3);
+    }
+
+    // 检查学分限制
+    if (totalCredits + credits > 8) {
+        JOptionPane.showMessageDialog(this, "You cannot exceed 8 credits! Current credits: " + totalCredits);
+        return;
+    }
+
+    // 添加到表格中
+    Object[] row = {courseNumber, courseName, instructor, credits};
+    registeredModel.addRow(row);
+
+    // 同时添加到studentProfile
+    for (CourseOffer co : department.getAllCourseOffers()) {
+        if (co.getCourseNumber().equals(courseNumber)) {
+            studentProfile.registerCourseOffer(co);
+            break;
+        }
+    }
+
+    JOptionPane.showMessageDialog(this, "Successfully enrolled in " + courseNumber + "!");
+    }//GEN-LAST:event_btnEnrollActionPerformed
+
+    private void btnDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDropActionPerformed
+    int selectedRow = tblRegisteredCourse.getSelectedRow();
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(this, "Please select a course to drop!");
+        return;
+    }
+
+    String courseNumber = (String) tblRegisteredCourse.getValueAt(selectedRow, 0);
+
+    // 从表格中移除这一行
+    DefaultTableModel model = (DefaultTableModel) tblRegisteredCourse.getModel();
+    model.removeRow(selectedRow);
+
+    // 同时从studentProfile中移除，这样以后才能重新enroll
+    ArrayList<CourseOffer> courses = studentProfile.getRegisteredCourseOffers();
+    if (courses != null) {
+        for (int i = 0; i < courses.size(); i++) {
+            if (courses.get(i).getCourseNumber().equals(courseNumber)) {
+                courses.remove(i);
+                break;
+            }
+        }
+    }
+
+    JOptionPane.showMessageDialog(this, "You have dropped " + courseNumber + ".");
+    }//GEN-LAST:event_btnDropActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+    userProcessContainer.remove(this);
+    CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+    layout.previous(userProcessContainer);
+    }//GEN-LAST:event_btnBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,6 +6,7 @@
 package University.Persona.Student;
 
 import University.CourseSchedule.CourseLoad;
+import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.SeatAssignment;
 import University.Persona.Student.EmploymentHistory.EmploymentHistory;
 import University.Persona.Profile;
@@ -31,10 +32,11 @@ public class StudentProfile extends Profile {
     private double paidAmount;
     private ArrayList<PaymentRecord>paymentHistory;
     private StudentAccount account;
+    private ArrayList<CourseOffer> registeredCourseOffers = new ArrayList<>();
 
     public StudentProfile(Person p) {
         super(p);
-        //person = p;
+        person = p;
         this.transcript = new Transcript(this);
         this.employmentHistory = new EmploymentHistory();
     }
@@ -123,6 +125,23 @@ public class StudentProfile extends Profile {
     }
     //MH 10/18 - Added so we get the role
     
+    public ArrayList<CourseOffer> getRegisteredCourseOffers() {
+    ArrayList<CourseOffer> offers = new ArrayList<>();
+    for (SeatAssignment sa : getCourseList()) {
+        offers.add(sa.getCourseOffer());
+    }
+    return offers;
+}
+
+    public void setRegisteredCourseOffers(ArrayList<CourseOffer> registeredCourseOffers) {
+        this.registeredCourseOffers = registeredCourseOffers;
+    }
+
+    public void registerCourseOffer(CourseOffer co) {
+    if (!registeredCourseOffers.contains(co)) {
+        registeredCourseOffers.add(co);
+    }
+    }
     
     @Override
     public String getRole() {

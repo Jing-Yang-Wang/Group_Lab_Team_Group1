@@ -46,22 +46,18 @@ public class Department {
     public Department(String n) {
         name = n;
         mastercoursecatalog = new HashMap<>();
-        coursecatalog = new CourseCatalog(this);
-        studentdirectory = new StudentDirectory(this); //pass the department object so it stays linked to it
-        //MH 10/18 - Added for login process
-        facultydirectory = new FacultyDirectory(this);
-        employeedirectory = new EmployeeDirectory(this);
-        //useraccountdirectory = new UserAccountDirectory(this);
-        
-        persondirectory = new PersonDirectory();
         degree = new Degree("MSIS");
         
+        this.coursecatalog = new CourseCatalog(this);
+        this.persondirectory = new PersonDirectory();
+        this.studentdirectory = new StudentDirectory(this);
+        this.facultydirectory = new FacultyDirectory(this);
+        this.employeedirectory = new EmployeeDirectory(this);
     }
     public void addCoreCourse(Course c){
         degree.addCoreCourse(c);
         
     }
-    
     
     //MH 10/18 - Seems like this should live with the Business but leaving it here for now.
     public EmployeeDirectory getEmployeeDirectory() {
@@ -94,12 +90,16 @@ public class Department {
         return studentdirectory;
     }
 
-    public CourseSchedule newCourseSchedule(String semester) {
-
-        CourseSchedule cs = new CourseSchedule(semester, coursecatalog);
-        mastercoursecatalog.put(semester, cs);
+     public CourseSchedule newCourseSchedule(String semester) {
+     CourseSchedule cs = new CourseSchedule(semester, this.coursecatalog);
+     mastercoursecatalog.put(semester, cs);
         return cs;
     }
+
+   public CourseCatalog getCourseCatalog() {
+    return this.coursecatalog;
+}
+
 
     public CourseSchedule getCourseSchedule(String semester) {
 
@@ -107,11 +107,6 @@ public class Department {
 
     }
 
-    public CourseCatalog getCourseCatalog() {
-
-        return coursecatalog;
-
-    }
 
     public Course newCourse(String n, String nm, int cr) {
 
@@ -130,6 +125,11 @@ public class Department {
     public String getName() {
         return name;
     }
+
+    public void setCourseCatalog(CourseCatalog coursecatalog) {
+    this.coursecatalog = coursecatalog;
+}
+
 
     
     public void RegisterForAClass(String studentid, String cn, String semester) {
@@ -151,8 +151,10 @@ public class Department {
         ArrayList<CourseOffer>allOffers = new ArrayList<>();
         
         //遍历所有学期课程表 将每个课程加入列表
-        for(CourseSchedule cs : mastercoursecatalog.values()){
-            allOffers.addAll(cs.getSchedule());
+        for (CourseSchedule cs : mastercoursecatalog.values()) {
+        if (cs != null && cs.getCourseOfferList() != null) {
+            allOffers.addAll(cs.getCourseOfferList());
+        }
         }
         return allOffers;
     }

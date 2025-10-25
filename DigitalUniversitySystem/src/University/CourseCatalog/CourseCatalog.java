@@ -40,11 +40,17 @@ public class CourseCatalog {
     
     //按课程编号查找课程
     public Course getCourseByNumber(String n){    
-        for( Course c: courselist){      
-            if(c.getCourseNumber().equals(n)) return c;
+    if (n == null) return null;
+    for (Course c : courselist) {
+        if (c.getCourseNumber() != null && 
+            c.getCourseNumber().trim().equalsIgnoreCase(n.trim())) {
+            return c;
         }
-        return null;
     }
+    System.out.println(" Course not found in catalog: " + n);
+    return null;
+}
+
 
     @Override
     public String toString(){
