@@ -12,10 +12,12 @@ import java.util.ArrayList;
  * @author kal bugrara
  */
 public class CourseLoad {
+    
     String semester;
     ArrayList<SeatAssignment> seatassignments;
     
     public CourseLoad(String s){
+        
         seatassignments = new ArrayList();
         semester = s;
     }
@@ -46,5 +48,15 @@ public class CourseLoad {
     public ArrayList<SeatAssignment> getSeatAssignments(){
         return seatassignments;
     }
+    
+    //Jing - find the SeatAssignment for a given CourseOffer
+    public SeatAssignment getSeatAssignment(CourseOffer courseOffer) {
+    for (SeatAssignment sa : seatassignments) {
+        if (sa.getSeat().getCourseOffer().equals(courseOffer)) {
+            return sa;
+        }
+    }
+    return null;
+    }
             
-}
+} 

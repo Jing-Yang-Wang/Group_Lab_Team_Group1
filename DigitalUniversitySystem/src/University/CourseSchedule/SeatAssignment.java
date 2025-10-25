@@ -12,14 +12,18 @@ import University.CourseCatalog.Course;
  * @author kal bugrara
  */
 public class SeatAssignment {
-    float grade; //(Letter grade mappings: A=4.0, A-=3.7, B+=3.3, B=3.0, )
-    Seat seat;
-    boolean like; //true means like and false means not like
-    CourseLoad courseload;
+    
+    private CourseLoad courseload;
+    private Seat seat;
+    private float grade; //(Letter grade mappings: A=4.0, A-=3.7, B+=3.3, B=3.0, )
+    private boolean like; //true means like and false means not like
+    private boolean enrolled;
+    
     
     public SeatAssignment(CourseLoad cl, Seat s){
         seat = s;
         courseload = cl;
+        enrolled = true;
     }
      
     public boolean getLike(){
@@ -28,6 +32,14 @@ public class SeatAssignment {
     
     public void assignSeatToStudent(CourseLoad cl){
         courseload = cl;
+    }
+    
+    public void setGrade(float g) {
+        grade = g;
+    }
+
+    public float getGrade() {
+        return grade;
     }
     
     public int getCreditHours(){
@@ -53,6 +65,12 @@ public class SeatAssignment {
         return getCreditHours()*grade;
     }
     
-    
-    
+    //check status
+    public boolean isEnrolled() {
+        return enrolled;
+    }
+    //drop 
+    public void drop() {
+    enrolled = false;
+    }
 }

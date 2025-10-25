@@ -103,7 +103,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
                 Object[] row = new Object[4]; 
                 row[0] = co.getCourseNumber();                
-                row[1] = c.getName();
+                row[1] = c.getCourseName();
                 //row[2] = //Schedlue
                 row[3] = String.valueOf(co.getSeatCount());
                 //row[4] = //Syllabus

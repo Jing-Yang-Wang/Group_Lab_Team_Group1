@@ -4,10 +4,75 @@
  */
 package University.Persona.Registrar;
 
+
+import University.Department.Department;
+import University.Persona.Person;
+import java.util.ArrayList;
+
+
 /**
  *
  * @author jingyangwang
  */
 public class RegistrarDirectory {
     
+    
+   
+    Department department; 
+    //collection of registrars
+    ArrayList<RegistrarProfile> registrarList;
+    
+    public RegistrarDirectory(Department d){
+        
+        //instantiate Arraylist
+        department = d;
+        registrarList = new ArrayList<>();
+    }
+    
+    
+    //add Registrar
+    public RegistrarProfile newRegistrarProfile(Person p) {
+
+        RegistrarProfile rp = new RegistrarProfile(p);
+        rp.setDepartment(department);//
+        registrarList.add(rp);
+        return rp;
+    }
+    
+    //remove Registrar
+   
+    public void removeRegistrar(Person p) {
+        registrarList.remove(p);
+    }
+  
+    // 返回注册员列表
+    public ArrayList<RegistrarProfile> getRegistrarList() {
+        return registrarList;
+    }
+
+
+    //find registrar by ID
+    public RegistrarProfile findRegistrarById(String id) {
+        for (RegistrarProfile r : registrarList) {
+            if (r.getPerson().getPersonId().equals(id)) {
+                return r;
+            }
+        }
+        return null; 
+    }
+
+    //check if registrar existed
+    public boolean isRegistrarExist(String id) {
+        return findRegistrarById(id) != null;
+    }
+
+    //get registrar number
+    public int getRegistrarCount() {
+        return registrarList.size();
+    }
+
 }
+
+
+
+

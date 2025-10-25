@@ -16,10 +16,13 @@ import University.Persona.Employee.EmployeeDirectory;
 import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.PersonDirectory;
+import University.Persona.Registrar.RegistrarDirectory;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
 import University.Persona.UserAccountDirectory;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  *
@@ -34,6 +37,7 @@ public class Department {
     //MH 10/18 - Added for login process
     FacultyDirectory facultydirectory;
     EmployeeDirectory employeedirectory;
+    RegistrarDirectory registrardirectory;
     //UserAccountDirectory useraccountdirectory;
     //MH 10/18 - For getting all Course Scedules
     CourseSchedule courseSchedule;
@@ -51,6 +55,7 @@ public class Department {
         //MH 10/18 - Added for login process
         facultydirectory = new FacultyDirectory(this);
         employeedirectory = new EmployeeDirectory(this);
+        registrardirectory = new RegistrarDirectory(this);
         //useraccountdirectory = new UserAccountDirectory(this);
         
         persondirectory = new PersonDirectory();
@@ -61,8 +66,11 @@ public class Department {
         degree.addCoreCourse(c);
         
     }
-    
-    
+
+    public RegistrarDirectory getRegistrarDirectory() {
+        return registrardirectory;
+    }
+      
     //MH 10/18 - Seems like this should live with the Business but leaving it here for now.
     public EmployeeDirectory getEmployeeDirectory() {
         return employeedirectory;
@@ -140,14 +148,24 @@ public class Department {
         co.assignEmptySeat(cl);
 
     }
-
-    //public UserAccountDirectory getUserAccountDirectory() {
-    //    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    //}
     
     public CourseSchedule getCourseSchedule() {
         return courseSchedule;
     }
+   
+    
+    public ArrayList<CourseOffer> getAllCourseOffers() {
+    ArrayList<CourseOffer> allOffers = new ArrayList<>();
+        for (CourseSchedule cs : mastercoursecatalog.values()) {
+            allOffers.addAll(cs.getSchedule());
+        }
+    return allOffers;
+    }
+    
+    public Set<String> getAllSemesters() {
+        return mastercoursecatalog.keySet();
+    }
+    
     
     //MH 10/20 - Getting department from FacultyProfile
     public Department getDepartmentIfContainsFaculty(FacultyProfile facultyProfile) {

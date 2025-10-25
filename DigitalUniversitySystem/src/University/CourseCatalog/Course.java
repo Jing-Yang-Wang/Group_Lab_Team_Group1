@@ -10,26 +10,26 @@ package University.CourseCatalog;
  * @author kal bugrara
  */
 public class Course {
+    //这里我更换了成员变量名 更清晰具体 增加了private访问修饰符
+    private String courseNumber;
+    private String courseName;
+    private int credits;
+    private int price = 1500; //per credit hour
 
-    String number;
-    String name;
-    int credits;
-    int price = 1500; //per credit hour
 
 
-
-    public Course(String n, String numb, int ch) {
-        name = n;
-        number = numb;
-        credits = ch;
+    public Course(String courseName, String courseNumber, int credits) {
+        this.courseName = courseName;
+        this.courseNumber = courseNumber;
+        this.credits = credits;
 
     }
 
     public String getCourseNumber() {
-        return number;
+        return courseNumber;
     }
 
-    public int getCoursePrice() {
+    public int getTotalOneCoursePrice() {
         return price * credits;
 
     }
@@ -40,12 +40,16 @@ public class Course {
     }
     
     //MH 10/20 - Added because I need to display
-    public String getName() {
-        return name;
+    public String getCourseName() {
+        return courseName;
     }
 
     public int getPrice() {
         return price;
     }
-  
+    
+    @Override
+    public String toString() {
+        return courseName;
+    }
 }

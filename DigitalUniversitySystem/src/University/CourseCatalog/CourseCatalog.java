@@ -13,10 +13,13 @@ import java.util.ArrayList;
  * @author kal bugrara
  */
 public class CourseCatalog {
-    Department department;
-    String lastupdated;
-    ArrayList<Course> courselist; 
+    
+    private Department department;
+    private String lastupdated;
+    private ArrayList<Course> courselist; 
+    
     public CourseCatalog(Department d){
+        //instantiate ArrayList
         courselist = new ArrayList();
         department = d;
     }
@@ -24,20 +27,24 @@ public class CourseCatalog {
     public ArrayList<Course> getCourseList(){
         return courselist;
     }
-    
-    public Course newCourse(String n, String nm, int cr){
-        Course c = new Course(n, nm, cr);
+    //add course
+    public Course newCourse(String courseName, String courseNumber, int credits){
+        Course c = new Course(courseName, courseNumber, credits);
         courselist.add(c);
         return c;
     }
-    
-    public Course getCourseByNumber(String n){
-        
+    //search course method
+    public Course getCourseByNumber(String courseNumber){
+        //look for course from the courselist
         for( Course c: courselist){
             
-            if(c.getCourseNumber().equals(n)) return c;
+            if(c.getCourseNumber().equalsIgnoreCase(courseNumber)) 
+                return c;
         }
         return null;
     }
-
+    //delete course method
+    public void deleteCourse(Course c) {
+        courselist.remove(c);
+    }
 }

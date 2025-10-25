@@ -9,32 +9,43 @@ package University.CourseSchedule;
  *
  * @author kal bugrara
  */
+
+//all seats contains in a course offer 
 public class Seat {
     
-    Boolean occupied; 
-    int number;
-    SeatAssignment seatassignment; //links back to studentprofile
-    CourseOffer courseoffer;
+    private CourseOffer courseoffer;
+    private int number;
+    private boolean occupied; 
+    private SeatAssignment seatAssignment; //links back to studentprofile
+    
     public Seat (CourseOffer co, int n){
         courseoffer = co;
         number = n;
         occupied = false;
         
     }
+
+    public SeatAssignment getSeatAssignment() {
+        return seatAssignment;
+    }
+    
     
     public Boolean isOccupied(){
         return occupied;
 
     }
+    
     public SeatAssignment newSeatAssignment(CourseLoad cl){
         
-        seatassignment = new SeatAssignment(cl, this); //links seatassignment to seat
+        seatAssignment = new SeatAssignment(cl, this);  
         occupied = true;   
-        return seatassignment;
+        return seatAssignment;
     }
+    
     public CourseOffer getCourseOffer(){
         return courseoffer;
     }
+    
     public int getCourseCredits(){
         return courseoffer.getCreditHours();
     }

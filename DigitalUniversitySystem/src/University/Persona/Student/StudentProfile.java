@@ -26,7 +26,7 @@ public class StudentProfile extends Profile {
     public StudentProfile(Person p) {
 
         super(p);
-        //person = p;
+        person = p;
         transcript = new Transcript(this);
         employmenthistory = new EmploymentHistroy();
     }
