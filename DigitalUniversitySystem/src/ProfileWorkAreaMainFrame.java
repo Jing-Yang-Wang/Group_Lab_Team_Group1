@@ -42,8 +42,9 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         business = ConfigureABusiness.initialize();
         
         // Initialize department from business
-        if (business != null && business.getAllDepartments() != null && !business.getAllDepartments().isEmpty()) {
-            department = business.getAllDepartments().get(0); // Get the first department
+        //MH 10/25 - Update to use the right method for getting the department list
+        if (business != null && business.getDepartmentList() != null && !business.getDepartmentList().isEmpty()) {
+            department = business.getDepartmentList().get(0); // Get the first department
         }
 
     }

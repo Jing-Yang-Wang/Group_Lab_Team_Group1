@@ -47,13 +47,13 @@ public class Course {
     public int getPrice() {
         return price;
     }
-<<<<<<< HEAD
+
     
     // XM 10/23
     @Override
     public String toString() {
         return name;
-=======
+    }
 
     public void setNumber(String number) {
         this.number = number;
@@ -61,7 +61,6 @@ public class Course {
 
     public void setName(String name) {
         this.name = name;
->>>>>>> origin/main
     }
   
 }

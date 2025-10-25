@@ -45,7 +45,8 @@ public class Business {
     FacultyDirectory facultyDirectory;
     
     //MH 10/20 - Added because a university is made up of departments
-    //private ArrayList<Department> departmentList;
+    //MH 10/25 - Put this back in because it is being used by others but loaded data from the college
+    private ArrayList<Department> departmentList;
     //MH 10/21 - Swapped to college to store departments   
     College college;
     
@@ -60,13 +61,10 @@ public class Business {
         // Xieming 10/21 add the directories       
         this.persondirectory=new PersonDirectory();
         this.useraccountdirectory = new UserAccountDirectory();
-        this.persondirectory = new PersonDirectory();
+        this.persondirectory = new PersonDirectory();    
         
-        this.departmentList = new ArrayList<>();
-        
-        
-        
-        
+        //MH 10/25 - Loading data from the college
+        this.departmentList = this.college.getDepartments();        
     }
        
     public UserAccountDirectory getUserAccountDirectory() {
@@ -162,6 +160,7 @@ public class Business {
         this.facultyDirectory = facultyDirectory;
     }
     
+    //MH 10/25 - Fixing issues where old version of code was used from before department was moved to college
     // Get StudentDirectory from the first department
     public StudentDirectory getStudentDirectory() {
         if (departmentList != null && !departmentList.isEmpty()) {
@@ -177,7 +176,7 @@ public class Business {
         }
         return null;
     }
-
+    
     // Xieming 10/21  We can put all directories here to store can easily invoke
     //MH 10/21 - Swapped to college to store departments
     //public void setDepartmentList(ArrayList<Department> departmentList) {
