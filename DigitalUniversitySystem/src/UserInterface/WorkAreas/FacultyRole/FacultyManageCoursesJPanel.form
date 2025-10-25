@@ -61,7 +61,7 @@
                 <Column editable="true" title="Schedule" type="java.lang.Object"/>
                 <Column editable="true" title="Capacity" type="java.lang.Object"/>
                 <Column editable="true" title="Syllabus" type="java.lang.Object"/>
-                <Column editable="true" title="Enrollment" type="java.lang.Object"/>
+                <Column editable="true" title="Enrollment Open?" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

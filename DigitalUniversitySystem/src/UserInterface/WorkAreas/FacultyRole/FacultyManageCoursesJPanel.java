@@ -163,7 +163,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Number/Title", "Name/Desc.", "Schedule", "Capacity", "Syllabus", "Enrollment"
+                "Number/Title", "Name/Desc.", "Schedule", "Capacity", "Syllabus", "Enrollment Open?"
             }
         ));
         OrderScroll1.setViewportView(tblHeader);
