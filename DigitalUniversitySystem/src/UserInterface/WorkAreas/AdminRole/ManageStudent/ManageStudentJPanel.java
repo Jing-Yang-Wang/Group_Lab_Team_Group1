@@ -44,6 +44,7 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
         StudentTbl = new javax.swing.JTable();
         btnView = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 204, 204));
 
@@ -89,31 +90,44 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnBack.setText("Back");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(btnBack)))
+                .addContainerGap(96, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(54, 54, 54)
                 .addComponent(btnView)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDelete)
-                .addGap(163, 163, 163))
+                .addGap(162, 162, 162))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnView)
-                    .addComponent(btnDelete))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(btnBack)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnView)
+                        .addContainerGap(77, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDelete)
+                        .addGap(66, 66, 66))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -168,6 +182,7 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable StudentTbl;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnView;
     private javax.swing.JScrollPane jScrollPane1;
@@ -177,14 +192,18 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
          DefaultTableModel model = (DefaultTableModel) StudentTbl.getModel();
          model.setRowCount(0);
 
-       
-        for (StudentProfile sp : studentDirectory.getStudentlist()) {
-            Object[] row = new Object[4]; 
-            row[0] = sp.getPerson().getUniversityID();
-            row[1] = sp.getPerson().getName();
-            row[2] = sp.getPerson().getEmail();
-            row[3]=sp.getAcademicStatus();
-            model.addRow(row);
-        }
+         // Add null check to prevent NullPointerException
+         if (studentDirectory != null && studentDirectory.getStudentlist() != null) {
+             for (StudentProfile sp : studentDirectory.getStudentlist()) {
+                 if (sp != null && sp.getPerson() != null) {
+                     Object[] row = new Object[4]; 
+                     row[0] = sp.getPerson().getUniversityID();
+                     row[1] = sp.getPerson().getName();
+                     row[2] = sp.getPerson().getEmail();
+                     row[3] = sp.getAcademicStatus();
+                     model.addRow(row);
+                 }
+             }
+         }
     }
 }

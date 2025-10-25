@@ -2,13 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package University.Admin;
+package UserInterface.WorkAreas.AdminRole.RegisterPerson;
 
 import University.Business;
 import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Person;
 import University.Persona.PersonDirectory;
+import University.Persona.Profile;
+import University.Persona.Registrar.RegistrarDirectory;
+import University.Persona.Registrar.RegistrarProfile;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
 import University.Persona.UserAccountDirectory;
@@ -198,6 +201,14 @@ public class SignUpJPanel extends javax.swing.JPanel {
            
         //1.create person
         PersonDirectory personDirectory=business.getPersondirectory();
+        boolean emailExists = personDirectory.emailExists(email);
+        Person p = null; 
+        if (emailExists) {
+            JOptionPane.showMessageDialog(null, "Email already exists! Registration failed.");
+            return;
+        } else {     // no email exists, so create a new person
+            p=personDirectory.newPerson(email);
+
         //MH 10/22 - Commented out so app can compile
         //boolean emailExists = personDirectory.personlist.stream().anyMatch(person -> person.getEmail().equals(p.getEmail()));
         //if (emailExists) {
@@ -205,6 +216,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
         //    return;
         //} else {     // no email exists, so create a new person
         //    Person p=personDirectory.newPerson(email);
+
             
         //}
 
@@ -215,20 +227,22 @@ public class SignUpJPanel extends javax.swing.JPanel {
         
         // attain the combo value
         String role = (String) RoleCombo.getSelectedItem();
-
+        Profile sp = null;
         // choose the raletive method through value
         //MH 10/22 - Commented out so app can compile
         if (role.equalsIgnoreCase("Student")) {
             StudentDirectory studentDirectory = business.getStudentdirectory();
-            //StudentProfile sp = studentDirectory.newStudentProfile(p);
+
+            sp = studentDirectory.newStudentProfile(p);
 
         } else if (role.equalsIgnoreCase("Faculty")) {
             FacultyDirectory facultyDirectory = business.getFacultyDirectory();
-            //FacultyProfile sp = facultyDirectory.newFacultyProfile(p);
+           sp = facultyDirectory.newFacultyProfile(p);
 
         } else if (role.equalsIgnoreCase("Registrar")) {
-            //RegistrarDirectory registrarDirectory = business.getRegistrardirectory();
-            //RegistrarProfile sp= registrarDirectory.newRegistrarProfile(p);
+            RegistrarDirectory registrarDirectory = business.getRegistrardirectory();
+            sp= registrarDirectory.newRegistrarProfile(p);
+
         }
 
         

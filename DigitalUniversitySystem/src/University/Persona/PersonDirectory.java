@@ -14,6 +14,14 @@ import java.util.ArrayList;
 public class PersonDirectory {
     
       ArrayList<Person> personlist ;
+
+    public ArrayList<Person> getPersonlist() {
+        return personlist;
+    }
+
+    public void setPersonlist(ArrayList<Person> personlist) {
+        this.personlist = personlist;
+    }
     
       public PersonDirectory (){
           
