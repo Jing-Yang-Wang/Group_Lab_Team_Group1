@@ -37,7 +37,7 @@ public class Transcript {
 
     public CourseLoad newCourseLoad(String sem) {
 
-        currentcourseload = new CourseLoad(sem);
+        currentcourseload = new CourseLoad(sem, this.student);
         courseloadlist.put(sem, currentcourseload);
         return currentcourseload;
     }
@@ -92,4 +92,10 @@ public class Transcript {
 
     }
 
+    //MH 10/22 - Was missing
+    public StudentProfile getStudent() {
+        return student;
+    }
+
+    
 }

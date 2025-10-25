@@ -9,6 +9,7 @@
 package University;
 
 //MH 10/18 - Additional classes added.
+import University.College.College;
 import University.CourseCatalog.Course;
 import University.CourseCatalog.CourseCatalog;
 import University.CourseSchedule.CourseLoad;
@@ -42,21 +43,19 @@ public class Business {
     EmployeeDirectory employeedirectory;
     StudentDirectory studentdirectory;
     FacultyDirectory facultyDirectory;
-
-    
-    
-    
-    
     
     //MH 10/20 - Added because a university is made up of departments
-    private ArrayList<Department> departmentList;
-    
+    //private ArrayList<Department> departmentList;
+    //MH 10/21 - Swapped to college to store departments   
+    College college;
     
     
     public Business() {
         this.useraccountdirectory = new UserAccountDirectory();
         //MH 10/20 - Added because a university is made up of departments
-        this.departmentList = new ArrayList<>();   
+        //this.departmentList = new ArrayList<>();   
+        //MH 10/21 - Swapped to college to store departments  
+        this.college = new College("University System");
         
         // Xieming 10/21 add the directories       
         this.persondirectory=new PersonDirectory();
@@ -109,16 +108,12 @@ public class Business {
         //System.out.print("Total: " + total);        
 */
     }   
-    
+        
     //MH 10/20 - Added because a university is made up of departments
-    public ArrayList<Department> getAllDepartments() {
-        return departmentList;
-    }
-    
-    //MH 10/20 - Added because a university is made up of departments
-    public void addDepartment(Department department) {
-        this.departmentList.add(department);
-    }
+    //MH 10/21 - Swapped to college to store departments
+    //public void addDepartment(Department department) {
+    //    this.departmentList.add(department);
+    //}
     
     
     
@@ -139,7 +134,7 @@ public class Business {
     }
 
     public ArrayList<Department> getDepartmentList() {
-        return departmentList;
+        return this.college.getDepartments();
     }
     
     
@@ -184,8 +179,13 @@ public class Business {
     }
 
     // Xieming 10/21  We can put all directories here to store can easily invoke
-    public void setDepartmentList(ArrayList<Department> departmentList) {
-        this.departmentList = departmentList;
+    //MH 10/21 - Swapped to college to store departments
+    //public void setDepartmentList(ArrayList<Department> departmentList) {
+    //    this.departmentList = departmentList;
+    //}
+
+    public College getCollege() {
+        return college;
     }
     public RegistrarDirectory getRegistrardirectory() {
         return registrardirectory;

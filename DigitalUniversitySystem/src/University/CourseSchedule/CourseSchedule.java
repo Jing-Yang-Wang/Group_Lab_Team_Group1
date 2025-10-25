@@ -28,7 +28,7 @@ public class CourseSchedule {
 
     }
 
-    public CourseOffer newCourseOffer(String  n) {
+    public CourseOffer newCourseOffer(String n) {
 
         Course c = coursecatalog.getCourseByNumber(n);
         if(c==null) return null;
@@ -67,18 +67,23 @@ public class CourseSchedule {
     public String getSemester() {
         return semester;
     }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+    
     
     //MH 10/20 - Added so we can get data by faculty profile
-    public ArrayList<CourseOffer> filterScheduleByFaculty(FacultyProfile facultyProfile) {
+    public ArrayList<CourseOffer> filterScheduleByFaculty(FacultyProfile fp) {
         ArrayList<CourseOffer> filteredOffers = new ArrayList<>();
         
-        if (facultyProfile == null) {
+        if (fp == null) {
             return filteredOffers; 
         }
 
         //Look for matches
         for (CourseOffer co : schedule) {
-            if (co.getFacultyProfile() != null && co.getFacultyProfile().equals(facultyProfile)) {
+            if (co.getFacultyProfile() != null && co.getFacultyProfile().equals(fp)) {
                 filteredOffers.add(co);
             }
         }
