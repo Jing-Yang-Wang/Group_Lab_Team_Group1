@@ -14,43 +14,60 @@ import java.util.ArrayList;
  *
  * @author kal bugrara
  */
+
+//all courses offered given a semester
 public class CourseSchedule {
+    
+    private ArrayList<CourseOffer> schedule;      
+    private CourseCatalog coursecatalog;                
+    private String semester;
 
-    CourseCatalog coursecatalog;
-
-    ArrayList<CourseOffer> schedule;
-    String semester;
-
-    public CourseSchedule(String s, CourseCatalog cc) {
-        semester = s;
+    public CourseSchedule(String semester, CourseCatalog cc) {
+        
+        schedule = new ArrayList<>();
+        this.semester = semester;
         coursecatalog = cc;
-        schedule = new ArrayList();
+        
 
     }
 
-    public CourseOffer newCourseOffer(String n) {
-
-        Course c = coursecatalog.getCourseByNumber(n);
-        if(c==null) return null;
-        CourseOffer co;
-        co = new CourseOffer(c);
-        schedule.add(co);
-        return co;
+    
+    //add courseoffer method
+    public CourseOffer newCourseOffer(String courseNumber) {
+        
+        Course c = coursecatalog.getCourseByNumber(courseNumber);
+            if(c == null) {
+                System.out.println("Course not found: " + courseNumber);
+                return null;
+            }
+            
+            CourseOffer co = new CourseOffer(c);
+            co.setCourseSchedule(this);
+            schedule.add(co);
+            return co;
     }
-
-    public CourseOffer getCourseOfferByNumber(String n) {
-
+    
+    //delete courseoffer method
+    public void deleteCourseOffer(CourseOffer co) {
+        schedule.remove(co);
+    }
+    
+    
+    public CourseOffer getCourseOfferByNumber(String courseNumber) {
+        //在course schedule里遍历course offer
         for (CourseOffer co : schedule) {
 
-            if (co.getCourseNumber().equals(n)) {
+            if (co.getCourseNumber().equals(courseNumber)) {
                 return co;
             }
         }
         return null;
     }
-
+    
+    //calculate total revenue method
     public int calculateTotalRevenues() {
         int sum = 0;
+        
         for (CourseOffer co : schedule) {
 
             sum = sum + co.getTotalCourseRevenues();

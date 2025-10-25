@@ -4,30 +4,37 @@
  */
 package University.Persona.Registrar;
 
+
+import java.util.ArrayList;
+import University.Department.Department;
 import University.Persona.Person;
 import University.Persona.Profile;
-import java.util.ArrayList;
+
 
 /**
  *
  * @author DELL
  */
-    
+
+
+
+//inheritance from Profile class 
 public class RegistrarProfile extends Profile{ 
 
     //RegistrarProfile own attributes 
     private String officeHours; 
     private String email; 
     private String phone; 
-    Person person;
+    private Person person;
+    private Department department;
+
     //constructor 
-   public RegistrarProfile(Person p){ 
+    public RegistrarProfile(Person p){ 
 
     super(p); 
     this.person = p;
-    
-} 
-   
+    } 
+
     public String getOfficeHours() {
         return officeHours;
     }
@@ -51,13 +58,22 @@ public class RegistrarProfile extends Profile{
     public void setPhone(String phone) {
         this.phone = phone;
     }
-   
 
-    @Override 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+ @Override 
     public String getRole(){
-        return "Registrar"; }
+     return "Registrar"; }
+
     
     
 }
+
 
 

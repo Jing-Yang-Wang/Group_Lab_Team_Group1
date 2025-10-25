@@ -82,6 +82,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             Course c = co.getSubjectCourse();
             CourseSchedule cs = department.findCourseScheduleByCourseOffer(co);
 
+
             Object[] row = new Object[6]; 
             row[0] = co.getCourseNumber();                
             row[1] = c.getName();
@@ -89,6 +90,16 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             row[3] = String.valueOf(co.getSeatCount());
             row[4] = co.getSyllabus();
             row[5] = co.getEnrollmentOpen();
+            //Jing-I see conflicts here, but im not sure wich one do you need
+            //so i make this below as comment. if you need the below one please change it.
+            /*  Object[] row = new Object[4]; 
+                row[0] = co.getCourseNumber();                
+                row[1] = c.getCourseName();
+                //row[2] = //Schedlue
+                row[3] = String.valueOf(co.getSeatCount());
+                //row[4] = //Syllabus
+                */
+
 
             model.addRow(row);                      
         } 

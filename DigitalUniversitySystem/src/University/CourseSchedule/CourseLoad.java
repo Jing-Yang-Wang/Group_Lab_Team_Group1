@@ -13,12 +13,15 @@ import java.util.ArrayList;
  * @author kal bugrara
  */
 public class CourseLoad {
+    
     String semester;
     ArrayList<SeatAssignment> seatassignments;
     //MH 10/24 - Added so I can relate everything below back to the student
     StudentProfile studentProfile;
     
+
     public CourseLoad(String s, StudentProfile sp){
+        
         seatassignments = new ArrayList();
         semester = s;
         this.studentProfile = sp;
@@ -55,6 +58,16 @@ public class CourseLoad {
     public StudentProfile getStudentProfile() {
         return studentProfile;
     }
-     
-    
-}
+   
+    //Jing - find the SeatAssignment for a given CourseOffer
+    public SeatAssignment getSeatAssignment(CourseOffer courseOffer) {
+    for (SeatAssignment sa : seatassignments) {
+        if (sa.getSeat().getCourseOffer().equals(courseOffer)) {
+            return sa;
+        }
+    }
+    return null;
+    }
+            
+} 
+

@@ -32,9 +32,16 @@ public class FacultyDirectory {
         teacherlist = new ArrayList();
 
     }
+
     public void deletefaculty(FacultyProfile p){
         teacherlist.remove(p);
     }
+
+    //Jing- added to get teacherlist for addcourseoffer
+    public ArrayList<FacultyProfile> getTeacherList() {
+        return teacherlist;
+    }
+    
     public FacultyProfile newFacultyProfile(Person p) {
 
         FacultyProfile sp = new FacultyProfile(p);

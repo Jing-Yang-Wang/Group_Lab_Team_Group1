@@ -14,18 +14,22 @@ import java.util.ArrayList;
  * @author kal bugrara
  */
 public class SeatAssignment {
-    float grade; //(Letter grade mappings: A=4.0, A-=3.7, B+=3.3, B=3.0, )
-    Seat seat;
-    boolean like; //true means like and false means not like
-    CourseLoad courseload;
-    //MH 10/23 - Added so we can track student assignments
-    ArrayList<Assignment> assignmentlist;
+    
+    private CourseLoad courseload;
+    private Seat seat;
+    private float grade; //(Letter grade mappings: A=4.0, A-=3.7, B+=3.3, B=3.0, )
+    private boolean like; //true means like and false means not like
+    private boolean enrolled;
+    private ArrayList<Assignment> assignmentlist;
+    
+
     
     public SeatAssignment(CourseLoad cl, Seat s){
         seat = s;
         courseload = cl;
         //MH 10/23 - Added so we can track student assignments
         assignmentlist = new ArrayList<>(); 
+        enrolled = true;
     }
      
     public boolean getLike(){
@@ -34,6 +38,14 @@ public class SeatAssignment {
     
     public void assignSeatToStudent(CourseLoad cl){
         courseload = cl;
+    }
+    
+    public void setGrade(float g) {
+        grade = g;
+    }
+
+    public float getGrade() {
+        return grade;
     }
     
     public int getCreditHours(){
@@ -68,6 +80,7 @@ public class SeatAssignment {
         return assignmentlist;
     }
     
+
     
     //MH 10/23 - Added so we can track student assignments
     public Assignment newAssignment(String assignmentName) {
@@ -118,5 +131,14 @@ public class SeatAssignment {
             return this.courseload.getStudentProfile(); 
         }
         return null; // Should not happen if objects are linked correctly
+
+    //check status
+    public boolean isEnrolled() {
+        return enrolled;
+    }
+    //drop 
+    public void drop() {
+    enrolled = false;
+
     }
 }
