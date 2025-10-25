@@ -364,6 +364,33 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         //saveDetail();
         //Save all of the values in the table
         DefaultTableModel model = (DefaultTableModel) tblDetail.getModel();
+        
+        //Before saving anything, make sure the grades are all valid numbers
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object gradeValue = tblDetail.getValueAt(i, 1);
+            String name = tblDetail.getValueAt(i, 0).toString().trim();
+            String gradeStr = String.valueOf(gradeValue).trim(); 
+            float grade;
+        
+            //Test for empty
+            if (gradeStr.isEmpty() || name.isEmpty()) { 
+                JOptionPane.showMessageDialog(null, "Please make sure all assignments have a name & grade!", "Warning", JOptionPane.WARNING_MESSAGE);           
+                return;
+            }   
+            //Test for number
+            try {
+                Float.parseFloat(gradeStr);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Please make sure all assignments have a numeric grade!", "Warning", JOptionPane.WARNING_MESSAGE);           
+                return;
+            }
+            //Test for grade range, 0 to 120
+            grade = Float.parseFloat(gradeStr);
+            if (grade < 0.0f || grade > 120.1f) {
+                JOptionPane.showMessageDialog(null, "Grades must be between 0 and 120!", "Warning", JOptionPane.WARNING_MESSAGE);           
+                return;
+            }            
+        }       
                 
         for (int i = 0; i < model.getRowCount(); i++) {
             Assignment a = currentAssignments.get(i);
