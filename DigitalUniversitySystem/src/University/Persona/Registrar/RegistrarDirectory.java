@@ -52,7 +52,8 @@ public class RegistrarDirectory {
     //find registrar by ID
     public RegistrarProfile findRegistrarById(String id) {
         for (RegistrarProfile r : registrarList) {
-            if (r.getPerson().getPersonId().equals(id)) {
+            //MH 10/26 - Fixes because ID was changed to UniversityID
+            if (r.getPerson().getUniversityID().equals(id)) {
                 return r;
             }
         }

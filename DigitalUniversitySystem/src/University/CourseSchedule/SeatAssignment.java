@@ -89,13 +89,15 @@ public class SeatAssignment {
         return newAssignment;
     }
 
-    public float getGrade() {
-        return grade;
-    }
+    //MH 10/26 - Removed because a team member also added this.
+    //public float getGrade() {
+    //    return grade;
+    //}
 
-    public void setGrade(float grade) {
-        this.grade = grade;
-    }
+    //MH 10/26 - Removed because a team member also added this.
+    //public void setGrade(float grade) {
+    //    this.grade = grade;
+    //}
     
     //MH 10/24 - Calc grade based on assignments
     public float calculateGrade() {
@@ -131,7 +133,8 @@ public class SeatAssignment {
             return this.courseload.getStudentProfile(); 
         }
         return null; // Should not happen if objects are linked correctly
-
+    }
+        
     //check status
     public boolean isEnrolled() {
         return enrolled;

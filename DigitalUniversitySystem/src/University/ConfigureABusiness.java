@@ -178,8 +178,8 @@ public class ConfigureABusiness {
 //Create Courseloads and set grades for students 给每个学生添加注册的课程和成绩用于展示
 
         //CreateCourseloads for student 1(person003)   
-        CourseLoad courseloadFirstSemestersp1 = sp1.newCourseLoad("Fall2020");
-        CourseLoad courseloadSecondSemestersp1 = sp1.newCourseLoad("Spring2021");    
+        CourseLoad courseloadFirstSemestersp1 = sp1.newCourseLoad("Fall2020", sp1);
+        CourseLoad courseloadSecondSemestersp1 = sp1.newCourseLoad("Spring2021", sp1);    
         //add two seatassignment to student1 in his courseload of first semester
         SeatAssignment sa1sp1 = courseloadFirstSemestersp1.newSeatAssignment(courseoffer1);
         sa1sp1.setGrade(4.0f); //float grade
@@ -192,9 +192,9 @@ public class ConfigureABusiness {
         sa4sp1.setGrade(3.8f);
      
         //CreateCourseloads for student 2(person010)
-        CourseLoad courseloadFirstSemestersp2 = sp2.newCourseLoad("Fall2020");
-        CourseLoad courseloadSecondSemestersp2 = sp2.newCourseLoad("Spring2021");
-        CourseLoad courseloadThirdSemestersp2 = sp2.newCourseLoad("Fall2021");     
+        CourseLoad courseloadFirstSemestersp2 = sp2.newCourseLoad("Fall2020", sp2);
+        CourseLoad courseloadSecondSemestersp2 = sp2.newCourseLoad("Spring2021", sp2);
+        CourseLoad courseloadThirdSemestersp2 = sp2.newCourseLoad("Fall2021", sp2);     
         //add two seatassignment to student2 in his courseload of first semester      
         SeatAssignment sa1sp2 = courseloadFirstSemestersp2.newSeatAssignment(courseoffer1);
         sa1sp2.setGrade(4.0f);            
@@ -212,8 +212,8 @@ public class ConfigureABusiness {
         sa6sp2.setGrade(3.5f);
               
         //CreateCourseloads for student 3(person011) 
-        CourseLoad courseloadFirstSemestersp3 = sp3.newCourseLoad("Fall2020");
-        CourseLoad courseloadSecondSemestersp3 = sp3.newCourseLoad("Spring2021");      
+        CourseLoad courseloadFirstSemestersp3 = sp3.newCourseLoad("Fall2020", sp3);
+        CourseLoad courseloadSecondSemestersp3 = sp3.newCourseLoad("Spring2021", sp3);      
         //add two seatassignment to student3 in his courseload of first semester
         SeatAssignment sa1sp3 = courseloadFirstSemestersp3.newSeatAssignment(courseoffer1);
         sa1sp3.setGrade(3.0f);     
@@ -226,9 +226,9 @@ public class ConfigureABusiness {
         sa4sp3.setGrade(2.5f);
      
         //CreateCourseloads for student 4(person019)
-        CourseLoad courseloadFirstSemestersp4 = sp4.newCourseLoad("Fall2020");
-        CourseLoad courseloadSecondSemestersp4 = sp4.newCourseLoad("Spring2021");
-        CourseLoad courseloadThirdSemestersp4 = sp4.newCourseLoad("Fall2021");      
+        CourseLoad courseloadFirstSemestersp4 = sp4.newCourseLoad("Fall2020", sp4);
+        CourseLoad courseloadSecondSemestersp4 = sp4.newCourseLoad("Spring2021", sp4);
+        CourseLoad courseloadThirdSemestersp4 = sp4.newCourseLoad("Fall2021", sp4);      
         //add two seatassignment to student4 in his courseload of first semester
         SeatAssignment sa1sp4 = courseloadFirstSemestersp4.newSeatAssignment(courseoffer1);
         sa1sp4.setGrade(2.0f);     
@@ -247,8 +247,8 @@ public class ConfigureABusiness {
         
         
         //CreateCourseloads for student 5 (person020)
-        CourseLoad courseloadFirstSemestersp5 = sp5.newCourseLoad("Fall2020");
-        CourseLoad courseloadSecondSemestersp5 = sp5.newCourseLoad("Spring2021");  
+        CourseLoad courseloadFirstSemestersp5 = sp5.newCourseLoad("Fall2020", sp5);
+        CourseLoad courseloadSecondSemestersp5 = sp5.newCourseLoad("Spring2021", sp5);  
         //add two seatassignment to student5 in his courseload of first semester    
         SeatAssignment sa1sp5 = courseloadFirstSemestersp5.newSeatAssignment(courseoffer1);
         sa1sp5.setGrade(2.2f);
@@ -262,42 +262,62 @@ public class ConfigureABusiness {
         
      
         //CreateCourseloads for student 6 (person021)
-        CourseLoad courseloadFirstSemestersp6 = sp6.newCourseLoad("Spring2021");
-        CourseLoad courseloadSecondSemestersp6 = sp6.newCourseLoad("Fall2021");
+        CourseLoad courseloadFirstSemestersp6 = sp6.newCourseLoad("Spring2021", sp6);
+        CourseLoad courseloadSecondSemestersp6 = sp6.newCourseLoad("Fall2021", sp6);
         //add two seatassignment to student6 in his courseload of first semester
         SeatAssignment sa1sp6 = courseloadFirstSemestersp6.newSeatAssignment(courseoffer3);
-        sa1sp6.setGrade(2.9f);      
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa1sp6);
+        //sa1sp6.setGrade(2.9f);      
         SeatAssignment sa2sp6 = courseloadFirstSemestersp6.newSeatAssignment(courseoffer4);
-        sa2sp6.setGrade(1.9f);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa2sp6);
+        //sa2sp6.setGrade(1.9f);
         //add two seatassignment to student6 in his courseload of second semester
         SeatAssignment sa3sp6 = courseloadSecondSemestersp6.newSeatAssignment(courseoffer5);
-        sa3sp6.setGrade(3.6f);       
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa3sp6);
+        //sa3sp6.setGrade(3.6f);       
         SeatAssignment sa4sp6 = courseloadSecondSemestersp6.newSeatAssignment(courseoffer6);
-        sa4sp6.setGrade(3.9f);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa4sp6);
+        //sa4sp6.setGrade(3.9f);
         
         
         //CreateCourseloads for student 7 (person022)
-        CourseLoad courseloadFirstSemestersp7 = sp7.newCourseLoad("Fall2021");
-        CourseLoad courseloadSecondSemestersp7 = sp7.newCourseLoad("Spring2022");
+        CourseLoad courseloadFirstSemestersp7 = sp7.newCourseLoad("Fall2021", sp7);
+        CourseLoad courseloadSecondSemestersp7 = sp7.newCourseLoad("Spring2022", sp7);
         //add two seatassignment to student7 in his courseload of first semester
         SeatAssignment sa1sp7 = courseloadFirstSemestersp7.newSeatAssignment(courseoffer5);
-        sa1sp7.setGrade(3.1f);      
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa1sp7); 
+        //sa1sp7.setGrade(3.1f);      
         SeatAssignment sa2sp7 = courseloadFirstSemestersp7.newSeatAssignment(courseoffer6);
-        sa2sp7.setGrade(2.8f);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa2sp7); 
+        //sa2sp7.setGrade(2.8f);
         //add two seatassignment to student7 in his courseload of second semester
         SeatAssignment sa3sp7 = courseloadSecondSemestersp7.newSeatAssignment(courseoffer7);
-        sa3sp7.setGrade(3.7f); 
+        //MH 10/26 - Added to add assignments & calc grades.     
+         populateAssignment(sa3sp7);    
+        //sa3sp7.setGrade(3.7f); 
         SeatAssignment sa4sp7 = courseloadSecondSemestersp7.newSeatAssignment(courseoffer8);
-        sa4sp7.setGrade(4.0f);
+        //MH 10/26 - Added to add assignments & calc grades.
+        populateAssignment(sa4sp7);
+        //sa4sp7.setGrade(4.0f);
         
         
         //CreateCourseloads for student 8 (person023)
-        CourseLoad courseloadFirstSemestersp8 = sp8.newCourseLoad("Spring2022");
+        CourseLoad courseloadFirstSemestersp8 = sp8.newCourseLoad("Spring2022", sp8);
         //add two seatassignment to student8 in his courseload of first semester
         SeatAssignment sa1sp8 = courseloadFirstSemestersp8.newSeatAssignment(courseoffer7);
-        sa1sp8.setGrade(2.0f);      
+       //MH 10/26 - Added to add assignments & calc grades.
+        populateAssignment(sa1sp8);
+        //sa1sp8.setGrade(2.0f);      
         SeatAssignment sa2sp8 = courseloadFirstSemestersp8.newSeatAssignment(courseoffer8);
-        sa2sp8.setGrade(4.0f);
+        //MH 10/26 - Added to add assignments & calc grades.
+        populateAssignment(sa2sp8);
+        //sa2sp8.setGrade(4.0f);
 
 
 //Calculate revenue by semester 计算每个学期的总收入
@@ -307,30 +327,8 @@ public class ConfigureABusiness {
         int totalRevenueOfFourthSemester = department.calculateRevenuesBySemester("Spring2022");
 
         //MH 10/20 - Added because a university is made up of departments
-        business.addDepartment(department); 
-
-
-        /*//MH 10/23 - Added assignments to the students class         
-        SeatAssignment sa1 = courseload.newSeatAssignment(courseoffer);       
-        Assignment sa1_a1 = sa1.newAssignment("Lab 1");
-        sa1_a1.setGrade((float) 95.0); 
-        Assignment sa1_a2 = sa1.newAssignment("Lab 2");
-        sa1_a2.setGrade(88.0f);
-        Assignment sa1_a3 = sa1.newAssignment("Assignment 1");
-        sa1_a3.setGrade(92.5f);
-        sa1.calculateGrade();
-        
-        StudentProfile sp2 = sd.newStudentProfile(person004);        
-        CourseLoad courseload2 = sp2.newCourseLoad("Fall2020", sp2);        
-        
-        SeatAssignment sa2 = courseload2.newSeatAssignment(courseoffer); //register student in class 
-        Assignment sa2_a1 = sa2.newAssignment("Lab 1");
-        sa2_a1.setGrade(90.0f); // Slightly different grade for variety
-        Assignment sa2_a2 = sa2.newAssignment("Lab 2");
-        sa2_a2.setGrade(85.0f);
-        Assignment sa2_a3 = sa2.newAssignment("Assignment 1");
-        sa2_a3.setGrade(95.0f);
-        sa2.calculateGrade();  */   
+        //MH 10/26 - I think this is old code that was broght back in after a merge
+        //business.addDepartment(department); 
    
 // Create User accounts that link to specific profiles 创建用户信息和密码
         UserAccountDirectory uad = business.getUserAccountDirectory();
@@ -346,6 +344,34 @@ public class ConfigureABusiness {
         rp1.setPhone("207-712-8888");
      
         return business;
+    }
+    
+    //MH 10/26 - Added so we have a better way to manage adding assignements.
+    public static void populateAssignment(SeatAssignment sa) {
+        int seatNumber = sa.getSeat().getNumber(); //Used as a fake random number
+
+        float gradeA1 = roundToTwoDecimals(90.0f - seatNumber);
+        float gradeA2 = roundToTwoDecimals(85.0f - seatNumber);
+        float gradeA3 = roundToTwoDecimals(95.0f - seatNumber);
+
+        // Lab 1
+        Assignment a1 = sa.newAssignment("Lab 1");
+        a1.setGrade(gradeA1); // Set the 2-decimal float grade
+
+        // Lab 2
+        Assignment a2 = sa.newAssignment("Lab 2");
+        a2.setGrade(gradeA2); // Set the 2-decimal float grade
+
+        // Assignment 1
+        Assignment a3 = sa.newAssignment("Assignment 1");
+        a3.setGrade(gradeA3); // Set the 2-decimal float grade
+
+        sa.calculateGrade();
+    }
+
+    //MH 10/26 - Added so we have a better way to manage adding assignements.
+    private static float roundToTwoDecimals(float value) { 
+        return Math.round(value * 100.0f) / 100.0f;
     }
 }
 

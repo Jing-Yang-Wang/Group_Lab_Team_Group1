@@ -130,7 +130,8 @@ public class CourseOffer {
     }
     
     //MH 10/21 - Added this so I can manage the data
-    /* public String getSyllabus() {
+    //MH 10/26 - Uncommented this.  It is needed by Faculty Manage Courses and does not cause any errors in the code.
+     public String getSyllabus() {
         return syllabus;
     }
 
@@ -145,7 +146,7 @@ public class CourseOffer {
     public void setEnrollmentOpen(Boolean enrollmentOpen) {
         this.enrollmentOpen= enrollmentOpen;
     }
-    */
+    
 
     public float getAverageGrade() {
         

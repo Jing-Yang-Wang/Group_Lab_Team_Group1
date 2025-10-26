@@ -41,7 +41,8 @@ public class Department {
     //UserAccountDirectory useraccountdirectory;
     //MH 10/18 - For getting all Course Scedules
     //MH - 10/22 Removed because it is using the Hashmap
-    //CourseSchedule courseSchedule;
+    //MH - 10/26 - But this back for now so team members can fix code issues
+    CourseSchedule courseSchedule;
     
     EmployerDirectory employerdirectory;
     Degree degree;
@@ -151,6 +152,7 @@ public class Department {
     }
     
     //Jing-this method i need to use
+    //MH - 10/26, the course schedule is inside mastercoursecatalog.  We'll need to transition code to this.
     public CourseSchedule getCourseSchedule() {
         return courseSchedule;
     }
@@ -184,9 +186,10 @@ public class Department {
     
     //MH 10/22 - Added so we can have a semester list
     //AI helped me build this.  Was not sure how to get the key
-    public Set<String> getAllSemesters() {
-        return mastercoursecatalog.keySet();
-    }
+    //MH 10/26 - Removed because a team member also added this.
+    //public Set<String> getAllSemesters() {
+    //    return mastercoursecatalog.keySet();
+    //}
    
     //MH 10/22 - Added so course offer can be used to update the schedule
     public CourseSchedule findCourseScheduleByCourseOffer(CourseOffer courseOffer) {

@@ -85,7 +85,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
             Object[] row = new Object[6]; 
             row[0] = co.getCourseNumber();                
-            row[1] = c.getName();
+            row[1] = c.getCourseName(); 
             row[2] = cs.getSemester();//semester;
             row[3] = String.valueOf(co.getSeatCount());
             row[4] = co.getSyllabus();
@@ -382,8 +382,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         c.setNumber(number);
         c.setName(name);      
         co.setEnrollmentOpen(enrollmentOpen);
-        co.setSyllabus(syllabus);   
-        co.generatSeats(seats);  
+        co.setSyllabus(syllabus);  
+        co.generateSeats(seats);
         cs.setSemester(semester);
         
         //Reset everything
