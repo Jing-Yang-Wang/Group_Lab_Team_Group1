@@ -19,6 +19,7 @@ public class CourseOffer {
     private FacultyAssignment facultyassignment; // 教师分配
     private boolean enrollmentOpen = true;//是否开放注册
     private String syllabus = "No syllabus available"; //课程大纲说明
+    private CourseSchedule courseschedule; //MH - Was removed, added it back.
 
     // 构造方法：传入 Course 对象
     public CourseOffer(Course c) {
@@ -269,16 +270,22 @@ public class CourseOffer {
         else if (avg >= 1.0) return "D";
         else return "F";
     }
-    
-    public CourseSchedule getCourseSchedule() {
-        return null;
-    }
-
-    
+        
     @Override
     public String toString() {
         return course.getCourseNumber() + " - " + course.getCourseName() + " | Seats: " + seatlist.size();
     }
     
-    
+    //MH - Put this back from old code.
+    public void setCourseSchedule(CourseSchedule cs) {
+        this.courseschedule = cs;
+    }
+
+    public CourseSchedule getCourseschedule() {
+        return courseschedule;
+    }   
+
+    public CourseSchedule getCourseSchedule() {
+        return courseschedule;
+    }      
 }

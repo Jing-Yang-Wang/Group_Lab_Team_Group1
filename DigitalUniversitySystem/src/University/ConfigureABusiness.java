@@ -106,27 +106,29 @@ public class ConfigureABusiness {
 
         
         //Original course offerings
-        CourseOffer co1 = fall2020.newCourseOffer("INFO5100"); co1.generateSeats(15);
-        CourseOffer co2 = fall2020.newCourseOffer("INFO6205"); co2.generateSeats(15);
-        CourseOffer co3 = spring2021.newCourseOffer("INFO6210"); co3.generateSeats(20);
-        CourseOffer co4 = spring2021.newCourseOffer("INFO6215"); co4.generateSeats(10);
-        CourseOffer co5 = fall2021.newCourseOffer("INFO6250"); co5.generateSeats(10);
-        CourseOffer co6 = fall2021.newCourseOffer("INFO7245"); co6.generateSeats(20);
-        CourseOffer co7 = spring2022.newCourseOffer("INFO7370"); co7.generateSeats(10);
-        CourseOffer co8 = spring2022.newCourseOffer("INFO5001"); co8.generateSeats(20);     
+        CourseOffer co1 = fall2020.newCourseOfferByCourse(course1); co1.generateSeats(15);
+        CourseOffer co2 = fall2020.newCourseOfferByCourse(course2); co2.generateSeats(15);
+        CourseOffer co3 = spring2021.newCourseOfferByCourse(course3); co3.generateSeats(20);
+        CourseOffer co4 = spring2021.newCourseOfferByCourse(course4); co4.generateSeats(10);
+        CourseOffer co5 = fall2021.newCourseOfferByCourse(course5); co5.generateSeats(10);
+        CourseOffer co6 = fall2021.newCourseOfferByCourse(course6); co6.generateSeats(20);
+        CourseOffer co7 = spring2022.newCourseOfferByCourse(course7); co7.generateSeats(10);
+        CourseOffer co8 = spring2022.newCourseOfferByCourse(course8); co8.generateSeats(20);     
         
         //New courses offered
+        /* MH - Removed because we the code above works.
         for (String c : new String[]{"INFO5100","INFO5200","INFO5300","INFO5400","INFO5500"}) {
             CourseOffer sOffer = spring2025.newCourseOffer(c);
             if (sOffer != null) sOffer.generateSeats(20);
             CourseOffer fOffer = fall2025.newCourseOffer(c);
             if (fOffer != null) fOffer.generateSeats(20);
-        }
-
-        //Create a faculty
+        } */
+        
+        //Create emplyee
         EmployeeDirectory employeedirectory = department.getEmployeeDirectory();
         EmployeeProfile employeeprofile0 = employeedirectory.newEmployeeProfile(person001);
 
+        //Create faculty
         FacultyDirectory fd = department.getFacultyDirectory();
         FacultyProfile fp1 = fd.newFacultyProfile(person002);
         FacultyProfile fp2 = fd.newFacultyProfile(person012);
@@ -315,20 +317,16 @@ public class ConfigureABusiness {
         SeatAssignment sa1sp5 = courseloadFirstSemestersp5.newSeatAssignment(co1);
         //MH 10/26 - Added to add assignments & calc grades.     
         populateAssignment(sa1sp5);
-        //sa1sp5.setGrade(2.2f);
         SeatAssignment sa2sp5 = courseloadFirstSemestersp5.newSeatAssignment(co2);
         //MH 10/26 - Added to add assignments & calc grades.     
         populateAssignment(sa2sp5);
-        //sa2sp5.setGrade(3.2f);
         //add two seatassignment to student5 in his courseload of second semester
         SeatAssignment sa3sp5 = courseloadSecondSemestersp5.newSeatAssignment(co3);
         //MH 10/26 - Added to add assignments & calc grades.     
-        populateAssignment(sa3sp5);
-        //sa3sp5.setGrade(2.7f);      
+        populateAssignment(sa3sp5);     
         SeatAssignment sa4sp5 = courseloadSecondSemestersp5.newSeatAssignment(co4);
         //MH 10/26 - Added to add assignments & calc grades.     
         populateAssignment(sa3sp5);
-        //sa4sp5.setGrade(3.4f);
         
      
         //CreateCourseloads for student 6 (person021)
@@ -337,21 +335,17 @@ public class ConfigureABusiness {
         //add two seatassignment to student6 in his courseload of first semester
         SeatAssignment sa1sp6 = courseloadFirstSemestersp6.newSeatAssignment(co3);
         //MH 10/26 - Added to add assignments & calc grades.     
-        populateAssignment(sa1sp6);
-        //sa1sp6.setGrade(2.9f);      
+        populateAssignment(sa1sp6);     
         SeatAssignment sa2sp6 = courseloadFirstSemestersp6.newSeatAssignment(co4);
         //MH 10/26 - Added to add assignments & calc grades.     
         populateAssignment(sa2sp6);
-        //sa2sp6.setGrade(1.9f);
         //add two seatassignment to student6 in his courseload of second semester
         SeatAssignment sa3sp6 = courseloadSecondSemestersp6.newSeatAssignment(co5);
         //MH 10/26 - Added to add assignments & calc grades.     
-        populateAssignment(sa3sp6);
-        //sa3sp6.setGrade(3.6f);       
+        populateAssignment(sa3sp6);      
         SeatAssignment sa4sp6 = courseloadSecondSemestersp6.newSeatAssignment(co6);
         //MH 10/26 - Added to add assignments & calc grades.     
         populateAssignment(sa4sp6);
-        //sa4sp6.setGrade(3.9f);
         
         
         //CreateCourseloads for student 7 (person022)
@@ -360,21 +354,17 @@ public class ConfigureABusiness {
         //add two seatassignment to student7 in his courseload of first semester
         SeatAssignment sa1sp7 = courseloadFirstSemestersp7.newSeatAssignment(co5);
         //MH 10/26 - Added to add assignments & calc grades.     
-        populateAssignment(sa1sp7); 
-        //sa1sp7.setGrade(3.1f);      
+        populateAssignment(sa1sp7);      
         SeatAssignment sa2sp7 = courseloadFirstSemestersp7.newSeatAssignment(co6);
         //MH 10/26 - Added to add assignments & calc grades.     
         populateAssignment(sa2sp7); 
-        //sa2sp7.setGrade(2.8f);
         //add two seatassignment to student7 in his courseload of second semester
         SeatAssignment sa3sp7 = courseloadSecondSemestersp7.newSeatAssignment(co7);
         //MH 10/26 - Added to add assignments & calc grades.     
          populateAssignment(sa3sp7);    
-        //sa3sp7.setGrade(3.7f); 
         SeatAssignment sa4sp7 = courseloadSecondSemestersp7.newSeatAssignment(co8);
         //MH 10/26 - Added to add assignments & calc grades.
         populateAssignment(sa4sp7);
-        //sa4sp7.setGrade(4.0f);
         
         
         //CreateCourseloads for student 8 (person023)
