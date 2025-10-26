@@ -22,14 +22,19 @@ public class Person {
         this.name = name;
         this.email = email;
     }
-    
-    // 只有姓名的构造方法（自动生成ID）
-    public Person(String name) {
-        this.universityID = "P" + counter++;
-        this.name = name;
+    //Ximeing 10/25
+     public Person(String email) {
+        this.email = email;
     }
+   
+    // Getter / Setter
+//    public Person(String name) {
+//        this.universityID = "P" + counter++;
+//        this.name = name;
+//    }
     
     // Getter / Setter 方法
+
     public String getUniversityID() {
         return universityID;
     }

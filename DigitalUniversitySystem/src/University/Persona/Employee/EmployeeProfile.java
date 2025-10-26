@@ -14,7 +14,15 @@ import University.Persona.Profile;
  */
 //MH 10/18 - Added because it was not in the sample code
 public class EmployeeProfile extends Profile {
+    String telephone;
 
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
 
     public EmployeeProfile(Person p) {

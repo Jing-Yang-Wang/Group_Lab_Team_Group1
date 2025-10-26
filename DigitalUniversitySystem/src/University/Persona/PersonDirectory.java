@@ -34,13 +34,21 @@ public class PersonDirectory {
         personlist.add(p);
         return p;
     }
+
+ //   Xieming 10/25
     
-    // 只有姓名的创建方法（自动生成ID）
-    public Person newPerson(String name) {
-        Person p = new Person(name);
+    public Person newPerson(String email) {
+        Person p = new Person( email);
         personlist.add(p);
         return p;
     }
+
+//    // 只有姓名的创建方法（自动生成ID）
+//    public Person newPerson(String name) {
+//        Person p = new Person(name);
+//        personlist.add(p);
+//        return p;
+//    }
 
     public Person findPerson(String id) {
         for (Person p : personlist) {

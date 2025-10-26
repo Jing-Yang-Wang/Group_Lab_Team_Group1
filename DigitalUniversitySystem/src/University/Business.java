@@ -47,6 +47,7 @@ public class Business {
     
     //MH 10/20 - Added because a university is made up of departments
     //MH 10/25 - Put this back in because it is being used by others but loaded data from the college
+
     private ArrayList<Department> departmentList;
     //MH 10/21 - Swapped to college to store departments   
     College college;
