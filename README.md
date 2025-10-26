@@ -34,14 +34,13 @@ Prerequisites
 - IDE: Apache NetBeans IDE 15
 - Libraries: Absolutelayout, CopyLibs
   
-Clone Repository - 
-
-- Provide step-by-step setup instructions, including how to clone the repository and
-  run the project.
-- git checkout main
-- git pull origin main
+Clone Repository 
+- git clone https://github.com/Jing-Yang-Wang/Group_Lab_Team_Group1.git 
   
 Run Project
+- Open NetBeans
+- Open Project: Select the local folder where the code was placed
+- Select Run Project in NetBeans
 
 
 5. Authentication & Access Control
@@ -52,13 +51,22 @@ Logout: The login jpanel is always visible on the lefthand side.  There is no lo
 
 
 6. Features Implemented
-- Admin
-- Faculty
-- Student
-- Regisrar
+
+Admin
+
+Faculty: Michael Hynes
+- Mange Course
+- Manage Student Profiles
+- Tuition/Enrollment Insight
+- My Profile Management: Leverage a jframe created by Sophia-Geng.
+- Performance Reporting
+  
+Student
+
+Regisrar
 
   TO DO Detail the functionalities implemented for each role.
-  2TO DO Clearly specify which team member was responsible for each feature.
+  TO DO Clearly specify which team member was responsible for each feature.
 
 
 7. Usage Instructions
@@ -68,6 +76,14 @@ Logout: The login jpanel is always visible on the lefthand side.  There is no lo
 
 
 8. Testing Guide
+
+Admin
+
+Faculty
+  
+Student
+
+Regisrar
 
   TO DO Outline how to test the system, including sample test cases.
   TO DO Explain how to verify that authentication and authorization work correctly.
@@ -126,6 +142,7 @@ Xieming Geng
 
   TO DO Clearly state each team member’s contributions to the project.
   TO DO Provide details on coding, documentation, testing, and other tasks.
+
 
 
 
