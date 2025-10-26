@@ -206,7 +206,8 @@ public class ViewTeacher extends javax.swing.JPanel {
    
     facultyProfile.setTelephone(fieldTelephone.getText().trim());
     facultyProfile.setDepartment((String) Combodepartment.getSelectedItem());
-    facultyProfile.setCourse((String) ComboCourse.getSelectedItem());
+    //MH 10/26 - A teach can teach multipe courses, see ArrayList <FacultyAssignment> facultyassignments; 
+    //facultyProfile.setCourse((String) ComboCourse.getSelectedItem());
 
    
     JOptionPane.showMessageDialog(this,
@@ -236,7 +237,8 @@ public class ViewTeacher extends javax.swing.JPanel {
     facultyProfile.setTelephone(fieldTelephone.getText().trim());
   
     facultyProfile.setDepartment((String) Combodepartment.getSelectedItem());
-    facultyProfile.setCourse((String) ComboCourse.getSelectedItem());
+    //MH 10/26 - A teach can teach multipe courses, see ArrayList <FacultyAssignment> facultyassignments; 
+    //facultyProfile.setCourse((String) ComboCourse.getSelectedItem());
     
     
     java.time.LocalDateTime now = java.time.LocalDateTime.now();

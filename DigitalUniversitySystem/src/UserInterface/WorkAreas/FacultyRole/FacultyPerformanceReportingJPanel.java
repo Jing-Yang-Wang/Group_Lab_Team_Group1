@@ -48,6 +48,7 @@ public class FacultyPerformanceReportingJPanel extends javax.swing.JPanel {
     Business business;
     Department department;
     FacultyProfile facultyProfile;
+    private boolean isInitialized = false; //Using this to manage when comboboxes refresh the jframe
 
 
     public FacultyPerformanceReportingJPanel(Business bz, FacultyProfile f, JPanel jp) {
@@ -59,6 +60,7 @@ public class FacultyPerformanceReportingJPanel extends javax.swing.JPanel {
         
         populateCombobox();
         populateTableHeader();  
+        isInitialized = true;
     }
     
     public void populateCombobox() {        
@@ -77,7 +79,7 @@ public class FacultyPerformanceReportingJPanel extends javax.swing.JPanel {
             
         //Get an arrey of Courses    
         String semester = cbSchedule.getSelectedItem().toString().trim();           
-        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); 
+        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyassignments(); 
         for (FacultyAssignment fa : assignments) {
             CourseOffer co = fa.getCourseOffer();         
             Course c = co.getSubjectCourse();
@@ -236,12 +238,10 @@ public class FacultyPerformanceReportingJPanel extends javax.swing.JPanel {
 
     private void cbScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbScheduleActionPerformed
         // TODO add your handling code here:
-        //AI - Helped manage the event
-        if (evt.getActionCommand().equals("comboBoxEdited") || evt.getActionCommand().equals("comboBoxChanged")) {
-            return;
-        }
-        //resetUpdateSection();
-        //populateTableHeader();
+        if (!isInitialized) {
+                return; 
+        }    
+        populateTableHeader();
     }//GEN-LAST:event_cbScheduleActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed

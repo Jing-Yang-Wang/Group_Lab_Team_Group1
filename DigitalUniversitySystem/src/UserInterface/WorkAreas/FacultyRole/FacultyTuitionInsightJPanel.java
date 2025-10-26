@@ -52,7 +52,7 @@ public class FacultyTuitionInsightJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
             
         //Get an arrey of Courses            
-        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); 
+        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyassignments(); 
         for (FacultyAssignment fa : assignments) {
             CourseOffer co = fa.getCourseOffer();         
             Course c = co.getSubjectCourse();

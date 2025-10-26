@@ -41,6 +41,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     Department department;
     FacultyProfile facultyProfile;    
     String selectedCourseNumber;
+    String selectedSchedule;
     int selectedRow;
 
     public FacultyManageCoursesJPanel(Business bz, FacultyProfile f, JPanel jp) {
@@ -76,12 +77,11 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         column.setPreferredWidth(0);
         column.setWidth(0); 
                
-        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); // <-- Direct Field Access
+        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyassignments(); // <-- Direct Field Access
         for (FacultyAssignment fa : assignments) {
             CourseOffer co = fa.getCourseOffer();         
             Course c = co.getSubjectCourse();
             CourseSchedule cs = department.findCourseScheduleByCourseOffer(co);
-
 
             Object[] row = new Object[6]; 
             row[0] = co.getCourseNumber();                
@@ -90,17 +90,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             row[3] = String.valueOf(co.getSeatCount());
             row[4] = co.getSyllabus();
             row[5] = co.getEnrollmentOpen();
-            //Jing-I see conflicts here, but im not sure wich one do you need
-            //so i make this below as comment. if you need the below one please change it.
-            /*  Object[] row = new Object[4]; 
-                row[0] = co.getCourseNumber();                
-                row[1] = c.getCourseName();
-                //row[2] = //Schedlue
-                row[3] = String.valueOf(co.getSeatCount());
-                //row[4] = //Syllabus
-                */
-
-
+            
             model.addRow(row);                      
         } 
     }    
@@ -202,36 +192,36 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
         lblNumber.setText("Number/Title");
         add(lblNumber);
-        lblNumber.setBounds(30, 300, 80, 30);
+        lblNumber.setBounds(20, 300, 80, 30);
         add(tbNumber);
-        tbNumber.setBounds(120, 300, 110, 30);
+        tbNumber.setBounds(100, 300, 170, 30);
 
         lblName.setText("Name/Desc.");
         add(lblName);
-        lblName.setBounds(30, 340, 80, 30);
+        lblName.setBounds(20, 340, 80, 30);
         add(tbName);
-        tbName.setBounds(120, 340, 110, 30);
+        tbName.setBounds(100, 340, 170, 30);
 
         lblSchedule.setText("Schedule");
         add(lblSchedule);
-        lblSchedule.setBounds(30, 380, 80, 30);
+        lblSchedule.setBounds(20, 380, 80, 30);
 
         lblCapacity.setText("Capacity");
         add(lblCapacity);
-        lblCapacity.setBounds(30, 420, 80, 30);
+        lblCapacity.setBounds(20, 420, 80, 30);
         add(tbCapacity);
-        tbCapacity.setBounds(120, 420, 50, 30);
+        tbCapacity.setBounds(100, 420, 50, 30);
 
         lblSyllabus.setText("Syllabus");
         add(lblSyllabus);
-        lblSyllabus.setBounds(250, 300, 50, 16);
+        lblSyllabus.setBounds(290, 300, 50, 16);
 
         taSyllabus.setColumns(20);
         taSyllabus.setRows(5);
         spSyllabus.setViewportView(taSyllabus);
 
         add(spSyllabus);
-        spSyllabus.setBounds(304, 296, 310, 110);
+        spSyllabus.setBounds(354, 296, 260, 110);
 
         lblEnrollment.setText("Enrollment");
         add(lblEnrollment);
@@ -262,7 +252,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             }
         });
         add(cbSchedule);
-        cbSchedule.setBounds(120, 380, 110, 30);
+        cbSchedule.setBounds(100, 380, 100, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -309,7 +299,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         //Get values from the slected row
         String courseNumber = tblHeader.getValueAt(selectedRow, 0).toString().trim();
         String courseName = tblHeader.getValueAt(selectedRow, 1).toString().trim();
-        //Schedule
+        String schedule = tblHeader.getValueAt(selectedRow, 2).toString().trim();
         String capacity = tblHeader.getValueAt(selectedRow, 3).toString().trim();
         String syllabus = tblHeader.getValueAt(selectedRow, 4).toString().trim();
         String enrollmentOpen = tblHeader.getValueAt(selectedRow,5).toString().trim();
@@ -328,6 +318,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
         //Save selected Course Number for update code
         selectedCourseNumber = courseNumber;
+        selectedSchedule = schedule;
 
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -342,7 +333,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             return; 
         }        
         
-        int capacity;
+        int capacity = 0;
         Boolean enrollmentOpen;
            
         String number = tbNumber.getText();        
@@ -363,9 +354,9 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
             return;
         }
         
-        Course c = department.getCourseCatalog().getCourseByNumber(selectedCourseNumber);      
-        CourseOffer co = department.getCourseSchedule(semester).getCourseOfferByNumber(selectedCourseNumber);
-        int seats;
+        Course c = department.getCourseCatalog().getCourseByNumber(selectedCourseNumber);  
+        CourseOffer co = department.getCourseSchedule(selectedSchedule).getCourseOfferByNumber(selectedCourseNumber);
+        int seats = 0;
         
         //See if they tried to reduce the capacity
         if (capacity < co.getSeatCount()) {
@@ -384,7 +375,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         co.setEnrollmentOpen(enrollmentOpen);
         co.setSyllabus(syllabus);  
         co.generateSeats(seats);
-        cs.setSemester(semester);
+        cs.setSemester(semester); //MH - Need to fix how this is saved.
         
         //Reset everything
         JOptionPane.showMessageDialog(this, "Data has been updated!", "Data Saved", JOptionPane.INFORMATION_MESSAGE);
