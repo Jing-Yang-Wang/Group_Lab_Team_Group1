@@ -44,6 +44,7 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
     int selectedRow;
     int selectedSeatNumber;
     ArrayList<Assignment> currentAssignments;
+    private boolean isInitialized = false; //Using this to manage when comboboxes refresh the jframe
 
     public FacultyManageStudentsJPanel(Business bz, FacultyProfile f, JPanel jp) {
         initComponents();
@@ -53,24 +54,32 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         this.department = bz.getCollege().findDepartmentByFaculty(f);
         
         resetUpdateSection();
-        populateCombobox();
-        populateTableHeader();        
+        populateComboboxSchedule();
+        populateComboboxCourse();
+        populateTableHeader(); 
+        isInitialized = true;
     }
-    
-    
-     public void populateCombobox() {        
+      
+    public void populateComboboxSchedule() {        
         //Get semesters
         Set<String> semesters = department.getAllSemesters();
         for (String semester : semesters) {
             cbSchedule.addItem(semester);
         }
         cbSchedule.setSelectedIndex(0); 
-        
+    }
+    
+    public void populateComboboxCourse() {       
         //Get Courses
-        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyassignments(); 
-        for (FacultyAssignment fa : assignments) {
+        cbCourse.removeAllItems();
+        String semester = cbSchedule.getSelectedItem().toString().trim();
+        
+        ArrayList<FacultyAssignment> facultyAssignments = this.facultyProfile.getFacultyassignments(); 
+        for (FacultyAssignment fa : facultyAssignments) {
             CourseOffer co = fa.getCourseOffer();   
-            cbCourse.addItem(co.getCourseNumber());             
+            if (semester == co.getCourseSchedule().getSemester()) {
+                cbCourse.addItem(co.getCourseNumber());   
+            }
         }
         cbCourse.setSelectedIndex(0); 
     }
@@ -349,12 +358,12 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
 
     private void cbScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbScheduleActionPerformed
         // TODO add your handling code here:
-        //AI - Helped manage the event
-        if (evt.getActionCommand().equals("comboBoxEdited") || evt.getActionCommand().equals("comboBoxChanged")) {
-        return;
-        }
+        if (!isInitialized) {
+                return; 
+        }        
+        populateComboboxCourse();
         resetUpdateSection();  
-        populateTableHeader();
+        populateTableHeader();         
     }//GEN-LAST:event_cbScheduleActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -382,9 +391,9 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Please make sure all assignments have a numeric grade!", "Warning", JOptionPane.WARNING_MESSAGE);           
                 return;
             }
-            //Test for grade range, 0 to 120
+            //Test for grade range, 0 to 5
             grade = Float.parseFloat(gradeStr);
-            if (grade < 0.0f || grade > 120.1f) {
+            if (grade < 0.0f || grade > 5.0f) {
                 JOptionPane.showMessageDialog(null, "Grades must be between 0 and 120!", "Warning", JOptionPane.WARNING_MESSAGE);           
                 return;
             }            
@@ -460,10 +469,9 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
 
     private void cbCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCourseActionPerformed
         // TODO add your handling code here:
-        //AI - Helped manage the event
-        if (evt.getActionCommand().equals("comboBoxEdited") || evt.getActionCommand().equals("comboBoxChanged")) {
-            return;
-        }
+        if (!isInitialized) {
+                return; 
+        }   
         resetUpdateSection();  
         populateTableHeader();
     }//GEN-LAST:event_cbCourseActionPerformed
