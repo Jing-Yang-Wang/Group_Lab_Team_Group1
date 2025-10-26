@@ -12,6 +12,9 @@ import University.CourseSchedule.SeatAssignment;
 import University.Department.Department;
 import University.Persona.Faculty.FacultyAssignment;
 import University.Persona.Faculty.FacultyProfile;
+import University.Persona.Student.StudentProfile;
+import UserInterface.WorkAreas.StudentRole.TranscriptReviewJPanel;
+import java.awt.CardLayout;
 import java.util.ArrayList;
 import java.util.Set;
 import javax.swing.JOptionPane;
@@ -58,6 +61,8 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         populateComboboxCourse();
         populateTableHeader(); 
         isInitialized = true;
+        
+        btnProgressReport.setVisible(false);
     }
       
     public void populateComboboxSchedule() {        
@@ -353,16 +358,6 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_BackActionPerformed
 
-    private void btnProgressReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProgressReportActionPerformed
-        // TODO add your handling code here:
-        selectedRow = tblHeader.getSelectedRow();
-        
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(null, "Please select a student to view!", "Warning", JOptionPane.WARNING_MESSAGE);           
-            return;
-        }
-    }//GEN-LAST:event_btnProgressReportActionPerformed
-
     private void cbScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbScheduleActionPerformed
         // TODO add your handling code here:
         if (!isInitialized) {
@@ -443,7 +438,21 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(null, "Please select a student to view!", "Warning", JOptionPane.WARNING_MESSAGE);           
             return;
-        }
+        } 
+        
+        //Get the student profile and open the required jframe
+        int seatNumber = (int) Double.parseDouble(tblHeader.getValueAt(selectedRow, 3).toString().trim());        
+        selectedSeatNumber = seatNumber;
+        String semester = cbSchedule.getSelectedItem().toString().trim();
+        String number = cbCourse.getSelectedItem().toString().trim();
+        CourseOffer co = department.getCourseSchedule(semester).getCourseOfferByNumber(number);
+        seatAssignment = co.getSeatAssignmentBySeatNumber(selectedSeatNumber); 
+        StudentProfile sp = seatAssignment.getStudentProfile();
+        
+        TranscriptReviewJPanel panel = new TranscriptReviewJPanel(CardSequencePanel, sp);
+        CardSequencePanel.add("TranscriptReviewJPanel", panel);
+        CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
+        layout.show(CardSequencePanel,"TranscriptReviewJPanel");
     }//GEN-LAST:event_btnTranscriptActionPerformed
 
     private void btnAssignmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignmentsActionPerformed
@@ -482,6 +491,16 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         resetUpdateSection();  
         populateTableHeader();
     }//GEN-LAST:event_cbCourseActionPerformed
+
+    private void btnProgressReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProgressReportActionPerformed
+        // TODO add your handling code here:
+        selectedRow = tblHeader.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a student to view!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_btnProgressReportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
