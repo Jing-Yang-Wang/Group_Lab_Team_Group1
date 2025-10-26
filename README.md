@@ -70,8 +70,15 @@ o 8. Testing Guide
 
 
 9. Challenges & Solutions
-- GitHub: 
+Hairui Dou
+
+Jing Yang Wang
+
+Michael Hynes
+- GitHub: I worked with multiple TAs who here not able to help me with a fully working and documented process for working with branches.  It was not until Thursday that I had something that was provedn to work.  At that point I shared with the team but the divergance of our branches made the project much harder to complete then nessecary.
 - Missing Assignment Class: 
+
+Xieming Geng
 
 1. Summarize any difficulties encountered during development.
 2. Highlight the solutions implemented to overcome these challenges.
@@ -83,6 +90,10 @@ Admin Related
 
 Faculty Related
   - The ability to track attendance.
+  - Abiltiy to send emails to all students in a class.
+  - Ability to add or delete assignments.
+  - Ability to copy assignment structure from previous classes.
+  - Notifications when student enrollment changes.
 
 Student Related
 
@@ -105,6 +116,7 @@ Michael Hynes
 
 Xieming Geng
 
-- 1. Clearly state each team member’s contributions to the project.
-- 2. Provide details on coding, documentation, testing, and other tasks.
+1. Clearly state each team member’s contributions to the project.
+2. Provide details on coding, documentation, testing, and other tasks.
+
 
