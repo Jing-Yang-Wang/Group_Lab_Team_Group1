@@ -31,7 +31,7 @@ public class MyProfileJPanel extends javax.swing.JPanel {
 
         initComponents();  
         populateFields();  
-         setFieldsEditable(false);  
+          setFieldsEditable(false);  
     }
 
     /**

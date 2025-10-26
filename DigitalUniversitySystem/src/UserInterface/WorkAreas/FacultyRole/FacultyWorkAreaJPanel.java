@@ -12,12 +12,10 @@ package UserInterface.WorkAreas.FacultyRole;
 
 import University.Business;
 import University.Persona.Faculty.FacultyProfile;
-import University.Persona.Student.StudentProfile;
 import javax.swing.JPanel;
 
 /**
  *
- * @author kal
  * @author Michael Hynes
  * 
  */
@@ -32,7 +30,6 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
      */
 
     public FacultyWorkAreaJPanel(Business b, FacultyProfile fpp, JPanel clp) {
-
         business = b;
         this.CardSequencePanel = clp;
         faculty = fpp;
@@ -55,6 +52,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         btnPerformanceReports = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnPerformanceReports1 = new javax.swing.JButton();
+
 
         setForeground(new java.awt.Color(51, 51, 51));
 
@@ -131,6 +129,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,6 +137,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(101, 101, 101)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -152,6 +152,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
                         .addComponent(btnPerformanceReports1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(395, Short.MAX_VALUE))
+
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,8 +162,10 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnManageCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+
                     .addComponent(btnManageStudentsProdiles, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPerformanceReports1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMyProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,9 +177,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     private void btnManageCoursesIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageCoursesIdentifyResourceAssetsActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.removeAll();
-
         FacultyManageCoursesJPanel aos = new FacultyManageCoursesJPanel(business, faculty, CardSequencePanel);
-
         CardSequencePanel.add("Manage Courses", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
@@ -185,9 +186,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     private void btnManageStudentsProdilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageStudentsProdilesActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.removeAll();
-
         FacultyManageStudentsJPanel aos = new FacultyManageStudentsJPanel(business, faculty, CardSequencePanel);
-
         CardSequencePanel.add("Manage Students", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);  
     }//GEN-LAST:event_btnManageStudentsProdilesActionPerformed
@@ -195,29 +194,25 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.removeAll();
-        //IdentifyEventTypes iet = new IdentifyEventTypes(businessunit, CardSequencePanel);
 
-        //CardSequencePanel.add("IdentifyEventTypes", iet);
-        //((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-        //((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
+        FacultyProfileManagementJPanel aos = new FacultyProfileManagementJPanel(business, faculty, CardSequencePanel);
+
+        CardSequencePanel.add("Manage Profile", aos);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);  
 }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
 
     private void btnPerformanceReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerformanceReportsActionPerformed
-        // TODO add your handling code here:
-        CardSequencePanel.removeAll();
-
-        FacultyPerformanceReportingJPanel aos = new FacultyPerformanceReportingJPanel(business, faculty, CardSequencePanel);
-
-        CardSequencePanel.add("Performance Reporting", aos);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);  
+     CardSequencePanel.removeAll();
+     FacultyPerformanceReportingJPanel aos = new FacultyPerformanceReportingJPanel(business, faculty, CardSequencePanel);
+     CardSequencePanel.add("Performance Reporting", aos);
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel); 
+                                             
 }//GEN-LAST:event_btnPerformanceReportsActionPerformed
 
     private void btnPerformanceReports1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerformanceReports1ActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.removeAll();
-
         FacultyTuitionInsightJPanel aos = new FacultyTuitionInsightJPanel(business, faculty, CardSequencePanel);
-
         CardSequencePanel.add("Tuition/Enrollment Insight", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);             
     }//GEN-LAST:event_btnPerformanceReports1ActionPerformed

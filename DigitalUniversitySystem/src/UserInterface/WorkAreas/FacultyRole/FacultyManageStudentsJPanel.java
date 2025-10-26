@@ -44,6 +44,7 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
     int selectedRow;
     int selectedSeatNumber;
     ArrayList<Assignment> currentAssignments;
+    private boolean isInitialized = false; //Using this to manage when comboboxes refresh the jframe
 
     public FacultyManageStudentsJPanel(Business bz, FacultyProfile f, JPanel jp) {
         initComponents();
@@ -53,26 +54,36 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         this.department = bz.getCollege().findDepartmentByFaculty(f);
         
         resetUpdateSection();
-        populateCombobox();
-        populateTableHeader();        
+        populateComboboxSchedule();
+        populateComboboxCourse();
+        populateTableHeader(); 
+        isInitialized = true;
     }
-    
-    
-     public void populateCombobox() {        
+      
+    public void populateComboboxSchedule() {        
         //Get semesters
         Set<String> semesters = department.getAllSemesters();
         for (String semester : semesters) {
             cbSchedule.addItem(semester);
         }
         cbSchedule.setSelectedIndex(0); 
-        
+    }
+    
+    public void populateComboboxCourse() {       
         //Get Courses
-        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); 
-        for (FacultyAssignment fa : assignments) {
+        cbCourse.removeAllItems();
+        String semester = cbSchedule.getSelectedItem().toString().trim();
+        
+        ArrayList<FacultyAssignment> facultyAssignments = this.facultyProfile.getFacultyassignments(); 
+        for (FacultyAssignment fa : facultyAssignments) {
             CourseOffer co = fa.getCourseOffer();   
-            cbCourse.addItem(co.getCourseNumber());             
+            if (semester == co.getCourseschedule().getSemester()) {
+                cbCourse.addItem(co.getCourseNumber());   
+            }
         }
-        cbCourse.setSelectedIndex(0); 
+        if (cbCourse.getItemCount() > 0) {
+            cbCourse.setSelectedIndex(0);
+        }
     }
      
     public void populateTableHeader() {        
@@ -87,48 +98,53 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         column.setMaxWidth(0);
         column.setPreferredWidth(0);
         column.setWidth(0); 
+        
+        //Reset textbox
+        tbClassGPA.setText("0.0");
                       
-        //Get an arrey of SeatAssignments    
-        String semester = cbSchedule.getSelectedItem().toString().trim();
-        String number = cbCourse.getSelectedItem().toString().trim();
-        CourseOffer co = department.getCourseSchedule(semester).getCourseOfferByNumber(number);
-        
-        //Use to calaculate class score
-        int rank = 1;
-        int studentCount = 0;
-        float totalGrade = 0;
-               
-        //From seat assignments get students
-        ArrayList<SeatAssignment> allSeatAssignments = co.getSeatAssignments();
-        if (allSeatAssignments == null) {
-             return;
-        }           
-        
-        //Sort for ranking
-        //AI helped with this, I did not know sort code
-        allSeatAssignments.sort((sa1, sa2) -> {
-            float score1 = sa1.getGrade();
-            float score2 = sa2.getGrade();
-            return Float.compare(score2, score1);
-        });  
-        
-        for (SeatAssignment sa : allSeatAssignments) {        
-            Object[] row = new Object[4];
-                        
-            row[0] = sa.getStudentProfile().getPerson().getName();  //Student
-            row[1] = rank; //Rank
-            row[2] = String.valueOf(sa.getGrade());  //GPA
-            row[3] = sa.getSeat().getNumber();  //Seat Count (hidden)
+        //Get an arrey of SeatAssignments 
+        if (cbCourse.getItemCount() > 0) {
+            String semester = cbSchedule.getSelectedItem().toString().trim();
+            String number = cbCourse.getSelectedItem().toString().trim();
+            CourseOffer co = department.getCourseSchedule(semester).getCourseOfferByNumber(number);
 
-            model.addRow(row);    
-            rank = rank +1;
-            studentCount = studentCount + 1;
-            totalGrade = totalGrade + sa.getGrade();            
-        } 
-        
-        float classGrade = totalGrade / studentCount;
-        String formattedGrade = String.format("%.2f", classGrade);
-        tbClassGPA.setText(String.valueOf(formattedGrade));
+            //Use to calaculate class score
+            int rank = 1;
+            int studentCount = 0;
+            float totalGrade = 0;
+
+            //From seat assignments get students
+            ArrayList<SeatAssignment> allSeatAssignments = co.getSeatAssignments();
+            if (allSeatAssignments == null) {
+                 return;
+            }           
+
+            //Sort for ranking
+            //AI helped with this, I did not know sort code
+            allSeatAssignments.sort((sa1, sa2) -> {
+                float score1 = sa1.getGrade();
+                float score2 = sa2.getGrade();
+                return Float.compare(score2, score1);
+            });  
+
+            for (SeatAssignment sa : allSeatAssignments) {        
+                Object[] row = new Object[4];
+
+                row[0] = sa.getStudentProfile().getPerson().getName();  //Student
+                row[1] = rank; //Rank
+                row[2] = String.valueOf(sa.getGrade());  //GPA
+                row[3] = sa.getSeat().getNumber();  //Seat Count (hidden)
+
+                model.addRow(row);    
+                rank = rank +1;
+                studentCount = studentCount + 1;
+                totalGrade = totalGrade + sa.getGrade();            
+            } 
+
+            float classGrade = totalGrade / studentCount;
+            String formattedGrade = String.format("%.2f", classGrade);
+            tbClassGPA.setText(String.valueOf(formattedGrade));
+        }
     }
     
     public void populateTableDetail() {        
@@ -332,9 +348,7 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.removeAll();
-
         FacultyWorkAreaJPanel aos = new FacultyWorkAreaJPanel(business, facultyProfile, CardSequencePanel);
-
         CardSequencePanel.add("faculty", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_BackActionPerformed
@@ -351,12 +365,12 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
 
     private void cbScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbScheduleActionPerformed
         // TODO add your handling code here:
-        //AI - Helped manage the event
-        if (evt.getActionCommand().equals("comboBoxEdited") || evt.getActionCommand().equals("comboBoxChanged")) {
-        return;
-        }
+        if (!isInitialized) {
+                return; 
+        }        
+        populateComboboxCourse();
         resetUpdateSection();  
-        populateTableHeader();
+        populateTableHeader();         
     }//GEN-LAST:event_cbScheduleActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -364,6 +378,33 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         //saveDetail();
         //Save all of the values in the table
         DefaultTableModel model = (DefaultTableModel) tblDetail.getModel();
+        
+        //Before saving anything, make sure the grades are all valid numbers
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object gradeValue = tblDetail.getValueAt(i, 1);
+            String name = tblDetail.getValueAt(i, 0).toString().trim();
+            String gradeStr = String.valueOf(gradeValue).trim(); 
+            float grade;
+        
+            //Test for empty
+            if (gradeStr.isEmpty() || name.isEmpty()) { 
+                JOptionPane.showMessageDialog(null, "Please make sure all assignments have a name & grade!", "Warning", JOptionPane.WARNING_MESSAGE);           
+                return;
+            }   
+            //Test for number
+            try {
+                Float.parseFloat(gradeStr);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Please make sure all assignments have a numeric grade!", "Warning", JOptionPane.WARNING_MESSAGE);           
+                return;
+            }
+            //Test for grade range, 0 to 5
+            grade = Float.parseFloat(gradeStr);
+            if (grade < 0.0f || grade > 5.0f) {
+                JOptionPane.showMessageDialog(null, "Grades must be between 0 and 120!", "Warning", JOptionPane.WARNING_MESSAGE);           
+                return;
+            }            
+        }       
                 
         for (int i = 0; i < model.getRowCount(); i++) {
             Assignment a = currentAssignments.get(i);
@@ -435,10 +476,9 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
 
     private void cbCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCourseActionPerformed
         // TODO add your handling code here:
-        //AI - Helped manage the event
-        if (evt.getActionCommand().equals("comboBoxEdited") || evt.getActionCommand().equals("comboBoxChanged")) {
-            return;
-        }
+        if (!isInitialized) {
+                return; 
+        }   
         resetUpdateSection();  
         populateTableHeader();
     }//GEN-LAST:event_cbCourseActionPerformed

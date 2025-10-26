@@ -4,6 +4,12 @@
  */
 package UserInterface.WorkAreas.RegistrarRole;
 
+import University.Persona.Registrar.RegistrarDirectory;
+import University.Persona.Registrar.RegistrarProfile;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author jingyangwang
@@ -13,8 +19,20 @@ public class RegistrarProfileManagementJPanel extends javax.swing.JPanel {
     /**
      * Creates new form RegistrarProfileManagementJPanel
      */
-    public RegistrarProfileManagementJPanel() {
+    
+    RegistrarProfile registrarProfile;
+    JPanel CardSequencePanel;
+    
+    public RegistrarProfileManagementJPanel(JPanel csp,RegistrarProfile rp) {
+        
+        CardSequencePanel = csp;
+        registrarProfile = rp;
+        
         initComponents();
+        
+        //display pre-existing registrar information on fields
+        display();
+        setviewMode();
     }
 
     /**
@@ -26,19 +44,185 @@ public class RegistrarProfileManagementJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitle = new javax.swing.JLabel();
+        lblOfficeHour = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblPhone = new javax.swing.JLabel();
+        fieldOfficeHour = new javax.swing.JTextField();
+        fieldEmail = new javax.swing.JTextField();
+        fieldPhone = new javax.swing.JTextField();
+        btnSave = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+
+        lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 15)); // NOI18N
+        lblTitle.setText("Registrar Profile Management");
+
+        lblOfficeHour.setText("Office Hour");
+
+        lblEmail.setText("Email");
+
+        lblPhone.setText("Phone");
+
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnBack.setText("<<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(btnBack)
+                        .addGap(111, 111, 111)
+                        .addComponent(lblTitle))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnSave)
+                                .addGap(192, 192, 192)
+                                .addComponent(btnUpdate))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblEmail)
+                                    .addComponent(lblOfficeHour)
+                                    .addComponent(lblPhone))
+                                .addGap(84, 84, 84)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(fieldOfficeHour)
+                                    .addComponent(fieldEmail)
+                                    .addComponent(fieldPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))))))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(lblTitle))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(btnBack)))
+                .addGap(58, 58, 58)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblOfficeHour)
+                    .addComponent(fieldOfficeHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmail)
+                    .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPhone)
+                    .addComponent(fieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave)
+                    .addComponent(btnUpdate))
+                .addGap(68, 68, 68))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        //remove current jpanel
+        CardSequencePanel.remove(this);
+        
+        CardLayout layout = (CardLayout)CardSequencePanel.getLayout();
+        //display the previous one
+        layout.previous(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        //collecst all fields filled 
+        String officeHour = fieldOfficeHour.getText();
+        String email = fieldEmail.getText();
+        String phone = fieldPhone.getText();
+        //check if fields ara empty 
+        if(officeHour.isBlank()|| email.isBlank()||phone.isBlank())
+        {
+            JOptionPane.showMessageDialog(null, "All text are mandatory", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        //store the information in a variable
+        registrarProfile.setOfficeHours(officeHour);
+        registrarProfile.setEmail(email);
+        registrarProfile.setPhone(phone);
+        
+        //pop-up successful message
+            JOptionPane.showMessageDialog(null, "Registrar Profile updated successfully.","Information",JOptionPane.INFORMATION_MESSAGE);
+        
+        setviewMode();
+      
+          
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        setEditMode();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JTextField fieldEmail;
+    private javax.swing.JTextField fieldOfficeHour;
+    private javax.swing.JTextField fieldPhone;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblOfficeHour;
+    private javax.swing.JLabel lblPhone;
+    private javax.swing.JLabel lblTitle;
     // End of variables declaration//GEN-END:variables
+
+    private void display() {
+        //populate fields with demodata of person009
+        fieldOfficeHour.setText(registrarProfile.getOfficeHours());
+        fieldEmail.setText(registrarProfile.getEmail());
+        fieldPhone.setText(registrarProfile.getPhone());
+    }
+
+    private void setviewMode() {
+        //prohibit all fields to be modified except"Update"
+        fieldOfficeHour.setEnabled(false);
+        fieldEmail.setEnabled(false);
+        fieldPhone.setEnabled(false);
+        
+        btnSave.setEnabled(false);
+        btnUpdate.setEnabled(true);
+    }
+
+    private void setEditMode() {
+        //allowed all fields to be modified except "Update"button
+        fieldOfficeHour.setEnabled(true);
+        fieldEmail.setEnabled(true);
+        fieldPhone.setEnabled(true);
+        
+        btnSave.setEnabled(true);
+        btnUpdate.setEnabled(false);
+    }
 }

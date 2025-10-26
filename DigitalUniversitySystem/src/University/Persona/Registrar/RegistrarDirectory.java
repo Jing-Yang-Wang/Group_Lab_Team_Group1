@@ -8,12 +8,14 @@ import University.Department.Department;
 import University.Persona.Person;
 import java.util.ArrayList;
 
+
 /**
  *
  * @author DELL
  */
 public class RegistrarDirectory {
     
+
     Department department; 
     //collection of registrars
     ArrayList<RegistrarProfile> registrarList;
@@ -30,6 +32,7 @@ public class RegistrarDirectory {
     public RegistrarProfile newRegistrarProfile(Person p) {
 
         RegistrarProfile rp = new RegistrarProfile(p);
+        rp.setDepartment(department);
         registrarList.add(rp);
         return rp;
     }
@@ -40,7 +43,7 @@ public class RegistrarDirectory {
         registrarList.remove(p);
     }
   
- 
+    // 返回注册员列表
     public ArrayList<RegistrarProfile> getRegistrarList() {
         return registrarList;
     }
@@ -49,6 +52,7 @@ public class RegistrarDirectory {
     //find registrar by ID
     public RegistrarProfile findRegistrarById(String id) {
         for (RegistrarProfile r : registrarList) {
+            //MH 10/26 - Fixes because ID was changed to UniversityID
             if (r.getPerson().getUniversityID().equals(id)) {
                 return r;
             }
@@ -65,6 +69,11 @@ public class RegistrarDirectory {
     public int getRegistrarCount() {
         return registrarList.size();
     }
+
+    public RegistrarDirectory() {
+    this.department = null;
+    this.registrarList = new ArrayList<>();
+}
 
 }
 

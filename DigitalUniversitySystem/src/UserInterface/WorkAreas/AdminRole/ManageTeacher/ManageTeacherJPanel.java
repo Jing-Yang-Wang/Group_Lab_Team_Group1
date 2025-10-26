@@ -184,7 +184,7 @@ if (selectedRow >= 0) {
         FacultyProfile selected = facultyDirectory.findTeachingFaculty(id);
 
         if (selected != null) {
-            facultyDirectory.deletefaculty(selected); // 调用删除方法
+            facultyDirectory.deleteFaculty(selected); // 调用删除方法
             initTable(); // 刷新表格
             JOptionPane.showMessageDialog(this, "Faculty deleted successfully!");
         } else {

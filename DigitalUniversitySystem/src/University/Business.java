@@ -37,36 +37,38 @@ import java.util.ArrayList;
 public class Business {       
     //MH 10/18 - Needed for the login process
     UserAccountDirectory useraccountdirectory;
+    
     // Xieming 10/21  We can put all directories here to store can easily invoke
     PersonDirectory persondirectory;
-
     EmployeeDirectory employeedirectory;
     StudentDirectory studentdirectory;
     FacultyDirectory facultyDirectory;
+    RegistrarDirectory registrardirectory;
     
     //MH 10/20 - Added because a university is made up of departments
+    //MH 10/25 - Put this back in because it is being used by others but loaded data from the college
+
     private ArrayList<Department> departmentList;
     //MH 10/21 - Swapped to college to store departments   
     College college;
     
+    private StudentProfile defaultStudent;//用于保存默认测试学生(Used to save the default test student)
     
     public Business() {
         this.useraccountdirectory = new UserAccountDirectory();
-        //MH 10/20 - Added because a university is made up of departments
-        //this.departmentList = new ArrayList<>();   
+        
+        // Xieming 10/21 add the directories       
+        this.persondirectory = new PersonDirectory();
+        this.employeedirectory = new EmployeeDirectory();
+        this.studentdirectory = new StudentDirectory(null); 
+        this.facultyDirectory = new FacultyDirectory();
+        this.registrardirectory = new RegistrarDirectory();
+        
         //MH 10/21 - Swapped to college to store departments  
         this.college = new College("University System");
         
-        // Xieming 10/21 add the directories       
-        this.persondirectory=new PersonDirectory();
-        this.useraccountdirectory = new UserAccountDirectory();
-        this.persondirectory = new PersonDirectory();
-        
-        this.departmentList = new ArrayList<>();
-        
-        
-        
-        
+        //MH 10/25 - Loading data from the college
+        this.departmentList = this.college.getDepartments();        
     }
        
     public UserAccountDirectory getUserAccountDirectory() {
@@ -80,44 +82,19 @@ public class Business {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        /*
-        Business business = new Business();
-        Department department = new Department("Information Systems");
-        
-        CourseCatalog coursecatalog = department.getCourseCatalog();        
-        Course course = coursecatalog.newCourse("app eng", "info 5100", 4);        
-        CourseSchedule courseschedule = department.newCourseSchedule("Fall2020");
+        //MH - Add code to add data was moved to ConfirgureABusiness
+    }    
 
-        CourseOffer courseoffer = courseschedule.newCourseOffer("info 5100");
-        if (courseoffer==null)return;
-        courseoffer.generatSeats(10);
-        
-        PersonDirectory pd = department.getPersonDirectory();
-        Person person = pd.newPerson("0112303");
-        
-        StudentDirectory sd = department.getStudentDirectory();
-        StudentProfile student = sd.newStudentProfile(person);
-        
-        CourseLoad courseload = student.newCourseLoad("Fall2020"); //        
-        courseload.newSeatAssignment(courseoffer); //register student in class
-        
-        int total = department.calculateRevenuesBySemester("Fall2020");
-        
-        //MH 10/20 - Added because a university is made up of departments
-        business.addDepartment(department);      
-        //System.out.print("Total: " + total);        
-*/
-    }   
-        
-    //MH 10/20 - Added because a university is made up of departments
-    //MH 10/21 - Swapped to college to store departments
-    //public void addDepartment(Department department) {
-    //    this.departmentList.add(department);
-    //}
+    public StudentProfile getDefaultStudent() {
+        return defaultStudent;
+    }
+
+    public void setDefaultStudent(StudentProfile defaultStudent) {
+        this.defaultStudent = defaultStudent;
+    }
+
     
-    
-    
-     public UserAccountDirectory getUseraccountdirectory() {
+    public UserAccountDirectory getUseraccountdirectory() {
         return useraccountdirectory;
     }
 
@@ -136,7 +113,6 @@ public class Business {
     public ArrayList<Department> getDepartmentList() {
         return this.college.getDepartments();
     }
-    
     
     public EmployeeDirectory getEmployeedirectory() {
         return employeedirectory;
@@ -162,6 +138,15 @@ public class Business {
         this.facultyDirectory = facultyDirectory;
     }
     
+    public RegistrarDirectory getRegistrardirectory() {
+        return registrardirectory;
+    }
+
+    public void setRegistrardirectory(RegistrarDirectory registrardirectory) {
+        this.registrardirectory = registrardirectory;
+    }
+    
+    //MH 10/25 - Fixing issues where old version of code was used from before department was moved to college
     // Get StudentDirectory from the first department
     public StudentDirectory getStudentDirectory() {
         if (departmentList != null && !departmentList.isEmpty()) {
@@ -178,22 +163,15 @@ public class Business {
         return null;
     }
 
-    // Xieming 10/21  We can put all directories here to store can easily invoke
-    //MH 10/21 - Swapped to college to store departments
-    //public void setDepartmentList(ArrayList<Department> departmentList) {
-    //    this.departmentList = departmentList;
-    //}
-
     public College getCollege() {
         return college;
     }
-    public RegistrarDirectory getRegistrardirectory() {
-        return registrardirectory;
-    }
-
-    public void setRegistrardirectory(RegistrarDirectory registrardirectory) {
-        this.registrardirectory = registrardirectory;
-    }
-    RegistrarDirectory registrardirectory;
     
+    //For easy access, add a method to get the first department
+    public Department getFirstDepartment() {
+        if (departmentList != null && !departmentList.isEmpty()) {
+            return departmentList.get(0);
+        }
+        return null;
+    }
 }

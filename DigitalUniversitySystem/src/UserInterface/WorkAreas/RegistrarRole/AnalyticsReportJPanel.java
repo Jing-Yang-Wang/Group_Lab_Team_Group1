@@ -4,6 +4,14 @@
  */
 package UserInterface.WorkAreas.RegistrarRole;
 
+import University.CourseSchedule.CourseOffer;
+import University.CourseSchedule.CourseSchedule;
+import University.Department.Department;
+import University.Persona.Registrar.RegistrarProfile;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author jingyangwang
@@ -13,8 +21,20 @@ public class AnalyticsReportJPanel extends javax.swing.JPanel {
     /**
      * Creates new form AnalyticsReportJPanel
      */
-    public AnalyticsReportJPanel() {
+    JPanel CardSequencePanel;
+    RegistrarProfile registrarProfile;
+    
+    public AnalyticsReportJPanel(JPanel CardSequencePanel,RegistrarProfile rp) {
+        
+        this.CardSequencePanel = CardSequencePanel;
+        registrarProfile = rp;
+        
         initComponents();
+        
+        Department department = registrarProfile.getDepartment(); 
+        
+        populateAnalyticsTable(department);
+        
     }
 
     /**
@@ -26,19 +46,126 @@ public class AnalyticsReportJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnBack = new javax.swing.JButton();
+        lblSelectDepartment = new javax.swing.JLabel();
+        comboDepartment = new javax.swing.JComboBox<>();
+        lblTitle = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAnalytics = new javax.swing.JTable();
+
+        setBackground(new java.awt.Color(204, 255, 204));
+
+        btnBack.setText("<<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        lblSelectDepartment.setText("Select an Department ");
+
+        comboDepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Information System", " " }));
+
+        lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 15)); // NOI18N
+        lblTitle.setText("Analytics Report ");
+
+        tblAnalytics.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Semester", "Course Number", "Course Name", "Faculty", "Capacity", "Enrolled ", "Avg GPA", "Letter Grade"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblAnalytics);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addGap(227, 227, 227)
+                        .addComponent(lblTitle))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblSelectDepartment)
+                        .addGap(31, 31, 31)
+                        .addComponent(comboDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(364, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(btnBack))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(lblTitle)))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblSelectDepartment)
+                    .addComponent(comboDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(62, 62, 62)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(131, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        //remove current jpanel
+        CardSequencePanel.remove(this);
+        
+        CardLayout layout = (CardLayout)CardSequencePanel.getLayout();
+        //display the previous one
+        layout.previous(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JComboBox<String> comboDepartment;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblSelectDepartment;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblAnalytics;
     // End of variables declaration//GEN-END:variables
+
+    private void populateAnalyticsTable(Department department) {
+        
+        DefaultTableModel model = (DefaultTableModel) tblAnalytics.getModel();
+        //clean the table to 0
+        model.setRowCount(0);
+
+        //fill the table with every course offer
+        for (CourseOffer co : department.getAllCourseOffers()) {
+            Object[] row = new Object[8];
+            row[0] = co.getCourseSchedule().getSemester();
+            row[1] = co.getCourseNumber();
+            row[2] = co.getSubjectCourse().getCourseName();
+            //MH 10/26 - Fixes because ID was changed to UniversityID
+            row[3] = co.getFacultyProfile().getPerson().getUniversityID(); 
+            row[4] = co.getSeatCount();
+            row[5] = co.getEnrolledStudents().size();   
+            row[6] = co.getAverageCourseGrade();
+            row[7] = co.getAverageGradeAsLetter();
+            
+            model.addRow(row);
+        }
+    }
 }
+

@@ -163,12 +163,12 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
             StudentProfile selected = studentDirectory.findStudent(Id);
             
             if(selected != null){
-                studentDirectory.deletestudent(selected);
+                studentDirectory.deleteStudent(selected);
                 initTable();
                 JOptionPane.showMessageDialog(this, "Student deleted successfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "Student not found!");
-            }
+            }   
         }
     } else {
         JOptionPane.showMessageDialog(this, "Please select an Student to delete!");
@@ -193,8 +193,8 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
          model.setRowCount(0);
 
          // Add null check to prevent NullPointerException
-         if (studentDirectory != null && studentDirectory.getStudentlist() != null) {
-             for (StudentProfile sp : studentDirectory.getStudentlist()) {
+         if (studentDirectory != null && studentDirectory.getStudentList() != null) {
+             for (StudentProfile sp : studentDirectory.getStudentList()) {
                  if (sp != null && sp.getPerson() != null) {
                      Object[] row = new Object[4]; 
                      row[0] = sp.getPerson().getUniversityID();

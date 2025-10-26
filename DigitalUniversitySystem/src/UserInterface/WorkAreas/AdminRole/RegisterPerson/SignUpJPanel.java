@@ -207,8 +207,14 @@ public class SignUpJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Email already exists! Registration failed.");
             return;
         } else {     // no email exists, so create a new person
+
             p=personDirectory.newPerson(email);
         
+
+            //MH 10/25 - Please update to use the fixed newPerson(String id, String name, String email)
+            //p=personDirectory.newPerson(email);
+        }
+
         //MH 10/22 - Commented out so app can compile
         //boolean emailExists = personDirectory.personlist.stream().anyMatch(person -> person.getEmail().equals(p.getEmail()));
         //if (emailExists) {
@@ -259,7 +265,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
             fieldEmail.setText("");
         }}
     }//GEN-LAST:event_SaveActionPerformed
-
+    
     private void RoleComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoleComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RoleComboActionPerformed

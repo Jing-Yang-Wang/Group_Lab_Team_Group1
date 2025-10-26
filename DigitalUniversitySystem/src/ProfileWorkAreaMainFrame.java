@@ -17,11 +17,12 @@ import University.Persona.UserAccountDirectory;
 import University.Persona.Employee.EmployeeProfile;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentProfile;
-
+import University.Persona.Registrar.RegistrarProfile;
 
 import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+import UserInterface.WorkAreas.RegistrarRole.RegistrarWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**
@@ -30,7 +31,7 @@ import javax.swing.JPanel;
  */
 public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
-    Business business;
+    Business business;  
     Department department;
 
     /**
@@ -40,11 +41,13 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
     public ProfileWorkAreaMainFrame() {
         initComponents();                
         business = ConfigureABusiness.initialize();
-        
+
         // Initialize department from business
-        if (business != null && business.getAllDepartments() != null && !business.getAllDepartments().isEmpty()) {
-            department = business.getAllDepartments().get(0); // Get the first department
+        //MH 10/25 - Update to use the right method for getting the department list
+        if (business != null && business.getDepartmentList() != null && !business.getDepartmentList().isEmpty()) {
+            department = business.getDepartmentList().get(0); // Get the first department
         }
+
 
     }
 
@@ -160,6 +163,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         StudentWorkAreaJPanel studentworkareajpanel;
         FacultyWorkAreaJPanel facultyworkarea;
         AdminRoleWorkAreaJPanel adminworkarea;
+        RegistrarWorkAreaJPanel registrarworkarea;
         String r = useraccount.getRole();
         Profile profile = useraccount.getAssociatedPersonProfile();
         
@@ -168,29 +172,38 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         if (profile instanceof EmployeeProfile) {
 
-            adminworkarea = new AdminRoleWorkAreaJPanel(business, CardSequencePanel);
+            adminworkarea = new AdminRoleWorkAreaJPanel(business, department, CardSequencePanel);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("Admin", adminworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
         }
         
         if (profile instanceof StudentProfile) {
-
             StudentProfile spp = (StudentProfile) profile;
-            studentworkareajpanel = new StudentWorkAreaJPanel(business, spp, CardSequencePanel);
+            
+            // 使用统一的构造函数调用
+            studentworkareajpanel = new StudentWorkAreaJPanel(CardSequencePanel, business, spp, department);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("student", studentworkareajpanel);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
         }
 
-       if (profile instanceof FacultyProfile) {
+        if (profile instanceof FacultyProfile) {
            
             FacultyProfile fpp = (FacultyProfile) profile;         
             facultyworkarea = new FacultyWorkAreaJPanel(business, fpp, CardSequencePanel);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("faculty", facultyworkarea);
+            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
+        }
+       
+        if (profile instanceof RegistrarProfile) {
+           
+            RegistrarProfile rp = (RegistrarProfile) profile;         
+            registrarworkarea = new RegistrarWorkAreaJPanel(business, rp, CardSequencePanel);
+            CardSequencePanel.removeAll();
+            CardSequencePanel.add("registrar", registrarworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }

@@ -1,52 +1,49 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package University.CourseCatalog;
 
-/**
- *
- * @author kal bugrara
- */
 public class Course {
 
-    String number;
-    String name;
-    int credits;
-    int price = 1500; //per credit hour
-
-
-
-    public Course(String n, String numb, int ch) {
-        name = n;
-        number = numb;
-        credits = ch;
-
+    //成员变量
+    private String courseNumber;   // 课程编号
+    private String courseName;     // 课程名称
+    private int credits;           // 学分
+    private int price = 1500;      // 每学分价格
+String name;
+    //构造方法
+    public Course(String courseNumber, String courseName, int credits) {
+        this.courseNumber = courseNumber;
+        this.courseName = courseName;
+        this.credits = credits;
     }
 
+    //Getter和Setter
     public String getCourseNumber() {
-        return number;
+        return courseNumber;
     }
 
-    public int getCoursePrice() {
-        return price * credits;
+    public void setCourseNumber(String courseNumber) {
+        this.courseNumber = courseNumber;
+    }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public int getCredits() {
         return credits;
-    
     }
-    
-    //MH 10/20 - Added because I need to display
-    public String getName() {
-        return name;
+
+    public void setCredits(int credits) {
+        this.credits = credits;
     }
 
     public int getPrice() {
         return price;
     }
+
 
     
     // XM 10/23
@@ -54,13 +51,37 @@ public class Course {
     public String toString() {
         return name;
     }
+
+ 
+    //MH 10/26 - Fixed after the names were changed
+
     public void setNumber(String number) {
-        this.number = number;
+        this.courseNumber = number;
     }
 
     public void setName(String name) {
+
         this.name = name;
 
+
+        this.courseName = name;
+
     }
-  
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    //计算课程总价
+    public int getTotalCoursePrice() {
+        return price * credits;
+
+    }
+
+    
+    //打印信息
+//    @Override
+//    public String toString() {
+//        return courseNumber + " - " + courseName + " (" + credits + "cr)";
+//    }
 }
