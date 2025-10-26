@@ -36,6 +36,14 @@ public class CourseSchedule {
         schedule.add(co);
         return co;
     }
+    
+    //MH 10/26 - Added to fix issue with version above.
+    public CourseOffer newCourseOfferByCourse(Course c) {
+        CourseOffer co = new CourseOffer(c);
+        co.setCourseSchedule(this); 
+        schedule.add(co);
+        return co;
+    }
 
     //删除某个课程 Offer
     public void deleteCourseOffer(CourseOffer co) {
@@ -92,5 +100,9 @@ public class CourseSchedule {
             }
         }
         return filteredOffers;
+    }
+
+    public CourseOffer newCourseOfferByCours(Course course1) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

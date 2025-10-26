@@ -77,7 +77,7 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         ArrayList<FacultyAssignment> facultyAssignments = this.facultyProfile.getFacultyassignments(); 
         for (FacultyAssignment fa : facultyAssignments) {
             CourseOffer co = fa.getCourseOffer();   
-            if (semester == co.getCourseSchedule().getSemester()) {
+            if (semester == co.getCourseschedule().getSemester()) {
                 cbCourse.addItem(co.getCourseNumber());   
             }
         }
