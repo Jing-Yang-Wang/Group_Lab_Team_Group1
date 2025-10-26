@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  */
 public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
-    Business business;
+    Business business;  
     Department department;
 
     /**
@@ -40,12 +40,13 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
     public ProfileWorkAreaMainFrame() {
         initComponents();                
         business = ConfigureABusiness.initialize();
-        
+
         // Initialize department from business
         //MH 10/25 - Update to use the right method for getting the department list
         if (business != null && business.getDepartmentList() != null && !business.getDepartmentList().isEmpty()) {
             department = business.getDepartmentList().get(0); // Get the first department
         }
+
 
     }
 
@@ -177,13 +178,13 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         }
         
         if (profile instanceof StudentProfile) {
-
             StudentProfile spp = (StudentProfile) profile;
-            studentworkareajpanel = new StudentWorkAreaJPanel(business, spp, CardSequencePanel);
+            
+            // 使用统一的构造函数调用
+            studentworkareajpanel = new StudentWorkAreaJPanel(CardSequencePanel, business, spp, department);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("student", studentworkareajpanel);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
         }
 
        if (profile instanceof FacultyProfile) {
@@ -194,7 +195,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             CardSequencePanel.add("faculty", facultyworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
-        }
+       }
 
 
     }//GEN-LAST:event_LoginButtonActionPerformed

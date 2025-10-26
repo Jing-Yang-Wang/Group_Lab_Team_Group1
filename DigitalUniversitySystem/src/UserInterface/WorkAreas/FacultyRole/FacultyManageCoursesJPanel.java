@@ -85,7 +85,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
 
             Object[] row = new Object[6]; 
             row[0] = co.getCourseNumber();                
-            row[1] = c.getCourseName(); 
+            row[1] = c.getCourseName();
+
             row[2] = cs.getSemester();//semester;
             row[3] = String.valueOf(co.getSeatCount());
             row[4] = co.getSyllabus();
@@ -258,9 +259,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.removeAll();
-
         FacultyWorkAreaJPanel aos = new FacultyWorkAreaJPanel(business, facultyProfile, CardSequencePanel);
-
         CardSequencePanel.add("faculty", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -370,8 +369,8 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         CourseSchedule cs = department.findCourseScheduleByCourseOffer(co);
         
         //Write data
-        c.setNumber(number);
-        c.setName(name);      
+        c.setCourseNumber(number);
+        c.setCourseName(name);      
         co.setEnrollmentOpen(enrollmentOpen);
         co.setSyllabus(syllabus);  
         co.generateSeats(seats);

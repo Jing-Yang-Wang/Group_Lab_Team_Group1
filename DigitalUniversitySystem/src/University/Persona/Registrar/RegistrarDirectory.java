@@ -70,5 +70,10 @@ public class RegistrarDirectory {
         return registrarList.size();
     }
 
+    public RegistrarDirectory() {
+    this.department = null;
+    this.registrarList = new ArrayList<>();
+}
+
 }
 

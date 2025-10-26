@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package University.CourseSchedule;
 
 import University.CourseCatalog.Course;
@@ -11,94 +6,86 @@ import University.Persona.Faculty.FacultyProfile;
 import java.util.ArrayList;
 
 /**
- *
+ * CourseSchedule 代表一个学期的课程安排（包含所有课程的 CourseOffer）
+ * 一个 Department 会有多个 CourseSchedule，例如 “Fall2024”、“Spring2025” 等。
  * @author kal bugrara
  */
-
-//all courses offered given a semester
 public class CourseSchedule {
-    
-    private ArrayList<CourseOffer> schedule;      
-    private CourseCatalog coursecatalog;                
-    private String semester;
 
-    public CourseSchedule(String semester, CourseCatalog cc) {
-        
-        schedule = new ArrayList<>();
-        this.semester = semester;
-        coursecatalog = cc;
-        
+    private CourseCatalog coursecatalog;      // 对应课程目录
+    private ArrayList<CourseOffer> schedule;  // 当前学期所有课程 Offer
+    private String semester;                  // 当前学期名称
 
+    //构造方法
+    public CourseSchedule(String s, CourseCatalog cc) {
+        this.semester = s;
+        this.coursecatalog = cc;
+        this.schedule = new ArrayList<>();
     }
 
-    
-    //add courseoffer method
+    //创建新的课程 Offer（从 CourseCatalog 中找到课程对象）
     public CourseOffer newCourseOffer(String courseNumber) {
-        
         Course c = coursecatalog.getCourseByNumber(courseNumber);
-            if(c == null) {
-                System.out.println("Course not found: " + courseNumber);
-                return null;
-            }
-            
-            CourseOffer co = new CourseOffer(c);
-            co.setCourseSchedule(this);
-            schedule.add(co);
-            return co;
+        if (c == null) {
+            System.out.println("Course not found: " + courseNumber);
+            return null;
+        }
+
+        CourseOffer co = new CourseOffer(c);
+        co.setCourseSchedule(this); // 保留另一分支中的逻辑
+        schedule.add(co);
+        return co;
     }
-    
-    //delete courseoffer method
+
+    //删除某个课程 Offer
     public void deleteCourseOffer(CourseOffer co) {
         schedule.remove(co);
     }
-    
-    
-    public CourseOffer getCourseOfferByNumber(String courseNumber) {
-        //在course schedule里遍历course offer
-        for (CourseOffer co : schedule) {
 
-            if (co.getCourseNumber().equals(courseNumber)) {
+    //根据课程号查找课程Offer
+    public CourseOffer getCourseOfferByNumber(String n) {
+        for (CourseOffer co : schedule) {
+            if (co.getCourseNumber().equals(n)) {
                 return co;
             }
         }
         return null;
     }
-    
-    //calculate total revenue method
+
+    //计算所有课程的总收入
     public int calculateTotalRevenues() {
         int sum = 0;
-        
         for (CourseOffer co : schedule) {
-
-            sum = sum + co.getTotalCourseRevenues();
-
+            sum += co.getTotalCourseRevenues();
         }
         return sum;
     }
 
-    //MH 10/19 - Added for "Faculty Use Case"
+    //返回当前学期所有课程 Offer
+    public ArrayList<CourseOffer> getCourseOfferList() {
+        return schedule;
+    }
+
+    //用于 Faculty 模块的专用访问方法
     public ArrayList<CourseOffer> getSchedule() {
         return schedule;
     }
 
+    //获取当前学期名
     public String getSemester() {
         return semester;
     }
 
+    //设置当前学期名
     public void setSemester(String semester) {
         this.semester = semester;
     }
-    
-    
-    //MH 10/20 - Added so we can get data by faculty profile
+
+    //按教师过滤课程Offer（Faculty 专用功能）
     public ArrayList<CourseOffer> filterScheduleByFaculty(FacultyProfile fp) {
         ArrayList<CourseOffer> filteredOffers = new ArrayList<>();
-        
-        if (fp == null) {
-            return filteredOffers; 
-        }
+        if (fp == null) return filteredOffers;
 
-        //Look for matches
         for (CourseOffer co : schedule) {
             if (co.getFacultyProfile() != null && co.getFacultyProfile().equals(fp)) {
                 filteredOffers.add(co);

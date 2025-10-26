@@ -17,85 +17,75 @@ import java.util.HashMap;
  */
 public class Transcript {
 
-    StudentProfile student;
-    HashMap<String, CourseLoad> courseloadlist;
-
-    CourseLoad currentcourseload;
+    private StudentProfile student;
+    private HashMap<String, CourseLoad> courseLoadMap;
+    private CourseLoad currentCourseLoad;
 
     public Transcript(StudentProfile sp) {
-        student = sp;
-        courseloadlist = new HashMap();
-
+        this.student = sp;
+        this.courseLoadMap = new HashMap<String, CourseLoad>(); // key是学期名 value是CourseLoad对象
     }
 
     public int getStudentSatisfactionIndex() {
-        //for each courseload 
-        //get seatassigmnets; 
-        //for each seatassignment add 1 if like =true;
+        // for each courseload 
+        // get seatassigmnets; 
+        // for each seatassignment add 1 if like =true;
         return 0;
     }
 
     public CourseLoad newCourseLoad(String sem) {
-
-        currentcourseload = new CourseLoad(sem, this.student);
-        courseloadlist.put(sem, currentcourseload);
-        return currentcourseload;
+        currentCourseLoad = new CourseLoad(sem, this.student);
+        courseLoadMap.put(sem, currentCourseLoad);
+        return currentCourseLoad;
     }
 
     public CourseLoad getCurrentCourseLoad() {
-
-        return currentcourseload;
-
+        return currentCourseLoad;
     }
 
     public CourseLoad getCourseLoadBySemester(String semester) {
-
-        return courseloadlist.get(semester);
-
+        return courseLoadMap.get(semester);
     }
 
     public float getStudentTotalScore() {
-
         float sum = 0;
-
-        for (CourseLoad cl : courseloadlist.values()) {
+        for (CourseLoad cl : courseLoadMap.values()) {
             sum = sum + cl.getSemesterScore();
-
         }
         return sum;
     }
-    //sat index means student rated their courses with likes;
-    public int getStudentSatifactionIndex() {
-        ArrayList<SeatAssignment> courseregistrations = getCourseList();
-        int sum = 0;
-        for (SeatAssignment sa : courseregistrations) {
 
+    // sat index means student rated their courses with likes;
+    public int getStudentSatifactionIndex() {
+        ArrayList<SeatAssignment> courseRegistrations = getCourseList();
+        int sum = 0;
+        for (SeatAssignment sa : courseRegistrations) {
             if (sa.getLike()) {
                 sum = sum + 1;
             }
         }
         return sum;
     }
-    //generate a list of all courses taken so far (seetassignments) 
-    //from multiple semesters (course loads)
-    //from seat assignments we will be able to access the course offers
 
+    // generate a list of all courses taken so far (seetassignments) 
+    // from multiple semesters (course loads)
+    // from seat assignments we will be able to access the course offers
     public ArrayList<SeatAssignment> getCourseList() {
-        ArrayList temp2;
-        temp2 = new ArrayList();
-
-        for (CourseLoad cl : courseloadlist.values()) { //extract cl list as objects --ignore label
-            temp2.addAll(cl.getSeatAssignments()); //merge one array list to another
+        ArrayList<SeatAssignment> allSeatAssignments = new ArrayList<>();
+        for (CourseLoad cl : courseLoadMap.values()) {
+            allSeatAssignments.addAll(cl.getSeatAssignments());
         }
-
-        return temp2;
-
+        return allSeatAssignments;
     }
 
-    //MH 10/22 - Was missing
+    // 返回所有学期的CourseLoad列表
+    public ArrayList<CourseLoad> getAllCourseLoads() {
+        // 创建一个新的ArrayList来存放每个学期的CourseLoad
+        return new ArrayList<>(courseLoadMap.values()); // 把HashMap中所有的value取出来
+    }
+
+    // MH 10/22 - Was missing
     public StudentProfile getStudent() {
         return student;
     }
-
-    
 }
