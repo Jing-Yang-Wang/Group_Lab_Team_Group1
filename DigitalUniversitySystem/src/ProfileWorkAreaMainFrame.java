@@ -17,11 +17,12 @@ import University.Persona.UserAccountDirectory;
 import University.Persona.Employee.EmployeeProfile;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Student.StudentProfile;
-
+import University.Persona.Registrar.RegistrarProfile;
 
 import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+import UserInterface.WorkAreas.RegistrarRole.RegistrarWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**
@@ -162,6 +163,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         StudentWorkAreaJPanel studentworkareajpanel;
         FacultyWorkAreaJPanel facultyworkarea;
         AdminRoleWorkAreaJPanel adminworkarea;
+        RegistrarWorkAreaJPanel registrarworkarea;
         String r = useraccount.getRole();
         Profile profile = useraccount.getAssociatedPersonProfile();
         
@@ -187,7 +189,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
         }
 
-       if (profile instanceof FacultyProfile) {
+        if (profile instanceof FacultyProfile) {
            
             FacultyProfile fpp = (FacultyProfile) profile;         
             facultyworkarea = new FacultyWorkAreaJPanel(business, fpp, CardSequencePanel);
@@ -195,7 +197,17 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             CardSequencePanel.add("faculty", facultyworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
-       }
+        }
+       
+        if (profile instanceof RegistrarProfile) {
+           
+            RegistrarProfile rp = (RegistrarProfile) profile;         
+            registrarworkarea = new RegistrarWorkAreaJPanel(business, rp, CardSequencePanel);
+            CardSequencePanel.removeAll();
+            CardSequencePanel.add("registrar", registrarworkarea);
+            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
+        }
 
 
     }//GEN-LAST:event_LoginButtonActionPerformed
