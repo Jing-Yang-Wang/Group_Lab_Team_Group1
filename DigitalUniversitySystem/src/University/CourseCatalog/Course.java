@@ -52,7 +52,7 @@ public class Course {
 
     public void setName(String name) {
         this.courseName = name;
-
+    }
 
     public void setPrice(int price) {
         this.price = price;

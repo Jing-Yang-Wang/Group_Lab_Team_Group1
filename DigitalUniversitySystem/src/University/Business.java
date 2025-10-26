@@ -81,31 +81,7 @@ public class Business {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Business business = new Business();
-        Department department = new Department("Information Systems");
-        business.getCollege().addDepartment(department); // Add to Department
-        
-        CourseCatalog coursecatalog = department.getCourseCatalog();
-        Course course = coursecatalog.newCourse("app eng", "info 5100", 4);
-        
-        CourseSchedule courseschedule = department.newCourseSchedule("Fall2020");
-
-        CourseOffer courseoffer = courseschedule.newCourseOffer("info 5100");
-        if (courseoffer == null) return;
-        courseoffer.generateSeats(10);
-        
-        PersonDirectory pd = department.getPersonDirectory();
-        Person person = pd.newPerson("0112303", "Person1", "0112303@gmail.com");
-        
-        StudentDirectory sd = department.getStudentDirectory();
-        StudentProfile student = sd.newStudentProfile(person);
-        
-        CourseLoad courseload = student.newCourseLoad("Fall2020"); 
-        courseload.newSeatAssignment(courseoffer); //register student in class
-        
-        int total = department.calculateRevenuesBySemester("Fall2020");
-        //System.out.print("Total: " + total);        
-
+        //MH - Add code to add data was moved to ConfirgureABusiness
     }    
 
     public StudentProfile getDefaultStudent() {

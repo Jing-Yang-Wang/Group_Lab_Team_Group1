@@ -28,15 +28,7 @@ public class Seat {
         return seatAssignment;
     }
 
-    
-    public CourseOffer getCourseOffer(){
-        return courseoffer;
-    }
-    
-    public int getCourseCredits(){
-        return courseoffer.getCreditHours();
-    }
-    
+       
     //MH 10/22 - Added because it was missing
     //MH 10/26 - Removed because a team member also added this.
     //public SeatAssignment getSeatAssignment() {
