@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package University.Persona.Student;
 
 import java.util.ArrayList;
@@ -12,7 +8,7 @@ import java.util.Date;
  *
  * @author kal bugrara
  */
-    public class StudentAccount {
+public class StudentAccount {
     //属性：余额和支付记录
     private double balance;
     private ArrayList<PaymentRecord> paymentHistory;
@@ -59,6 +55,4 @@ import java.util.Date;
     public String toString(){//返回余额及交易记录总数
         return "Balance: $" + "|" + balance + ", Transactions:" + paymentHistory.size();
     }
-    
-    
 }

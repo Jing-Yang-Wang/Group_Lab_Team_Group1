@@ -13,22 +13,30 @@ import java.util.ArrayList;
  */
 public class PersonDirectory {
     
-      ArrayList<Person> personlist ;
-    
-      public PersonDirectory (){
-          
-       personlist = new ArrayList();
+    ArrayList<Person> personlist;
 
+    public PersonDirectory() {
+        personlist = new ArrayList();
     }
 
-    public Person newPerson(String id, String name, String email) {
+    // Getter / Setter 方法
+    public ArrayList<Person> getPersonlist() {
+        return personlist;
+    }
 
+    public void setPersonlist(ArrayList<Person> personlist) {
+        this.personlist = personlist;
+    }
+
+    // 完整信息的创建方法
+    public Person newPerson(String id, String name, String email) {
         Person p = new Person(id, name, email);
         personlist.add(p);
         return p;
     }
     
-     public Person newPerson(String name) {
+    // 只有姓名的创建方法（自动生成ID）
+    public Person newPerson(String name) {
         Person p = new Person(name);
         personlist.add(p);
         return p;
@@ -40,7 +48,31 @@ public class PersonDirectory {
                 return p;
             }
         }
-            return null; //not found after going through the whole list
-         }
-    
+        return null; // not found after going through the whole list
+    }
+
+    // 添加现有Person对象
+    public void addPerson(Person p) {
+        personlist.add(p);
+    }
+
+    // 检查邮箱是否已存在
+    public boolean emailExists(String email) {
+        for (Person person : personlist) {
+            if (person.getEmail().equals(email)) { 
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 检查学号/工号是否已存在
+    public boolean universityIDExists(String universityID) {
+        for (Person person : personlist) {
+            if (person.getUniversityID().equals(universityID)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

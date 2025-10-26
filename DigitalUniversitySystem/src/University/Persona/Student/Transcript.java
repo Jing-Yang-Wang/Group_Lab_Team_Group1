@@ -23,30 +23,28 @@ public class Transcript {
 
     public Transcript(StudentProfile sp) {
         this.student = sp;
-        this.courseLoadMap = new HashMap<String, CourseLoad>();//key是学期名 value是CourseLoad对象
+        this.courseLoadMap = new HashMap<String, CourseLoad>(); // key是学期名 value是CourseLoad对象
     }
 
     public int getStudentSatisfactionIndex() {
-        //for each courseload 
-        //get seatassigmnets; 
-        //for each seatassignment add 1 if like =true;
+        // for each courseload 
+        // get seatassigmnets; 
+        // for each seatassignment add 1 if like =true;
         return 0;
     }
 
     public CourseLoad newCourseLoad(String sem) {
-        currentCourseLoad = new CourseLoad(sem);
+        currentCourseLoad = new CourseLoad(sem, this.student);
         courseLoadMap.put(sem, currentCourseLoad);
         return currentCourseLoad;
     }
 
     public CourseLoad getCurrentCourseLoad() {
         return currentCourseLoad;
-
     }
 
     public CourseLoad getCourseLoadBySemester(String semester) {
         return courseLoadMap.get(semester);
-
     }
 
     public float getStudentTotalScore() {
@@ -56,7 +54,8 @@ public class Transcript {
         }
         return sum;
     }
-    //sat index means student rated their courses with likes;
+
+    // sat index means student rated their courses with likes;
     public int getStudentSatifactionIndex() {
         ArrayList<SeatAssignment> courseRegistrations = getCourseList();
         int sum = 0;
@@ -67,22 +66,26 @@ public class Transcript {
         }
         return sum;
     }
-    //generate a list of all courses taken so far (seetassignments) 
-    //from multiple semesters (course loads)
-    //from seat assignments we will be able to access the course offers
 
+    // generate a list of all courses taken so far (seetassignments) 
+    // from multiple semesters (course loads)
+    // from seat assignments we will be able to access the course offers
     public ArrayList<SeatAssignment> getCourseList() {
-    ArrayList<SeatAssignment>allSeatAssignments = new ArrayList<>();
-    for (CourseLoad cl : courseLoadMap.values()){
-        allSeatAssignments.addAll(cl.getSeatAssignments());
-    }
-    return allSeatAssignments;
-    }
-    
-    //返回所有学期的CourseLoad列表
-    public ArrayList<CourseLoad>getAllCourseLoads(){
-        //创建一个新的ArrayList来存放每个学期的CourseLoad
-        return new ArrayList<>(courseLoadMap.values());//把HashMap中所有的value取出来
+        ArrayList<SeatAssignment> allSeatAssignments = new ArrayList<>();
+        for (CourseLoad cl : courseLoadMap.values()) {
+            allSeatAssignments.addAll(cl.getSeatAssignments());
+        }
+        return allSeatAssignments;
     }
 
+    // 返回所有学期的CourseLoad列表
+    public ArrayList<CourseLoad> getAllCourseLoads() {
+        // 创建一个新的ArrayList来存放每个学期的CourseLoad
+        return new ArrayList<>(courseLoadMap.values()); // 把HashMap中所有的value取出来
+    }
+
+    // MH 10/22 - Was missing
+    public StudentProfile getStudent() {
+        return student;
+    }
 }

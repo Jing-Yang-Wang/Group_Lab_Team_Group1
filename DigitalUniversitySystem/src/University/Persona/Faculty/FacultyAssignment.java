@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package University.Persona.Faculty;
 
 import University.CourseSchedule.CourseOffer;
@@ -12,24 +8,34 @@ import University.CourseSchedule.CourseOffer;
  * @author kal bugrara
  */
 public class FacultyAssignment {
-    double tracerating;
-    CourseOffer courseoffer;
-    FacultyProfile facultyprofile;
-    public FacultyAssignment(FacultyProfile fp, CourseOffer co){
-        courseoffer = co;
-        facultyprofile = fp;
+
+    private double tracerating;
+    private CourseOffer courseoffer;
+    private FacultyProfile facultyprofile;
+
+    // 构造方法：绑定教师与课程
+    public FacultyAssignment(FacultyProfile fp, CourseOffer co) {
+        this.courseoffer = co;
+        this.facultyprofile = fp;
     }
 
-       public double getRating(){
-        
+    // 获取教师评分
+    public double getRating() {
         return tracerating;
     }
-       public void seProfRating(double r){
-           
-           tracerating = r;
-       }
-    public FacultyProfile getFacultyProfile(){
+
+    // 设置教师评分
+    public void seProfRating(double r) {
+        tracerating = r;
+    }
+
+    // 获取教师信息
+    public FacultyProfile getFacultyProfile() {
         return facultyprofile;
     }
-    
+
+    // 获取对应的课程Offer（另一分支新增，保留兼容）
+    public CourseOffer getCourseOffer() {
+        return courseoffer;
+    }
 }

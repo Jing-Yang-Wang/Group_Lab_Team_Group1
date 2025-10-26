@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package University.Department;
 
 import University.CourseCatalog.Course;
@@ -14,156 +10,170 @@ import University.Degree.Degree;
 import University.Employer.EmployerDirectory;
 import University.Persona.Employee.EmployeeDirectory;
 import University.Persona.Faculty.FacultyDirectory;
+import University.Persona.Faculty.FacultyProfile;
 import University.Persona.PersonDirectory;
+import University.Persona.Registrar.RegistrarDirectory;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
 import University.Persona.UserAccountDirectory;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
- *
+ * Department 管理学院下的所有课程、人员、课表等。
+ * 一个 Department 维护一个 CourseCatalog（课程目录）和多个 CourseSchedule（学期课表）。
  * @author kal bugrara
  */
 public class Department {
 
-    String name;
-    CourseCatalog coursecatalog;
-    PersonDirectory persondirectory;
-    StudentDirectory studentdirectory;
-    //MH 10/18 - Added for login process
-    FacultyDirectory facultydirectory;
-    EmployeeDirectory employeedirectory;
-    //UserAccountDirectory useraccountdirectory;
-    //MH 10/18 - For getting all Course Scedules
-    CourseSchedule courseSchedule;
-    
-    EmployerDirectory employerdirectory;
-    Degree degree;
+    private String name;
+    private CourseCatalog coursecatalog;
+    private PersonDirectory persondirectory;
+    private StudentDirectory studentdirectory;
+    private FacultyDirectory facultydirectory;
+    private EmployeeDirectory employeedirectory;
+    private RegistrarDirectory registrardirectory;
+    private EmployerDirectory employerdirectory;
+    private Degree degree;
 
-    HashMap<String, CourseSchedule> mastercoursecatalog;
+    // 每个学期的课表映射表，例如 "Fall2024" → CourseSchedule
+    private HashMap<String, CourseSchedule> mastercoursecatalog;
 
+    // 构造方法
     public Department(String n) {
         name = n;
         mastercoursecatalog = new HashMap<>();
+        coursecatalog = new CourseCatalog(this);
+        studentdirectory = new StudentDirectory(this);
+        facultydirectory = new FacultyDirectory(this);
+        employeedirectory = new EmployeeDirectory(this);
+        registrardirectory = new RegistrarDirectory(this);
+        persondirectory = new PersonDirectory();
         degree = new Degree("MSIS");
-        
-        this.coursecatalog = new CourseCatalog(this);
-        this.persondirectory = new PersonDirectory();
-        this.studentdirectory = new StudentDirectory(this);
-        this.facultydirectory = new FacultyDirectory(this);
-        this.employeedirectory = new EmployeeDirectory(this);
     }
-    public void addCoreCourse(Course c){
+
+    // 添加核心课程
+    public void addCoreCourse(Course c) {
         degree.addCoreCourse(c);
-        
     }
-    
-    //MH 10/18 - Seems like this should live with the Business but leaving it here for now.
-    public EmployeeDirectory getEmployeeDirectory() {
-        return employeedirectory;
-    }
-    
-    public EmployerDirectory getEmployerDirectory() {
-        return employerdirectory;
-    }
-    
-    public void setEmployerdirectory(EmployerDirectory employerdirectory) {
-        this.employerdirectory = employerdirectory;
-    }
-    
-    public void addElectiveCourse(Course c){
+
+    // 添加选修课程
+    public void addElectiveCourse(Course c) {
         degree.addElectiveCourse(c);
-        
     }
+
     public PersonDirectory getPersonDirectory() {
         return persondirectory;
     }
-    
-    //MH 10/18 - I assume this should live here so I added it.  
+
     public FacultyDirectory getFacultyDirectory() {
         return facultydirectory;
     }
 
-    
+    public EmployeeDirectory getEmployeeDirectory() {
+        return employeedirectory;
+    }
+
+    public EmployerDirectory getEmployerDirectory() {
+        return employerdirectory;
+    }
+
+    public void setEmployerdirectory(EmployerDirectory employerdirectory) {
+        this.employerdirectory = employerdirectory;
+    }
+
+    public RegistrarDirectory getRegistrarDirectory() {
+        return registrardirectory;
+    }
+
     public StudentDirectory getStudentDirectory() {
         return studentdirectory;
     }
 
-     public CourseSchedule newCourseSchedule(String semester) {
-     CourseSchedule cs = new CourseSchedule(semester, this.coursecatalog);
-     mastercoursecatalog.put(semester, cs);
+    // 创建新的学期课表（例如 “Fall2024”）
+    public CourseSchedule newCourseSchedule(String semester) {
+        CourseSchedule cs = new CourseSchedule(semester, coursecatalog);
+        mastercoursecatalog.put(semester, cs);
         return cs;
     }
 
-   public CourseCatalog getCourseCatalog() {
-    return this.coursecatalog;
-}
-
-
+    // 获取特定学期的课表
     public CourseSchedule getCourseSchedule(String semester) {
-
         return mastercoursecatalog.get(semester);
-
     }
 
+    public CourseCatalog getCourseCatalog() {
+        return coursecatalog;
+    }
 
-    public Course newCourse(String n, String nm, int cr) {
-
-        Course c = coursecatalog.newCourse(n, nm, cr);
+    // 新建课程（添加到课程目录）
+    public Course newCourse(String number, String name, int credits) {
+        Course c = coursecatalog.newCourse(number, name, credits);
         return c;
     }
 
+    // 计算某学期的总收入
     public int calculateRevenuesBySemester(String semester) {
-
-        CourseSchedule css = mastercoursecatalog.get(semester);
-
-        return css.calculateTotalRevenues();
-
+        CourseSchedule cs = mastercoursecatalog.get(semester);
+        return cs.calculateTotalRevenues();
     }
 
+    // 获取学院名称
     public String getName() {
         return name;
     }
 
-    public void setCourseCatalog(CourseCatalog coursecatalog) {
-    this.coursecatalog = coursecatalog;
-}
-
-
-    
-    public void RegisterForAClass(String studentid, String cn, String semester) {
-
-        StudentProfile sp = studentdirectory.findStudent(studentid);
-
-        CourseLoad cl = sp.getCurrentCourseLoad();
-
-        CourseSchedule cs = mastercoursecatalog.get(semester);
-
-        CourseOffer co = cs.getCourseOfferByNumber(cn);
-
-        co.assignEmptySeat(cl);
-
+    // 获取某学期课表（兼容老逻辑）
+    public CourseSchedule getCourseSchedule() {
+        return mastercoursecatalog.values().stream().findFirst().orElse(null);
     }
 
-        //获取所有学期开设的课程
-        public ArrayList<CourseOffer>getAllCourseOffers(){
-        ArrayList<CourseOffer>allOffers = new ArrayList<>();
-        
-        //遍历所有学期课程表 将每个课程加入列表
+    // 获取所有学期开设的课程 Offer（整合 Student & Faculty 逻辑）
+    public ArrayList<CourseOffer> getAllCourseOffers() {
+        ArrayList<CourseOffer> allOffers = new ArrayList<>();
         for (CourseSchedule cs : mastercoursecatalog.values()) {
-        if (cs != null && cs.getCourseOfferList() != null) {
-            allOffers.addAll(cs.getCourseOfferList());
-        }
+            if (cs != null && cs.getCourseOfferList() != null) {
+                allOffers.addAll(cs.getCourseOfferList());
+            }
         }
         return allOffers;
     }
-    
-    //public UserAccountDirectory getUserAccountDirectory() {
-    //    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    //}
-    
-    public CourseSchedule getCourseSchedule() {
-        return courseSchedule;
+
+    // 获取所有学期名称
+    public Set<String> getAllSemesters() {
+        return mastercoursecatalog.keySet();
+    }
+
+    // 注册课程：学生注册某门课
+    public void RegisterForAClass(String studentid, String cn, String semester) {
+        StudentProfile sp = studentdirectory.findStudent(studentid);
+        CourseLoad cl = sp.getCurrentCourseLoad();
+        CourseSchedule cs = mastercoursecatalog.get(semester);
+        CourseOffer co = cs.getCourseOfferByNumber(cn);
+        co.assignEmptySeat(cl);
+    }
+
+    // Faculty 模块辅助函数：判断教师属于哪个学院
+    public Department getDepartmentIfContainsFaculty(FacultyProfile facultyProfile) {
+        String id = facultyProfile.getPerson().getUniversityID();
+        FacultyProfile foundProfile = facultydirectory.findTeachingFaculty(id);
+        if (foundProfile != null && foundProfile.equals(facultyProfile)) {
+            return this;
+        } else {
+            return null;
+        }
+    }
+
+    // 根据课程 Offer 查找对应学期课表
+    public CourseSchedule findCourseScheduleByCourseOffer(CourseOffer courseOffer) {
+        for (CourseSchedule cs : mastercoursecatalog.values()) {
+            for (CourseOffer co : cs.getCourseOfferList()) {
+                if (co.equals(courseOffer)) {
+                    return cs;
+                }
+            }
+        }
+        return null;
     }
 }

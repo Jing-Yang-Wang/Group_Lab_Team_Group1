@@ -1,4 +1,13 @@
 /TeamGreating/nbproject/private/
 /TeamGreeting/build/
 
+<<<<<<< HEAD
 /DigitalUniversitySystem/nbproject/private/
+=======
+/TeamGreeting/dist/
+/ProfileWorkareaExample/build/
+/ProfileWorkareaExample/nbproject/private/
+/DigitalUniversitySystem/nbproject/private/
+/DigitalUniversitySystem/build/
+>>>>>>> adc0cff448d7381498a48241bb154673a268d389
+/DigitalUniversitySystem/dist/

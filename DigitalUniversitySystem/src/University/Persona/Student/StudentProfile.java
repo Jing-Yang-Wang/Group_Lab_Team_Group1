@@ -19,10 +19,12 @@ import java.util.ArrayList;
  */
 
 //MH 10/18 - Updated so it extend the profile.
+//MH 10/24 - Fixed issue with how person was stored
 public class StudentProfile extends Profile {
-    private Person person;
+    private String academicStatus;
     private Transcript transcript;
     private EmploymentHistory employmentHistory;
+    
     //扩展:学位&专业
     private String major;
     private String degree;
@@ -30,20 +32,39 @@ public class StudentProfile extends Profile {
     private double balance;
     private double outstandingTuition;
     private double paidAmount;
-    private ArrayList<PaymentRecord>paymentHistory;
+    private ArrayList<PaymentRecord> paymentHistory;
     private StudentAccount account;
     private ArrayList<CourseOffer> registeredCourseOffers = new ArrayList<>();
 
+    //MH 10/24 - Fixed issue with how person was stored
+    public Person getPerson() {
+        return super.getPerson();
+    }
+
+    public String getAcademicStatus() {
+        return academicStatus;
+    }
+
+    public void setAcademicStatus(String academicStatus) {
+        this.academicStatus = academicStatus;
+    }
+
+    public EmploymentHistory getEmploymentHistory() {
+        return employmentHistory;
+    }
+
+    public void setEmploymentHistory(EmploymentHistory employmentHistory) {
+        this.employmentHistory = employmentHistory;
+    }
+
     public StudentProfile(Person p) {
         super(p);
-        person = p;
         this.transcript = new Transcript(this);
         this.employmentHistory = new EmploymentHistory();
     }
 
-    
     public boolean isMatch(String id) {
-        return getPerson()!= null && person.getPersonId().equals(id);
+        return super.getPerson().getUniversityID().equals(id);
     }
 
     public Transcript getTranscript() {
@@ -51,26 +72,22 @@ public class StudentProfile extends Profile {
     }
 
     public CourseLoad getCourseLoadBySemester(String semester) {
-
         return transcript.getCourseLoadBySemester(semester);
     }
 
     public CourseLoad getCurrentCourseLoad() {
-
         return transcript.getCurrentCourseLoad();
     }
 
     public CourseLoad newCourseLoad(String semester) {
-
         return transcript.newCourseLoad(semester);
     }
 
     public ArrayList<SeatAssignment> getCourseList() {
-
         return transcript.getCourseList();
-
     }
 
+    // 扩展功能：学位和专业相关
     public String getMajor() {
         return major;
     }
@@ -87,6 +104,7 @@ public class StudentProfile extends Profile {
         this.degree = degree;
     }
 
+    // 扩展功能：财务相关
     public double getBalance() {
         return balance;
     }
@@ -115,34 +133,35 @@ public class StudentProfile extends Profile {
         this.paidAmount = paidAmount;
     }
     
-    public void addPaymentRecord(PaymentRecord record){
-    //如果paymentHistory还没有初始化先创建一个空列表
-    if(paymentHistory == null){
-        paymentHistory = new ArrayList<>();
+    public void addPaymentRecord(PaymentRecord record) {
+        // 如果paymentHistory还没有初始化先创建一个空列表
+        if (paymentHistory == null) {
+            paymentHistory = new ArrayList<>();
+        }
+        // 把传入的记录添加进去
+        paymentHistory.add(record);
     }
-    //把传入的记录添加进去
-    paymentHistory.add(record);
-    }
-    //MH 10/18 - Added so we get the role
-    
+
+    // 课程注册相关功能
     public ArrayList<CourseOffer> getRegisteredCourseOffers() {
-    ArrayList<CourseOffer> offers = new ArrayList<>();
-    for (SeatAssignment sa : getCourseList()) {
-        offers.add(sa.getCourseOffer());
+        ArrayList<CourseOffer> offers = new ArrayList<>();
+        for (SeatAssignment sa : getCourseList()) {
+            offers.add(sa.getCourseOffer());
+        }
+        return offers;
     }
-    return offers;
-}
 
     public void setRegisteredCourseOffers(ArrayList<CourseOffer> registeredCourseOffers) {
         this.registeredCourseOffers = registeredCourseOffers;
     }
 
     public void registerCourseOffer(CourseOffer co) {
-    if (!registeredCourseOffers.contains(co)) {
-        registeredCourseOffers.add(co);
-    }
+        if (!registeredCourseOffers.contains(co)) {
+            registeredCourseOffers.add(co);
+        }
     }
     
+    //MH 10/18 - Added so we get the role
     @Override
     public String getRole() {
         return "Student";

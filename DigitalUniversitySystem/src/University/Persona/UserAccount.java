@@ -11,6 +11,7 @@ package University.Persona;
  */
 
 import University.Workareas.Workarea;
+import java.time.LocalDateTime;
 
 
 /**
@@ -23,6 +24,9 @@ public class UserAccount {
     Profile profile;
     String username;
     String password;
+ 
+    private LocalDateTime lastActivity;
+    private LocalDateTime lastUpdate;
     
     Workarea landingworkarea;
     
@@ -38,7 +42,7 @@ public class UserAccount {
 
     
     public String getPersonId(){
-        return profile.getPerson().getPersonId();
+        return profile.getPerson().getUniversityID();
     }
     
     public boolean isMatch(String id){
@@ -47,11 +51,10 @@ public class UserAccount {
     }
         
     public boolean IsValidUser(String un, String pw){
-
         if (username.equalsIgnoreCase(un) && password.equals(pw)) return true;
         else return false;
-
     }
+    
     public String getRole(){
         return profile.getRole();
     }
@@ -60,4 +63,19 @@ public class UserAccount {
         return profile;
     }
     
+    public LocalDateTime getLastActivity() {
+        return lastActivity;
+    }
+
+    public void setLastActivity(LocalDateTime lastActivity) {
+        this.lastActivity = lastActivity;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 }

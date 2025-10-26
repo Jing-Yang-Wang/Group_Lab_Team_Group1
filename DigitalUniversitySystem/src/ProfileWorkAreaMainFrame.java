@@ -30,8 +30,8 @@ import javax.swing.JPanel;
  */
 public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
-    Business business;
-    //Department department;
+    Business business;  
+    Department department;
 
     /**
      * Creates new form PricingMainFrame
@@ -40,6 +40,13 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
     public ProfileWorkAreaMainFrame() {
         initComponents();                
         business = ConfigureABusiness.initialize();
+
+        // Initialize department from business
+        //MH 10/25 - Update to use the right method for getting the department list
+        if (business != null && business.getDepartmentList() != null && !business.getDepartmentList().isEmpty()) {
+            department = business.getDepartmentList().get(0); // Get the first department
+        }
+
 
     }
 
@@ -126,7 +133,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 153, 255));
-        jLabel3.setText("Education Going Digital .... Info 5100 ");
+        jLabel3.setText("       Education Going Digital University System   Info 5100 ");
         jLabel3.setMaximumSize(new java.awt.Dimension(600, 400));
         jLabel3.setMinimumSize(new java.awt.Dimension(600, 400));
         jLabel3.setName(""); // NOI18N
@@ -157,7 +164,9 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         AdminRoleWorkAreaJPanel adminworkarea;
         String r = useraccount.getRole();
         Profile profile = useraccount.getAssociatedPersonProfile();
-
+        
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        useraccount.setLastActivity(now);
 
         if (profile instanceof EmployeeProfile) {
 
@@ -169,28 +178,24 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         }
         
         if (profile instanceof StudentProfile) {
-       StudentProfile spp = (StudentProfile) profile;
-
-       //从business获取department
-       Department department = business.getDepartment();
-
-        //注意这里要传入四个参数
-        studentworkareajpanel = new StudentWorkAreaJPanel(CardSequencePanel, business, spp, department);
-
-        CardSequencePanel.removeAll();
-        CardSequencePanel.add("student", studentworkareajpanel);
-
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-}
-
+            StudentProfile spp = (StudentProfile) profile;
+            
+            // 使用统一的构造函数调用
+            studentworkareajpanel = new StudentWorkAreaJPanel(CardSequencePanel, business, spp, department);
+            CardSequencePanel.removeAll();
+            CardSequencePanel.add("student", studentworkareajpanel);
+            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        }
 
        if (profile instanceof FacultyProfile) {
-            facultyworkarea = new FacultyWorkAreaJPanel(business, CardSequencePanel);
+           
+            FacultyProfile fpp = (FacultyProfile) profile;         
+            facultyworkarea = new FacultyWorkAreaJPanel(business, fpp, CardSequencePanel);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("faculty", facultyworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
-        }
+       }
 
 
     }//GEN-LAST:event_LoginButtonActionPerformed

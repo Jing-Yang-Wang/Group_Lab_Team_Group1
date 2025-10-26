@@ -9,6 +9,7 @@
 package University;
 
 //MH 10/18 - Additional classes added.
+import University.College.College;
 import University.CourseCatalog.Course;
 import University.CourseCatalog.CourseCatalog;
 import University.CourseSchedule.CourseLoad;
@@ -21,10 +22,12 @@ import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.Person;
 import University.Persona.PersonDirectory;
+import University.Persona.Registrar.RegistrarDirectory;
 import University.Persona.UserAccountDirectory;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
 import University.Persona.UserAccount;
+import java.util.ArrayList;
 
 
 /**
@@ -34,11 +37,37 @@ import University.Persona.UserAccount;
 public class Business {       
     //MH 10/18 - Needed for the login process
     UserAccountDirectory useraccountdirectory;
-    private StudentProfile defaultStudent;//用于保存默认测试学生
-    private Department department;  //管理所有学院
+    
+    // Xieming 10/21  We can put all directories here to store can easily invoke
+    PersonDirectory persondirectory;
+    EmployeeDirectory employeedirectory;
+    StudentDirectory studentdirectory;
+    FacultyDirectory facultyDirectory;
+    RegistrarDirectory registrardirectory;
+    
+    //MH 10/20 - Added because a university is made up of departments
+    //MH 10/25 - Put this back in because it is being used by others but loaded data from the college
+    private ArrayList<Department> departmentList;
+    //MH 10/21 - Swapped to college to store departments   
+    College college;
+    
+    private StudentProfile defaultStudent;//用于保存默认测试学生(Used to save the default test student)
     
     public Business() {
         this.useraccountdirectory = new UserAccountDirectory();
+        
+        // Xieming 10/21 add the directories       
+        this.persondirectory = new PersonDirectory();
+        this.employeedirectory = new EmployeeDirectory();
+        this.studentdirectory = new StudentDirectory(null); 
+        this.facultyDirectory = new FacultyDirectory();
+        this.registrardirectory = new RegistrarDirectory();
+        
+        //MH 10/21 - Swapped to college to store departments  
+        this.college = new College("University System");
+        
+        //MH 10/25 - Loading data from the college
+        this.departmentList = this.college.getDepartments();        
     }
        
     public UserAccountDirectory getUserAccountDirectory() {
@@ -54,21 +83,24 @@ public class Business {
         // TODO code application logic here
         Business business = new Business();
         Department department = new Department("Information Systems");
-        CourseCatalog coursecatalog = department.getCourseCatalog();
+        business.getCollege().addDepartment(department); // Add to Department
         
+        CourseCatalog coursecatalog = department.getCourseCatalog();
         Course course = coursecatalog.newCourse("app eng", "info 5100", 4);
         
         CourseSchedule courseschedule = department.newCourseSchedule("Fall2020");
 
         CourseOffer courseoffer = courseschedule.newCourseOffer("info 5100");
-        if (courseoffer==null)return;
+        if (courseoffer == null) return;
         courseoffer.generateSeats(10);
+        
         PersonDirectory pd = department.getPersonDirectory();
-        Person person = pd.newPerson("0112303","Person1","0112303@gmail.com");
+        Person person = pd.newPerson("0112303", "Person1", "0112303@gmail.com");
+        
         StudentDirectory sd = department.getStudentDirectory();
         StudentProfile student = sd.newStudentProfile(person);
+        
         CourseLoad courseload = student.newCourseLoad("Fall2020"); 
-//        
         courseload.newSeatAssignment(courseoffer); //register student in class
         
         int total = department.calculateRevenuesBySemester("Fall2020");
@@ -84,13 +116,85 @@ public class Business {
         this.defaultStudent = defaultStudent;
     }
 
-    public Department getDepartment() {
-        return department;
+    
+    public UserAccountDirectory getUseraccountdirectory() {
+        return useraccountdirectory;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setUseraccountdirectory(UserAccountDirectory useraccountdirectory) {
+        this.useraccountdirectory = useraccountdirectory;
+    }
+
+    public PersonDirectory getPersondirectory() {
+        return persondirectory;
+    }
+
+    public void setPersondirectory(PersonDirectory persondirectory) {
+        this.persondirectory = persondirectory;
+    }
+
+    public ArrayList<Department> getDepartmentList() {
+        return this.college.getDepartments();
     }
     
+    public EmployeeDirectory getEmployeedirectory() {
+        return employeedirectory;
+    }
+
+    public void setEmployeedirectory(EmployeeDirectory employeedirectory) {
+        this.employeedirectory = employeedirectory;
+    }
+
+    public StudentDirectory getStudentdirectory() {
+        return studentdirectory;
+    }
+
+    public void setStudentdirectory(StudentDirectory studentdirectory) {
+        this.studentdirectory = studentdirectory;
+    }
+
+    public FacultyDirectory getFacultyDirectory() {
+        return facultyDirectory;
+    }
+
+    public void setFacultyDirectory(FacultyDirectory facultyDirectory) {
+        this.facultyDirectory = facultyDirectory;
+    }
     
+    public RegistrarDirectory getRegistrardirectory() {
+        return registrardirectory;
+    }
+
+    public void setRegistrardirectory(RegistrarDirectory registrardirectory) {
+        this.registrardirectory = registrardirectory;
+    }
+    
+    //MH 10/25 - Fixing issues where old version of code was used from before department was moved to college
+    // Get StudentDirectory from the first department
+    public StudentDirectory getStudentDirectory() {
+        if (departmentList != null && !departmentList.isEmpty()) {
+            return departmentList.get(0).getStudentDirectory();
+        }
+        return null;
+    }
+    
+    // Get FacultyDirectory from the first department  
+    public FacultyDirectory getFacultyDirectoryFromDepartment() {
+        if (departmentList != null && !departmentList.isEmpty()) {
+            return departmentList.get(0).getFacultyDirectory();
+        }
+        return null;
+    }
+
+    public College getCollege() {
+        return college;
+    }
+    
+    //For easy access, add a method to get the first department
+    public Department getFirstDepartment() {
+        if (departmentList != null && !departmentList.isEmpty()) {
+            return departmentList.get(0);
+        }
+        return null;
+    }
 }

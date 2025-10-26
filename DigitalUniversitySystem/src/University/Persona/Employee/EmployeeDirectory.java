@@ -38,6 +38,11 @@ public class EmployeeDirectory {
         return sp;
     }
 
+    public EmployeeDirectory() {
+    this.department = null;
+    this.employeelist = new ArrayList<>();
+}
+
     public EmployeeProfile findEmployee(String id) {
 
         for (EmployeeProfile sp : employeelist) {
@@ -48,5 +53,6 @@ public class EmployeeDirectory {
         }
             return null; //not found after going through the whole list
          }
+    
     
 }

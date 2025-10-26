@@ -15,6 +15,12 @@ import University.Department.Department;
 import University.Persona.Student.StudentProfile;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+import UserInterface.WorkAreas.StudentRole.CourseWorkManagementJPanel;
+import UserInterface.WorkAreas.StudentRole.ProfileManagementJPanel;
+import UserInterface.WorkAreas.StudentRole.GraduationAuditJPanel;
+import UserInterface.WorkAreas.StudentRole.CourseRegistrationJPanel;
+import UserInterface.WorkAreas.StudentRole.TranscriptReviewJPanel;
+import UserInterface.WorkAreas.StudentRole.FinancialManagementJPanel;
 
 /**
  *
@@ -28,12 +34,11 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     private Department department;
 
     public StudentWorkAreaJPanel(JPanel upc, Business b, StudentProfile sp, Department d) {
-        this.userProcessContainer = upc;
-        this.business = b;
-        this.student = sp;
-        this.department = d;
-        initComponents();
-
+            this.userProcessContainer = upc;
+            this.business = b;
+            this.student = sp;
+            this.department = d;
+            initComponents();
     }
 
     /**
@@ -44,6 +49,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
 
         btnCourseWorkManagement = new javax.swing.JButton();
         btnProfileManagement = new javax.swing.JButton();
@@ -149,6 +155,7 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(101, 101, 101)
+
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnTranscriptReview, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
                     .addComponent(btnProfileManagement, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
@@ -163,10 +170,12 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(309, 309, 309)
                 .addComponent(lblTitle)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+
                 .addGap(44, 44, 44)
                 .addComponent(lblTitle)
                 .addGap(55, 55, 55)
@@ -227,16 +236,15 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.show(userProcessContainer,"FinancialManagementJPanel");
     }//GEN-LAST:event_btnFinancialManagementActionPerformed
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton btnCourseRegistration;
     private javax.swing.JButton btnCourseWorkManagement;
     private javax.swing.JButton btnFinancialManagement;
     private javax.swing.JButton btnGraduationAudit;
     private javax.swing.JButton btnProfileManagement;
     private javax.swing.JButton btnTranscriptReview;
-    private javax.swing.JLabel lblTitle;
-    // End of variables declaration//GEN-END:variables
+    private javax.swing.JLabel lblTitle;          
+
+   
 
 }

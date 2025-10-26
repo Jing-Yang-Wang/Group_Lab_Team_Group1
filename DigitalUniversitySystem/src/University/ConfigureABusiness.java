@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+//MH 10/18 - Just did some basic cleanup so it'll compile.
 package University;
 
 import University.CourseCatalog.Course;
@@ -18,169 +20,184 @@ import University.Persona.UserAccount;
 import University.Persona.UserAccountDirectory;
 import University.Persona.Employee.EmployeeDirectory;
 import University.Persona.Employee.EmployeeProfile;
+import University.Persona.Faculty.FacultyAssignment;
 import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
+import University.Persona.Registrar.RegistrarDirectory;
+import University.Persona.Registrar.RegistrarProfile;
 import University.Persona.Student.PaymentRecord;
 import University.Persona.Student.StudentDirectory;
 import University.Persona.Student.StudentProfile;
-import java.util.Date; // ✅ 必须导入
+import java.util.Date;
 
 /**
+ *
+ * @author kal bugrara
  */
 public class ConfigureABusiness {
 
     public static Business initialize() {
         Business business = new Business();      
         Department department = new Department("Information Systems");
-        
-        // 绑定唯一的Department给Business
-        business.setDepartment(department);
+
+        //Add to department structure
+        business.getCollege().addDepartment(department);
+
+        //Create a person directory
+        PersonDirectory persondirectory = department.getPersonDirectory(); 
 
        
-        // 原始8人
-        PersonDirectory persondirectory = department.getPersonDirectory(); 
-        Person person001 = persondirectory.newPerson("John Smith");
-        Person person002 = persondirectory.newPerson("Gina Montana");
-        Person person003 = persondirectory.newPerson("Adam Rollen");
-        Person person004 = persondirectory.newPerson("Gina Elva");
-        Person person005 = persondirectory.newPerson("Jim Dellon");
-        Person person006 = persondirectory.newPerson("Anna Shnider");
-        Person person007 = persondirectory.newPerson("Laura Brown");
-        Person person008 = persondirectory.newPerson("Jack While");
-
-        // 补全ID防止空指针
-        person001.setId("P001"); person002.setId("P002"); person003.setId("P003");
-        person004.setId("P004"); person005.setId("P005"); person006.setId("P006");
-        person007.setId("P007"); person008.setId("P008");
-
-        // 管理员、教师、学生（原始）
-        EmployeeDirectory employeedirectory = department.getEmployeeDirectory();
-        EmployeeProfile employeeprofile0 = employeedirectory.newEmployeeProfile(person001);
-        FacultyDirectory facultydirectory = department.getFacultyDirectory();
-        FacultyProfile facultyprofile0 = facultydirectory.newFacultyProfile(person002);
-        StudentDirectory studentdirectory = department.getStudentDirectory();
-        //StudentProfile studentprofile0 = studentdirectory.newStudentProfile(person003);
-
-        UserAccountDirectory uadirectory = business.getUserAccountDirectory();
-        uadirectory.newUserAccount(employeeprofile0, "admin", "****"); 
-       //uadirectory.newUserAccount(studentprofile0, "adam", "****"); 
-        uadirectory.newUserAccount(facultyprofile0, "gina", "****"); 
+        //Original 8 people + new people
+        Person person001 = persondirectory.newPerson("U001", "John Smith", "john.smith@university.edu");
+        Person person002 = persondirectory.newPerson("U002", "Gina Montana", "gina.montana@university.edu");        //faculty1
+        Person person003 = persondirectory.newPerson("U003", "Adam Rollen", "adam.rollen@university.edu");          //student1
+        Person person004 = persondirectory.newPerson("U004", "Gina Elva", "gina.elva@university.edu");
+        Person person005 = persondirectory.newPerson("U005", "Jim Dellon", "jim.dellon@university.edu");
+        Person person006 = persondirectory.newPerson("U006", "Anna Shnider", "anna.shnider@university.edu");
+        Person person007 = persondirectory.newPerson("U007", "Laura Brown", "laura.brown@university.edu");
+        Person person008 = persondirectory.newPerson("U008", "Jack While", "jack.while@university.edu");
+        Person person009 = persondirectory.newPerson("U009", "Mia Yang", "yangwang.j@northeastern.edu");             // registrar1
+        Person person010 = persondirectory.newPerson("U010", "David Hannan", "david.hannan@university.edu");         // student2
+        Person person011 = persondirectory.newPerson("U011", "Emily Johnson", "emily.johnson@university.edu");       // student3
+        Person person012 = persondirectory.newPerson("U012", "Joshua Miller", "joshua.miller@university.edu");       // faculty2
+        Person person013 = persondirectory.newPerson("U013", "Megan Anderson", "megan.anderson@university.edu");     // faculty3
+        Person person014 = persondirectory.newPerson("U014", "Sarah Wilson", "sarah.wilson@university.edu");         // faculty4
+        Person person015 = persondirectory.newPerson("U015", "Michael Brown", "michael.brown@university.edu");       // faculty5
+        Person person016 = persondirectory.newPerson("U016", "Jessica Davis", "jessica.davis@university.edu");       // faculty6
+        Person person017 = persondirectory.newPerson("U017", "Laura Garcia", "laura.garcia@university.edu");         // faculty7
+        Person person018 = persondirectory.newPerson("U018", "Jay Chou", "jay.chou@university.edu");                 // faculty8
         
-        // 新增10学生
-        Person person009 = persondirectory.newPerson("Evelyn Zhao");
-        Person person010 = persondirectory.newPerson("Michael Chen");
-        Person person011 = persondirectory.newPerson("Linda Park");
-        Person person012 = persondirectory.newPerson("Jason Lee");
-        Person person013 = persondirectory.newPerson("Emily Davis");
-        Person person014 = persondirectory.newPerson("Kevin Liu");
-        Person person015 = persondirectory.newPerson("Sophia Wang");
-        Person person016 = persondirectory.newPerson("Daniel Brown");
-        Person person017 = persondirectory.newPerson("Olivia Zhang");
-        Person person018 = persondirectory.newPerson("William Yang");
-
-        // 给新学生设置ID
-        person009.setId("S009"); person010.setId("S010"); person011.setId("S011");
-        person012.setId("S012"); person013.setId("S013"); person014.setId("S014");
-        person015.setId("S015"); person016.setId("S016"); person017.setId("S017");
-        person018.setId("S018");
-        
-        StudentProfile s1 = studentdirectory.newStudentProfile(person009);
-        StudentProfile s2 = studentdirectory.newStudentProfile(person010);
-        StudentProfile s3 = studentdirectory.newStudentProfile(person011);
-        StudentProfile s4 = studentdirectory.newStudentProfile(person012);
-        StudentProfile s5 = studentdirectory.newStudentProfile(person013);
-        StudentProfile s6 = studentdirectory.newStudentProfile(person014);
-        StudentProfile s7 = studentdirectory.newStudentProfile(person015);
-        StudentProfile s8 = studentdirectory.newStudentProfile(person016);
-        StudentProfile s9 = studentdirectory.newStudentProfile(person017);
-        StudentProfile s10 = studentdirectory.newStudentProfile(person018);
-        
-        // 学生账号
-        uadirectory.newUserAccount(s1, "student1", "student1");
-        uadirectory.newUserAccount(s2, "student2", "student2");
-        uadirectory.newUserAccount(s3, "student3", "student3");
-        uadirectory.newUserAccount(s4, "student4", "student4");
-        uadirectory.newUserAccount(s5, "student5", "student5");
-        uadirectory.newUserAccount(s6, "student6", "student6");
-        uadirectory.newUserAccount(s7, "student7", "student7");
-        uadirectory.newUserAccount(s8, "student8", "student8");
-        uadirectory.newUserAccount(s9, "student9", "student9");
-        uadirectory.newUserAccount(s10, "student10", "student10");
-        
-        // --- 给学生添加基本个人信息 ---
-        person009.setEmail("evelyn.zhao@northeastern.edu");
-        s1.setMajor("Information Systems");
-        s1.setDegree("Master of Science");
-
-        person010.setEmail("michael.chen@northeastern.edu");
-        s2.setMajor("Information Systems");
-        s2.setDegree("Master of Science");
-
-        person011.setEmail("linda.park@northeastern.edu");
-        s3.setMajor("Information Systems");
-        s3.setDegree("Master of Science");
-
-        person012.setEmail("jason.lee@northeastern.edu");
-        s4.setMajor("Information Systems");
-        s4.setDegree("Master of Science");
-
-        person013.setEmail("emily.davis@northeastern.edu");
-        s5.setMajor("Information Systems");
-        s5.setDegree("Master of Science");
-
-        person014.setEmail("kevin.liu@northeastern.edu");
-        s6.setMajor("Information Systems");
-        s6.setDegree("Master of Science");
-
-        person015.setEmail("sophia.wang@northeastern.edu");
-        s7.setMajor("Information Systems");
-        s7.setDegree("Master of Science");
-
-        person016.setEmail("daniel.brown@northeastern.edu");
-        s8.setMajor("Information Systems");
-        s8.setDegree("Master of Science");
-
-        person017.setEmail("olivia.zhang@northeastern.edu");
-        s9.setMajor("Information Systems");
-        s9.setDegree("Master of Science");
-
-        person018.setEmail("william.yang@northeastern.edu");
-        s10.setMajor("Information Systems");
-        s10.setDegree("Master of Science");
+        //10 new students
+        Person person019 = persondirectory.newPerson("S019", "Evelyn Zhao", "evelyn.zhao@northeastern.edu");
+        Person person020 = persondirectory.newPerson("S020", "Michael Chen", "michael.chen@northeastern.edu");
+        Person person021 = persondirectory.newPerson("S021", "Linda Park", "linda.park@northeastern.edu");
+        Person person022 = persondirectory.newPerson("S022", "Jason Lee", "jason.lee@northeastern.edu");
+        Person person023 = persondirectory.newPerson("S023", "Emily Davis", "emily.davis@northeastern.edu");
+        Person person024 = persondirectory.newPerson("S024", "Kevin Liu", "kevin.liu@northeastern.edu");
+        Person person025 = persondirectory.newPerson("S025", "Sophia Wang", "sophia.wang@northeastern.edu");
+        Person person026 = persondirectory.newPerson("S026", "Daniel Brown", "daniel.brown@northeastern.edu");
+        Person person027 = persondirectory.newPerson("S027", "Olivia Zhang", "olivia.zhang@northeastern.edu");
+        Person person028 = persondirectory.newPerson("S028", "William Yang", "william.yang@northeastern.edu");
 
         
-        // 创建课程
-        CourseCatalog catalog = new CourseCatalog(department);
-        catalog.newCourse("INFO5100", "Application Engineering & Development", 4);
-        catalog.newCourse("INFO5200", "Web Design", 4);
-        catalog.newCourse("INFO5300", "Algorithms", 4);
-        catalog.newCourse("INFO5400", "Database Management", 4);
-        catalog.newCourse("INFO5500", "Big Data Systems", 4);
+        CourseCatalog catalog = department.getCourseCatalog();
         
-        department.setCourseCatalog(catalog);
-            
-        // 创建学期
+        //Original courses
+        Course course1 = catalog.newCourse("Applied Engineering", "INFO5100", 4); 
+        Course course2 = catalog.newCourse("Program Structure", "INFO6205", 4); 
+        Course course3 = catalog.newCourse("Data Science", "INFO6210", 4); 
+        Course course4 = catalog.newCourse("Algorithmics", "INFO6215", 4); 
+        Course course5 = catalog.newCourse("Web Development Tools and Methods", "INFO6250", 4);
+        Course course6 = catalog.newCourse("Data Mining", "INFO7245", 4);
+        Course course7 = catalog.newCourse("Data Visualization", "INFO7370", 4); 
+        Course course8 = catalog.newCourse("Applied Marketing", "INFO5000", 4);
+        Course course9 = catalog.newCourse("Advanced Java", "INFO5001", 4);
+        
+        //New Courses
+        catalog.newCourse("Application Engineering & Development", "INFO5100", 4);
+        catalog.newCourse("Web Design", "INFO5200", 4);
+        catalog.newCourse("Algorithms", "INFO5300", 4);
+        catalog.newCourse("Database Management", "INFO5400", 4);
+        catalog.newCourse("Big Data Systems", "INFO5500", 4);
+
+        
+        //Original semester
+        CourseSchedule fall2020 = department.newCourseSchedule("Fall2020");
+        CourseSchedule spring2021 = department.newCourseSchedule("Spring2021");
+        CourseSchedule fall2021 = department.newCourseSchedule("Fall2021");
+        CourseSchedule spring2022 = department.newCourseSchedule("Spring2022");
+        
+        //New semester
         CourseSchedule spring2025 = department.newCourseSchedule("Spring2025");
         CourseSchedule fall2025 = department.newCourseSchedule("Fall2025");
+
+        
+        //Original course offerings
+        CourseOffer co1 = fall2020.newCourseOffer("INFO5100"); co1.generateSeats(15);
+        CourseOffer co2 = fall2020.newCourseOffer("INFO6205"); co2.generateSeats(15);
+        CourseOffer co3 = spring2021.newCourseOffer("INFO6210"); co3.generateSeats(20);
+        CourseOffer co4 = spring2021.newCourseOffer("INFO6215"); co4.generateSeats(10);
+        CourseOffer co5 = fall2021.newCourseOffer("INFO6250"); co5.generateSeats(10);
+        CourseOffer co6 = fall2021.newCourseOffer("INFO7245"); co6.generateSeats(20);
+        CourseOffer co7 = spring2022.newCourseOffer("INFO7370"); co7.generateSeats(10);
+        CourseOffer co8 = spring2022.newCourseOffer("INFO5001"); co8.generateSeats(20);
+        
+        //New courses offered
         for (String c : new String[]{"INFO5100","INFO5200","INFO5300","INFO5400","INFO5500"}) {
-
-        CourseOffer sOffer = spring2025.newCourseOffer(c);
-        if (sOffer != null) { 
-            sOffer.generateSeats(20); //为每门课创建座位
-        } else {
-            System.out.println("Spring offer for " + c + " is null");
+            CourseOffer sOffer = spring2025.newCourseOffer(c);
+            if (sOffer != null) sOffer.generateSeats(20);
+            CourseOffer fOffer = fall2025.newCourseOffer(c);
+            if (fOffer != null) fOffer.generateSeats(20);
         }
 
-        CourseOffer fOffer = fall2025.newCourseOffer(c);
-        if (fOffer != null) { 
-            fOffer.generateSeats(20); //为每门课创建座位
-        } else {
-            System.out.println("Fall offer for " + c + " is null");
-        }
-    }
+        //Create a faculty
+        EmployeeDirectory employeedirectory = department.getEmployeeDirectory();
+        EmployeeProfile employeeprofile0 = employeedirectory.newEmployeeProfile(person001);
 
+        FacultyDirectory fd = department.getFacultyDirectory();
+        FacultyProfile fp1 = fd.newFacultyProfile(person002);
+        FacultyProfile fp2 = fd.newFacultyProfile(person012);
+        FacultyProfile fp3 = fd.newFacultyProfile(person013);
+        FacultyProfile fp4 = fd.newFacultyProfile(person014);
+        FacultyProfile fp5 = fd.newFacultyProfile(person015);
+        FacultyProfile fp6 = fd.newFacultyProfile(person016);
+        FacultyProfile fp7 = fd.newFacultyProfile(person017);
+        FacultyProfile fp8 = fd.newFacultyProfile(person018);
 
-        // 学生数据
+        //Assigning teachers to courses
+        FacultyAssignment fa1 = fp1.assignAsTeacher(co1); co1.AssignAsTeacher(fp1);
+        FacultyAssignment fa2 = fp2.assignAsTeacher(co2); co2.AssignAsTeacher(fp2);
+        FacultyAssignment fa3 = fp3.assignAsTeacher(co3); co3.AssignAsTeacher(fp3);
+        FacultyAssignment fa4 = fp4.assignAsTeacher(co4); co4.AssignAsTeacher(fp4);
+        FacultyAssignment fa5 = fp5.assignAsTeacher(co5); co5.AssignAsTeacher(fp5);
+        FacultyAssignment fa6 = fp6.assignAsTeacher(co6); co6.AssignAsTeacher(fp6);
+        FacultyAssignment fa7 = fp7.assignAsTeacher(co7); co7.AssignAsTeacher(fp7);
+        FacultyAssignment fa8 = fp8.assignAsTeacher(co8); co8.AssignAsTeacher(fp8);
+
+        //Create Student
+        StudentDirectory sd = department.getStudentDirectory();
+        
+        //Original students
+        StudentProfile sp1 = sd.newStudentProfile(person003);
+        StudentProfile sp2 = sd.newStudentProfile(person010);
+        StudentProfile sp3 = sd.newStudentProfile(person011);
+        
+        //Add new students
+        StudentProfile s1 = sd.newStudentProfile(person019);
+        StudentProfile s2 = sd.newStudentProfile(person020);
+        StudentProfile s3 = sd.newStudentProfile(person021);
+        StudentProfile s4 = sd.newStudentProfile(person022);
+        StudentProfile s5 = sd.newStudentProfile(person023);
+        StudentProfile s6 = sd.newStudentProfile(person024);
+        StudentProfile s7 = sd.newStudentProfile(person025);
+        StudentProfile s8 = sd.newStudentProfile(person026);
+        StudentProfile s9 = sd.newStudentProfile(person027);
+        StudentProfile s10 = sd.newStudentProfile(person028);
+
+        //Set up student majors and degrees
+        s1.setMajor("Information Systems"); s1.setDegree("Master of Science");
+        s2.setMajor("Information Systems"); s2.setDegree("Master of Science");
+        s3.setMajor("Information Systems"); s3.setDegree("Master of Science");
+        s4.setMajor("Information Systems"); s4.setDegree("Master of Science");
+        s5.setMajor("Information Systems"); s5.setDegree("Master of Science");
+        s6.setMajor("Information Systems"); s6.setDegree("Master of Science");
+        s7.setMajor("Information Systems"); s7.setDegree("Master of Science");
+        s8.setMajor("Information Systems"); s8.setDegree("Master of Science");
+        s9.setMajor("Information Systems"); s9.setDegree("Master of Science");
+        s10.setMajor("Information Systems"); s10.setDegree("Master of Science");
+
+        //Registrar
+        RegistrarDirectory rd = department.getRegistrarDirectory();
+        RegistrarProfile rp1 = rd.newRegistrarProfile(person009);
+        rp1.setDepartment(department);
+        rp1.setOfficeHours("Monday 10:00 a.m - 16:00 p.m.");
+        rp1.setEmail("yangwang.j@northeastern.edu");
+        rp1.setPhone("207-712-8888");
+
+        //Student course registration and grades (original data)
+        setupOriginalStudentData(sp1, sp2, sp3, fall2020, spring2021, fall2021, co1, co2, co3, co4, co5, co6, co7, co8);
+
+        //Add new student data
         addStudentData(s1, spring2025, fall2025, "INFO5100", "INFO5200");
         addStudentData(s2, spring2025, fall2025, "INFO5200", "INFO5300");
         addStudentData(s3, spring2025, fall2025, "INFO5300", "INFO5400");
@@ -191,14 +208,43 @@ public class ConfigureABusiness {
         addStudentData(s8, spring2025, fall2025, "INFO5100", "INFO5400");
         addStudentData(s9, spring2025, fall2025, "INFO5200", "INFO5500");
         addStudentData(s10, spring2025, fall2025, "INFO5300", "INFO5400");
+
+        //Create a user account
+        UserAccountDirectory uad = business.getUserAccountDirectory();
+        uad.newUserAccount(employeeprofile0, "admin", "****"); 
+        uad.newUserAccount(fp1, "gina", "****"); 
+        uad.newUserAccount(sp1, "adam", "****"); 
+        uad.newUserAccount(rp1, "mia", "109");
         
+        //Add new student accounts
+        uad.newUserAccount(s1, "student1", "student1");
+        uad.newUserAccount(s2, "student2", "student2");
+        uad.newUserAccount(s3, "student3", "student3");
+        uad.newUserAccount(s4, "student4", "student4");
+        uad.newUserAccount(s5, "student5", "student5");
+        uad.newUserAccount(s6, "student6", "student6");
+        uad.newUserAccount(s7, "student7", "student7");
+        uad.newUserAccount(s8, "student8", "student8");
+        uad.newUserAccount(s9, "student9", "student9");
+        uad.newUserAccount(s10, "student10", "student10");
+
+        //Set Default Student
         business.setDefaultStudent(s1);
+
         return business;
     }
 
-    // 添加学生成绩&财务
-        private static void addStudentData(StudentProfile student, CourseSchedule spring, CourseSchedule fall, String springC1, String springC2) {
-        // --- Spring 学期（已完成） ---
+    // Original student data setting method
+    private static void setupOriginalStudentData(StudentProfile sp1, StudentProfile sp2, StudentProfile sp3, 
+                                               CourseSchedule fall2020, CourseSchedule spring2021, CourseSchedule fall2021,
+                                               CourseOffer co1, CourseOffer co2, CourseOffer co3, CourseOffer co4, 
+                                               CourseOffer co5, CourseOffer co6, CourseOffer co7, CourseOffer co8) {
+      
+    }
+
+    //New create student data method
+    private static void addStudentData(StudentProfile student, CourseSchedule spring, CourseSchedule fall, String springC1, String springC2) {
+        //Spring semester (completed)
         CourseLoad springLoad = student.newCourseLoad("Spring2025");
         CourseOffer c1 = spring.getCourseOfferByNumber(springC1);
         CourseOffer c2 = spring.getCourseOfferByNumber(springC2);
@@ -219,7 +265,7 @@ public class ConfigureABusiness {
             seat2.setStatus("Submitted");
         }
 
-        // --- Fall 学期（进行中） ---
+        //Fall semester (in progress)
         CourseLoad fallLoad = student.newCourseLoad("Fall2025");
         for (String code : new String[]{"INFO5300", "INFO5400", "INFO5500"}) {
             CourseOffer f = fall.getCourseOfferByNumber(code);
@@ -229,7 +275,6 @@ public class ConfigureABusiness {
                 sa.setAssignmentScore(85);
                 sa.setStatus("In Progress");
                 
-                //让不同课程设置不同分值
                 float grade = switch (code) {
                     case "INFO5300" -> 3.9f;
                     case "INFO5400" -> 3.6f;
@@ -240,10 +285,10 @@ public class ConfigureABusiness {
             }
         }
 
-        // --- 财务信息 ---
+        //Financial Information
         student.setBalance(10000);
         student.setOutstandingTuition(9000);
         student.setPaidAmount(5000);
         student.addPaymentRecord(new PaymentRecord(new Date(), 5000, "Tuition Payment", "Paid"));
-}
+    }
 }
