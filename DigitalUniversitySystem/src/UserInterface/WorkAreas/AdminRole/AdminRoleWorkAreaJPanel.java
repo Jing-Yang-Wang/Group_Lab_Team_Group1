@@ -18,6 +18,7 @@ import UserInterface.WorkAreas.AdminRole.ManageStudent.ManageStudentJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageTeacher.ManageTeacherJPanel;
 import UserInterface.WorkAreas.AdminRole.RegisterPerson.SignUpJPanel;
 
+
 import javax.swing.JPanel;
 
 /**
@@ -58,6 +59,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         jButton8 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
+
 
         setForeground(new java.awt.Color(51, 51, 51));
 
@@ -131,33 +133,6 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton11.setBackground(new java.awt.Color(102, 153, 255));
-        jButton11.setFont(getFont());
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Dashboard");
-        jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton11.setMaximumSize(new java.awt.Dimension(200, 40));
-        jButton11.setMinimumSize(new java.awt.Dimension(20, 20));
-        jButton11.setPreferredSize(new java.awt.Dimension(240, 25));
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-
-        jButton12.setBackground(new java.awt.Color(102, 153, 255));
-        jButton12.setFont(getFont());
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Manage Registrar");
-        jButton12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton12.setMaximumSize(new java.awt.Dimension(200, 40));
-        jButton12.setMinimumSize(new java.awt.Dimension(20, 20));
-        jButton12.setPreferredSize(new java.awt.Dimension(240, 25));
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -166,6 +141,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(101, 101, 101)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+
                     .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,6 +154,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(118, Short.MAX_VALUE))
+
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,12 +168,9 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(127, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -213,8 +187,8 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
 
-        SignUpJPanel aos = new SignUpJPanel(business, CardSequencePanel);
 
+        ManagePersonsJPanel aos = new ManagePersonsJPanel(business, CardSequencePanel);
         CardSequencePanel.add("Manage Persons", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
@@ -224,9 +198,9 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         ManageStudentJPanel aos = new ManageStudentJPanel(CardSequencePanel, business.getStudentDirectory());
-
         CardSequencePanel.add("Manage Students", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -234,14 +208,12 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton6IdentifyEventsActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-        
-        ManageTeacherJPanel aos = new ManageTeacherJPanel(CardSequencePanel, business.getFacultyDirectoryFromDepartment(), null);
-
-        CardSequencePanel.add("Manage Teachers", aos);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    ManageTeacherJPanel aos = new ManageTeacherJPanel(CardSequencePanel, business.getFacultyDirectoryFromDepartment(), null);
+    CardSequencePanel.add("Manage Teachers", aos);
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
     }//GEN-LAST:event_jButton9ActionPerformed
+                                    
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:

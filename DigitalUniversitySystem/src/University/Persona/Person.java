@@ -10,19 +10,26 @@ package University.Persona;
  * @author kal bugrara
  */
 public class Person {
-
+    // 扩展,增加姓名&邮箱
+    private static int counter = 1; 
     private String universityID; 
     private String name;
     private String email;  
 
-    //MH 10/24 - Fixed to populate all fields.
+    // 完整参数的构造方法
     public Person(String id, String name, String email) {
         this.universityID = id;
         this.name = name;
         this.email = email;
     }
-
-    // Getter / Setter
+    
+    // 只有姓名的构造方法（自动生成ID）
+    public Person(String name) {
+        this.universityID = "P" + counter++;
+        this.name = name;
+    }
+    
+    // Getter / Setter 方法
     public String getUniversityID() {
         return universityID;
     }
@@ -47,10 +54,16 @@ public class Person {
         this.email = email;
     }
 
+    // 为了向后兼容，保留 getPersonId 方法
+    public String getPersonId() {
+        return universityID;
+    }
+
+    public void setId(String id) {
+        this.universityID = id;
+    }
     
     public boolean isMatch(String id) {
         return this.universityID.equals(id);
     }
-
-    
 }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package University.Department;
 
 import University.CourseCatalog.Course;
@@ -25,10 +21,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- *
  * @author kal bugrara
  */
 public class Department {
+
 
     String name;
     CourseCatalog coursecatalog;
@@ -47,142 +43,141 @@ public class Department {
     EmployerDirectory employerdirectory;
     Degree degree;
 
-    HashMap<String, CourseSchedule> mastercoursecatalog;
 
+    // Course schedule mapping table for each semester
+    private HashMap<String, CourseSchedule> mastercoursecatalog;
+
+   
     public Department(String n) {
         name = n;
         mastercoursecatalog = new HashMap<>();
         coursecatalog = new CourseCatalog(this);
-        studentdirectory = new StudentDirectory(this); //pass the department object so it stays linked to it
-        //MH 10/18 - Added for login process
+        studentdirectory = new StudentDirectory(this);
         facultydirectory = new FacultyDirectory(this);
         employeedirectory = new EmployeeDirectory(this);
         registrardirectory = new RegistrarDirectory(this);
-        //useraccountdirectory = new UserAccountDirectory(this);
-        
         persondirectory = new PersonDirectory();
         degree = new Degree("MSIS");
-        
     }
-    public void addCoreCourse(Course c){
+
+    // 添加核心课程
+    public void addCoreCourse(Course c) {
         degree.addCoreCourse(c);
-        
+    }
+
+    // 添加选修课程
+    public void addElectiveCourse(Course c) {
+        degree.addElectiveCourse(c);
+    }
+
+    public PersonDirectory getPersonDirectory() {
+        return persondirectory;
+    }
+
+    public FacultyDirectory getFacultyDirectory() {
+        return facultydirectory;
+    }
+
+    public EmployeeDirectory getEmployeeDirectory() {
+        return employeedirectory;
+    }
+
+    public EmployerDirectory getEmployerDirectory() {
+        return employerdirectory;
+    }
+
+    public void setEmployerdirectory(EmployerDirectory employerdirectory) {
+        this.employerdirectory = employerdirectory;
     }
 
     public RegistrarDirectory getRegistrarDirectory() {
         return registrardirectory;
     }
-      
-    //MH 10/18 - Seems like this should live with the Business but leaving it here for now.
-    public EmployeeDirectory getEmployeeDirectory() {
-        return employeedirectory;
-    }
-    
-    public EmployerDirectory getEmployerDirectory() {
-        return employerdirectory;
-    }
-    
-    public void setEmployerdirectory(EmployerDirectory employerdirectory) {
-        this.employerdirectory = employerdirectory;
-    }
-    
-    public void addElectiveCourse(Course c){
-        degree.addElectiveCourse(c);
-        
-    }
-    public PersonDirectory getPersonDirectory() {
-        return persondirectory;
-    }
-    
-    //MH 10/18 - I assume this should live here so I added it.  
-    public FacultyDirectory getFacultyDirectory() {
-        return facultydirectory;
-    }
 
-    
     public StudentDirectory getStudentDirectory() {
         return studentdirectory;
     }
 
+    // 创建新的学期课表
     public CourseSchedule newCourseSchedule(String semester) {
-
         CourseSchedule cs = new CourseSchedule(semester, coursecatalog);
         mastercoursecatalog.put(semester, cs);
         return cs;
     }
 
+    // 获取特定学期的课表
     public CourseSchedule getCourseSchedule(String semester) {
-
         return mastercoursecatalog.get(semester);
-
     }
 
     public CourseCatalog getCourseCatalog() {
-
         return coursecatalog;
-
     }
 
-    public Course newCourse(String n, String nm, int cr) {
-
-        Course c = coursecatalog.newCourse(n, nm, cr);
+    // 新建课程（添加到课程目录）
+    public Course newCourse(String number, String name, int credits) {
+        Course c = coursecatalog.newCourse(number, name, credits);
         return c;
     }
 
+    // 计算某学期的总收入
     public int calculateRevenuesBySemester(String semester) {
-
-        CourseSchedule css = mastercoursecatalog.get(semester);
-
-        return css.calculateTotalRevenues();
-
-    }
-
-    public void RegisterForAClass(String studentid, String cn, String semester) {
-
-        StudentProfile sp = studentdirectory.findStudent(studentid);
-
-        CourseLoad cl = sp.getCurrentCourseLoad();
-
         CourseSchedule cs = mastercoursecatalog.get(semester);
-
-        CourseOffer co = cs.getCourseOfferByNumber(cn);
-
-        co.assignEmptySeat(cl);
-
+        return cs.calculateTotalRevenues();
     }
+
     
     //Jing-this method i need to use
     //MH - 10/26, the course schedule is inside mastercoursecatalog.  We'll need to transition code to this.
+
+
+    // 获取学院名称
+    public String getName() {
+        return name;
+    }
+
+    // 获取某学期课表
+
     public CourseSchedule getCourseSchedule() {
-        return courseSchedule;
+        return mastercoursecatalog.values().stream().findFirst().orElse(null);
     }
-   
-    
+
+    // 获取所有学期开设的课程 Offer
     public ArrayList<CourseOffer> getAllCourseOffers() {
-    ArrayList<CourseOffer> allOffers = new ArrayList<>();
+        ArrayList<CourseOffer> allOffers = new ArrayList<>();
         for (CourseSchedule cs : mastercoursecatalog.values()) {
-            allOffers.addAll(cs.getSchedule());
+            if (cs != null && cs.getCourseOfferList() != null) {
+                allOffers.addAll(cs.getCourseOfferList());
+            }
         }
-    return allOffers;
+        return allOffers;
     }
-    
+
+    // 获取所有学期名称
     public Set<String> getAllSemesters() {
         return mastercoursecatalog.keySet();
     }
+
+    // 注册课程：学生注册某门课
+    public void RegisterForAClass(String studentid, String cn, String semester) {
+        StudentProfile sp = studentdirectory.findStudent(studentid);
+        CourseLoad cl = sp.getCurrentCourseLoad();
+        CourseSchedule cs = mastercoursecatalog.get(semester);
+        CourseOffer co = cs.getCourseOfferByNumber(cn);
+        co.assignEmptySeat(cl);
+    }
+
     
-    
-    //MH 10/20 - Getting department from FacultyProfile
     public Department getDepartmentIfContainsFaculty(FacultyProfile facultyProfile) {
         String id = facultyProfile.getPerson().getUniversityID();
-        // See if the FacultyProfile exists in department
-        FacultyProfile foundProfile = this.facultydirectory.findTeachingFaculty(id);
-        //Return the department if found
+        FacultyProfile foundProfile = facultydirectory.findTeachingFaculty(id);
         if (foundProfile != null && foundProfile.equals(facultyProfile)) {
-            return this;  
+            return this;
         } else {
-            return null; 
+            return null;
         }
     }
+
     
     //MH 10/22 - Added so we can have a semester list
     //AI helped me build this.  Was not sure how to get the key
@@ -192,16 +187,18 @@ public class Department {
     //}
    
     //MH 10/22 - Added so course offer can be used to update the schedule
+
+
+    // 根据课程 Offer 查找对应学期课表
+
     public CourseSchedule findCourseScheduleByCourseOffer(CourseOffer courseOffer) {
         for (CourseSchedule cs : mastercoursecatalog.values()) {
-                        
-            for (CourseOffer co : cs.getSchedule()) {
-
+            for (CourseOffer co : cs.getCourseOfferList()) {
                 if (co.equals(courseOffer)) {
-                    return cs; 
+                    return cs;
                 }
             }
         }
-        return null; 
+        return null;
     }
 }

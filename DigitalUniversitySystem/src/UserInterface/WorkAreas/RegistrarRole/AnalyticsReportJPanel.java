@@ -161,7 +161,7 @@ public class AnalyticsReportJPanel extends javax.swing.JPanel {
             row[3] = co.getFacultyProfile().getPerson().getUniversityID(); 
             row[4] = co.getSeatCount();
             row[5] = co.getEnrolledStudents().size();   
-            row[6] = co.getAverageGrade();
+            row[6] = co.getAverageCourseGrade();
             row[7] = co.getAverageGradeAsLetter();
             
             model.addRow(row);

@@ -77,7 +77,7 @@ public class FacultyPerformanceReportingJPanel extends javax.swing.JPanel {
             
         //Get an arrey of Courses    
         String semester = cbSchedule.getSelectedItem().toString().trim();           
-        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyAssignments(); 
+        ArrayList<FacultyAssignment> assignments = this.facultyProfile.getFacultyassignments(); 
         for (FacultyAssignment fa : assignments) {
             CourseOffer co = fa.getCourseOffer();         
             Course c = co.getSubjectCourse();
@@ -264,9 +264,7 @@ public class FacultyPerformanceReportingJPanel extends javax.swing.JPanel {
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.removeAll();
-
         FacultyWorkAreaJPanel aos = new FacultyWorkAreaJPanel(business, facultyProfile, CardSequencePanel);
-
         CardSequencePanel.add("faculty", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_BackActionPerformed
