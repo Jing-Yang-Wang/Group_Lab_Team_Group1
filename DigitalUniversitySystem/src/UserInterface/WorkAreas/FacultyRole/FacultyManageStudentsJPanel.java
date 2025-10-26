@@ -81,7 +81,9 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
                 cbCourse.addItem(co.getCourseNumber());   
             }
         }
-        cbCourse.setSelectedIndex(0); 
+        if (cbCourse.getItemCount() > 0) {
+            cbCourse.setSelectedIndex(0);
+        }
     }
      
     public void populateTableHeader() {        
@@ -96,48 +98,53 @@ public class FacultyManageStudentsJPanel extends javax.swing.JPanel {
         column.setMaxWidth(0);
         column.setPreferredWidth(0);
         column.setWidth(0); 
+        
+        //Reset textbox
+        tbClassGPA.setText("0.0");
                       
-        //Get an arrey of SeatAssignments    
-        String semester = cbSchedule.getSelectedItem().toString().trim();
-        String number = cbCourse.getSelectedItem().toString().trim();
-        CourseOffer co = department.getCourseSchedule(semester).getCourseOfferByNumber(number);
-        
-        //Use to calaculate class score
-        int rank = 1;
-        int studentCount = 0;
-        float totalGrade = 0;
-               
-        //From seat assignments get students
-        ArrayList<SeatAssignment> allSeatAssignments = co.getSeatAssignments();
-        if (allSeatAssignments == null) {
-             return;
-        }           
-        
-        //Sort for ranking
-        //AI helped with this, I did not know sort code
-        allSeatAssignments.sort((sa1, sa2) -> {
-            float score1 = sa1.getGrade();
-            float score2 = sa2.getGrade();
-            return Float.compare(score2, score1);
-        });  
-        
-        for (SeatAssignment sa : allSeatAssignments) {        
-            Object[] row = new Object[4];
-                        
-            row[0] = sa.getStudentProfile().getPerson().getName();  //Student
-            row[1] = rank; //Rank
-            row[2] = String.valueOf(sa.getGrade());  //GPA
-            row[3] = sa.getSeat().getNumber();  //Seat Count (hidden)
+        //Get an arrey of SeatAssignments 
+        if (cbCourse.getItemCount() > 0) {
+            String semester = cbSchedule.getSelectedItem().toString().trim();
+            String number = cbCourse.getSelectedItem().toString().trim();
+            CourseOffer co = department.getCourseSchedule(semester).getCourseOfferByNumber(number);
 
-            model.addRow(row);    
-            rank = rank +1;
-            studentCount = studentCount + 1;
-            totalGrade = totalGrade + sa.getGrade();            
-        } 
-        
-        float classGrade = totalGrade / studentCount;
-        String formattedGrade = String.format("%.2f", classGrade);
-        tbClassGPA.setText(String.valueOf(formattedGrade));
+            //Use to calaculate class score
+            int rank = 1;
+            int studentCount = 0;
+            float totalGrade = 0;
+
+            //From seat assignments get students
+            ArrayList<SeatAssignment> allSeatAssignments = co.getSeatAssignments();
+            if (allSeatAssignments == null) {
+                 return;
+            }           
+
+            //Sort for ranking
+            //AI helped with this, I did not know sort code
+            allSeatAssignments.sort((sa1, sa2) -> {
+                float score1 = sa1.getGrade();
+                float score2 = sa2.getGrade();
+                return Float.compare(score2, score1);
+            });  
+
+            for (SeatAssignment sa : allSeatAssignments) {        
+                Object[] row = new Object[4];
+
+                row[0] = sa.getStudentProfile().getPerson().getName();  //Student
+                row[1] = rank; //Rank
+                row[2] = String.valueOf(sa.getGrade());  //GPA
+                row[3] = sa.getSeat().getNumber();  //Seat Count (hidden)
+
+                model.addRow(row);    
+                rank = rank +1;
+                studentCount = studentCount + 1;
+                totalGrade = totalGrade + sa.getGrade();            
+            } 
+
+            float classGrade = totalGrade / studentCount;
+            String formattedGrade = String.format("%.2f", classGrade);
+            tbClassGPA.setText(String.valueOf(formattedGrade));
+        }
     }
     
     public void populateTableDetail() {        

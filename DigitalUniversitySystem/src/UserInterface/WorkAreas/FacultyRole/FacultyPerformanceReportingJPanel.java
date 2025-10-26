@@ -87,7 +87,7 @@ public class FacultyPerformanceReportingJPanel extends javax.swing.JPanel {
     
             if (cs.getSemester() == semester) {
                 //AI - Helped with destribution code
-                Map<String, Integer> distributionMap = co.getGradeDistribution();
+                Map<String, Integer> distributionMap = co.getGradeDistributionForReport();
                 StringBuilder sb = new StringBuilder();
                 String[] gradeOrder = {"A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"};
                 for (String gradeKey : gradeOrder) {

@@ -307,6 +307,7 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         //Set Fields
         tbNumber.setText(courseNumber);
         tbName.setText(courseName);
+        cbSchedule.setSelectedItem(schedule);
         tbCapacity.setText(capacity);
         taSyllabus.setText(syllabus);
         if (enrollmentOpen == "true") {

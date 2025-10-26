@@ -287,5 +287,58 @@ public class CourseOffer {
 
     public CourseSchedule getCourseSchedule() {
         return courseschedule;
-    }      
+    }  
+
+    
+    //MH 10/26 - Putting it back with a new name after it was removed.
+    //AI - Helped with this since it was a lot of detail
+    public Map<String, Integer> getGradeDistributionForReport() {
+        // Initialize the distribution map with zero counts for common grades
+        Map<String, Integer> distribution = new HashMap<>();
+        distribution.put("A", 0);
+        distribution.put("A-", 0);
+        distribution.put("B+", 0);
+        distribution.put("B", 0);
+        distribution.put("B-", 0);
+        distribution.put("C+", 0);
+        distribution.put("C", 0);
+        distribution.put("C-", 0);
+        distribution.put("D", 0);
+        distribution.put("F", 0);
+
+        // Reuse existing logic to get all final grades
+        ArrayList<SeatAssignment> assignments = getSeatAssignments();
+
+        for (SeatAssignment sa : assignments) {
+            float grade = sa.getGrade(); // This is the final numeric grade (e.g., 4.0, 3.3, 2.0)
+            String letterGrade;
+
+            // Define the numeric to letter grade mapping (adjust these cutoffs as needed)
+            if (grade >= 4.0f) {
+                letterGrade = "A";
+            } else if (grade >= 3.7f) {
+                letterGrade = "A-";
+            } else if (grade >= 3.3f) {
+                letterGrade = "B+";
+            } else if (grade >= 3.0f) {
+                letterGrade = "B";
+            } else if (grade >= 2.7f) {
+                letterGrade = "B-";
+            } else if (grade >= 2.3f) {
+                letterGrade = "C+";
+            } else if (grade >= 2.0f) {
+                letterGrade = "C";
+            } else if (grade >= 1.7f) {
+                letterGrade = "C-";
+            } else if (grade >= 1.0f) {
+                letterGrade = "D";
+            } else {
+                letterGrade = "F";
+            }
+
+            // Increment the count for the determined letter grade
+            distribution.put(letterGrade, distribution.get(letterGrade) + 1);
+        }
+        return distribution;
+    }
 }
