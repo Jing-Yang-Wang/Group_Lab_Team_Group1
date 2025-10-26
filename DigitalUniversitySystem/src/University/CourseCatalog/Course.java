@@ -48,18 +48,17 @@ public class Course {
         return price;
     }
  
-
+    //MH 10/26 - Fixed after the names were changed
     public void setNumber(String number) {
-        this.number = number;
+        this.courseNumber = number;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.courseName = name;
     }
     
     @Override
     public String toString() {
         return courseName;
     }
-
 }

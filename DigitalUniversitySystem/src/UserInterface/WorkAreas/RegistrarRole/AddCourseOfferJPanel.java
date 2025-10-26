@@ -221,7 +221,8 @@ public class AddCourseOfferJPanel extends javax.swing.JPanel {
     //Assign teacher
     FacultyProfile selectedFaculty = null;
     for (FacultyProfile fp : registrarProfile.getDepartment().getFacultyDirectory().getTeacherList()) {
-        if (fp.getPerson().getPersonId().equalsIgnoreCase(facultyName)) {
+        //MH 10/26 - Fixes because ID was changed to UniversityID
+        if (fp.getPerson().getUniversityID().equalsIgnoreCase(facultyName)) {
             selectedFaculty = fp;
             break;
         }

@@ -51,9 +51,10 @@ public class Seat {
     }
     
     //MH 10/22 - Added because it was missing
-    public SeatAssignment getSeatAssignment() {
-        return seatassignment;
-    }
+    //MH 10/26 - Removed because a team member also added this.
+    //public SeatAssignment getSeatAssignment() {
+    //    return seatassignment;
+    //}
 
     //MH 10/23 - Needed to search for seat assignments
     public int getNumber() {

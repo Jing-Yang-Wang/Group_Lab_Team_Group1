@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 //MH 10/18 - Updated so it extend the profile.
 //MH 10/24 - Fixed issue with how person was stored
+
 public class StudentProfile extends Profile {
     //Person person;
     private String academicStatus;
@@ -54,7 +55,8 @@ public class StudentProfile extends Profile {
     public StudentProfile(Person p) {
 
         super(p);
-        person = p;
+        //MH 10/26 - Commenting this out again, StudentProfile extends person
+        //person = p;
         transcript = new Transcript(this);
         employmenthistory = new EmploymentHistroy();
     }
