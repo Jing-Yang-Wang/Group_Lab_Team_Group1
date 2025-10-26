@@ -208,7 +208,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
             return;
         } else {     // no email exists, so create a new person
             p=personDirectory.newPerson(email);
-
+        
         //MH 10/22 - Commented out so app can compile
         //boolean emailExists = personDirectory.personlist.stream().anyMatch(person -> person.getEmail().equals(p.getEmail()));
         //if (emailExists) {
@@ -257,7 +257,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
             fieldPassword.setText("");
             fieldVerPassword.setText("");
             fieldEmail.setText("");
-        }
+        }}
     }//GEN-LAST:event_SaveActionPerformed
 
     private void RoleComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoleComboActionPerformed

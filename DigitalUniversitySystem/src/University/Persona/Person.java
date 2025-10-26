@@ -21,7 +21,14 @@ public class Person {
         this.name = name;
         this.email = email;
     }
-
+    //Ximeing 10/25
+     public Person(String email) {
+        this.email = email;
+    }
+    
+    
+    
+    
     // Getter / Setter
     public String getUniversityID() {
         return universityID;

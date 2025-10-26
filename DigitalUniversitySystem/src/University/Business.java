@@ -45,7 +45,7 @@ public class Business {
     FacultyDirectory facultyDirectory;
     
     //MH 10/20 - Added because a university is made up of departments
-    //private ArrayList<Department> departmentList;
+    private ArrayList<Department> departmentList;
     //MH 10/21 - Swapped to college to store departments   
     College college;
     

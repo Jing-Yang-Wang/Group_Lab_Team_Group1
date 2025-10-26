@@ -35,7 +35,13 @@ public class PersonDirectory {
         personlist.add(p);
         return p;
     }
-
+ //   Xieming 10/25
+    
+    public Person newPerson(String email) {
+        Person p = new Person( email);
+        personlist.add(p);
+        return p;
+    }
     public Person findPerson(String id) {
 
         for (Person p : personlist) {
