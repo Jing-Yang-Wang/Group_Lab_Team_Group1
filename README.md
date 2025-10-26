@@ -47,12 +47,13 @@ Run Project
 
 Login: This process is managed by the left actionsidejpanel on ProfileWorkArea.  When valid user name and password is entered and the Login button pushed, the application checks the user's profile role and sends the user to that roll's workarea. Workareas are in place for Admin, Faculty, Student, and Regisrar roles.
 
-Logout: The login jpanel is always visible on the lefthand side.  There is no logout <ADD?>
+Logout: The login jpanel is always visible on the lefthand side.  There is no logout process other then closing the application or logging in as a different user.
+
 
 6. Features Implemented
 - Admin
 - Faculty
-- tudent
+- Student
 - Regisrar
 
 1. Detail the functionalities implemented for each role.
@@ -76,7 +77,10 @@ Jing Yang Wang
 
 Michael Hynes
 - GitHub: I worked with multiple TAs who here not able to help me with a fully working and documented process for working with branches.  It was not until Thursday that I had something that was provedn to work.  At that point I shared with the team but the divergance of our branches made the project much harder to complete then nessecary.
-- Missing Assignment Class: 
+- Communication: The team was able to meet on Tuesday to confirm roles and to go over the initial mergerd code that I provided.  We also had a short meeting before out Thursday class.  However, the rest of the team did not involve me in code reviews, answering questions, test planning, or any other planning.  I tried to establish regular communications in the MS Team I established when the group was formed, however I was the only one actively sending messages throughtout the project. 
+- Language: Being the only native English speaker, there were obvious language barrier issues.  This was a challenge during out meetings, our Teams conversations, and in for our code comments.
+- Group Size: Unlike other groups, have a group of four further compnonded the challenges that I stated above.
+- Instructions: In a few places, the intructions were not clear.  An example, "View and update assigned course details (title, description, schedule, capacity)" is an assignement requirement but several of these terms were used to describe the data in course and course schedule.  It also did not make it clear that we were free to add classes and data points as needed.
 
 Xieming Geng
 
@@ -118,5 +122,6 @@ Xieming Geng
 
 1. Clearly state each team member’s contributions to the project.
 2. Provide details on coding, documentation, testing, and other tasks.
+
 
 
