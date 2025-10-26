@@ -1,8 +1,6 @@
 # Group_Lab_Team_01
-yangwang.j@northeastern.edu 💗
 
 1. Digital University System
-
 
 2. Team Information
 - Hairui Dou
@@ -32,9 +30,12 @@ Key features include:
 4. Installation & Setup Instructions
 
 Prerequisites
-- List the prerequisites required to run the project (e.g., Java version, IDE, libraries).
+- Java Version: 19.0.2
+- IDE: Apache NetBeans IDE 15
+- Libraries: Absolutelayout, CopyLibs
   
-Clone Repository
+Clone Repository - 
+
 - Provide step-by-step setup instructions, including how to clone the repository and
   run the project.
 - git checkout main
@@ -125,6 +126,7 @@ Xieming Geng
 
   TO DO Clearly state each team member’s contributions to the project.
   TO DO Provide details on coding, documentation, testing, and other tasks.
+
 
 
 
