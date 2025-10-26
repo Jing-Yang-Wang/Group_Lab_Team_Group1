@@ -9,8 +9,6 @@ public class FacultyProfile extends Profile {
     //Person person;
     ArrayList <FacultyAssignment> facultyassignments; 
     String department;
-    //MH 10/26 - Removed since faculty can teach multiple courses.
-    //String course;
     String telephone;
     //MH 10/26 - Added to match other profiles
     String email;
@@ -22,10 +20,10 @@ public class FacultyProfile extends Profile {
         return facultyassignments;
     }
 
-    private ArrayList<FacultyAssignment> facultyassignments;
-    private String department;
+    //MH 10/26 - Removed since faculty can teach multiple courses.
+    //MH 10/26 - THIS NEEDS TO BE REMOVED
     private String course;
-    private String telephone;
+
 
     public String getDepartment() {
         return department;
@@ -34,14 +32,6 @@ public class FacultyProfile extends Profile {
     public void setDepartment(String department) {
         this.department = department;
     }
-
-    //public String getCourse() {
-    //    return course;
-    //}
-
-    //public void setCourse(String course) {
-    //    this.course = course;
-    //}
 
     public String getTelephone() {
         return telephone;
@@ -74,8 +64,9 @@ public class FacultyProfile extends Profile {
     }
 
     // Getter 和 Setter
-    public String getDepartment() { return department; }
-    public void setDepartment(String department) { this.department = department; }
+    //MH 10/26 - These are dups
+    //public String getDepartment() { return department; }
+    //public void setDepartment(String department) { this.department = department; }
 
     public String getCourse() { return course; }
     public void setCourse(String course) { this.course = course; }
@@ -107,5 +98,10 @@ public class FacultyProfile extends Profile {
 
     public void setFacultystatus(String facultystatus) {
         this.facultystatus = facultystatus;
+    }
+    
+    @Override
+    public String getRole() {
+        return "Faculty"; // Or whatever specific role name is needed
     }
 }

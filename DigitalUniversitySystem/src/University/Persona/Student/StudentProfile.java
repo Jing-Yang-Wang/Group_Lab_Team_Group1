@@ -85,7 +85,7 @@ public class StudentProfile extends Profile {
         return transcript.getCurrentCourseLoad();
     }
 
-    public CourseLoad newCourseLoad(String semester) {
+    public CourseLoad newCourseLoad(String semester, StudentProfile sp1) {
         return transcript.newCourseLoad(semester);
     }
 
