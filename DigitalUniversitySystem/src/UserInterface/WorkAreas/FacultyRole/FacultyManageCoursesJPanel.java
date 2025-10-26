@@ -222,21 +222,21 @@ public class FacultyManageCoursesJPanel extends javax.swing.JPanel {
         spSyllabus.setViewportView(taSyllabus);
 
         add(spSyllabus);
-        spSyllabus.setBounds(354, 296, 260, 110);
+        spSyllabus.setBounds(354, 296, 260, 100);
 
         lblEnrollment.setText("Enrollment");
         add(lblEnrollment);
-        lblEnrollment.setBounds(240, 430, 60, 16);
+        lblEnrollment.setBounds(290, 410, 60, 16);
 
         bgEnrollment.add(rbOpen);
         rbOpen.setText("Open");
         add(rbOpen);
-        rbOpen.setBounds(310, 430, 70, 21);
+        rbOpen.setBounds(360, 410, 70, 21);
 
         bgEnrollment.add(rbClosed);
         rbClosed.setText("Closed");
         add(rbClosed);
-        rbClosed.setBounds(380, 430, 70, 21);
+        rbClosed.setBounds(430, 410, 70, 21);
 
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
