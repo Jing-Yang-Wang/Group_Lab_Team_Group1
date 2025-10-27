@@ -1,8 +1,8 @@
 # Group_Lab_Team_01
 
-1. Digital University System
+<B>1. Digital University System</B>
 
-2. Team Information
+<B>2. Team Information</B>
 - Hairui Dou
 - Jing Yang Wang
 - Michael Hynes, 76045378: Faculty Use Case
@@ -12,7 +12,7 @@
   TO DO Include NUIDs for identification.
 
 
-3. Project Overview
+<B>3. Project Overview</B>
 
 The Digital University System allows for university staff, faculty, students, and the registar to manage tasks related to the academic college experence.  This systems allows members of each of the stated roles to view data and complete tasks that are important to them.
 
@@ -27,7 +27,7 @@ Key features include:
 - Registrar task management
 
 
-4. Installation & Setup Instructions
+<B>4. Installation & Setup Instructions</B>
 
 Prerequisites
 - Java Version: 19.0.2
@@ -43,14 +43,14 @@ Run Project
 - Select Run Project in NetBeans
 
 
-5. Authentication & Access Control
+<B>5. Authentication & Access Control</B>
 
 Login: This process is managed by the left actionsidejpanel on ProfileWorkArea.  When valid user name and password is entered and the Login button pushed, the application checks the user's profile role and sends the user to that roll's workarea. Workareas are in place for Admin, Faculty, Student, and Regisrar roles.
 
 Logout: The login jpanel is always visible on the lefthand side.  There is no logout process other then closing the application or logging in as a different user.
 
 
-6. Features Implemented
+<B>6. Features Implemented</B>
 
 Admin
 
@@ -69,13 +69,13 @@ Registrar
   TO DO Clearly specify which team member was responsible for each feature.
 
 
-7. Usage Instructions
+<B>7. Usage Instructions</B>
    
   TO DO Provide a step-by-step guide on how to interact with the system.
   TO DO Include example scenarios for different user roles.
 
 
-8. Testing Guide
+<B>8. Testing Guide</B>
 
 General
 - Making sure the application compiles with no issues.
@@ -98,7 +98,7 @@ Regisrar
   TO DO Explain how to verify that authentication and authorization work correctly.
 
 
-9. Challenges & Solutions
+<B>9. Challenges & Solutions</B>
     
 Hairui Dou
 
@@ -117,7 +117,7 @@ Xieming Geng
 TO DO Highlight the solutions implemented to overcome these challenges.
 
 
-10. Future Enhancements
+<B>10. Future Enhancements</B>
 
 Admin Related
 
@@ -133,7 +133,7 @@ Student Related
 Registrar Related
 
 
-11. Contribution Breakdown
+<B>11. Contribution Breakdown</B>
 
 Hairui Dou
 
@@ -151,6 +151,7 @@ Xieming Geng
 
   TO DO Clearly state each team member’s contributions to the project.
   TO DO Provide details on coding, documentation, testing, and other tasks.
+
 
 
 
