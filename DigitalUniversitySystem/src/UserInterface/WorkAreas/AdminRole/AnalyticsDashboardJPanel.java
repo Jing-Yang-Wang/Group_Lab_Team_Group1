@@ -370,19 +370,6 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel courseLabel;
     private javax.swing.JScrollPane courseScrollPane;
     private javax.swing.JTable courseTable;
-    
-
-   
-    private javax.swing.JLabel enrollmentLabel;
-    private javax.swing.JScrollPane enrollmentScrollPane;
-    private javax.swing.JTable enrollmentTable;
-   
-    private javax.swing.JLabel revenueLabel;
-    private javax.swing.JScrollPane revenueScrollPane;
-    private javax.swing.JTable revenueTable;
-  
-    private javax.swing.JButton refreshBtn;
-    
 
     // 注册统计
     private javax.swing.JLabel enrollmentLabel;
