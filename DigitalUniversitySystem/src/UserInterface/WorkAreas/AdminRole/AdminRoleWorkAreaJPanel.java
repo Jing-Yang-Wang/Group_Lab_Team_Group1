@@ -12,10 +12,14 @@ package UserInterface.WorkAreas.AdminRole;
 
 import University.Business;
 import University.Department.Department;
+import University.Persona.UserAccount;
+import University.Persona.Employee.EmployeeProfile;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.ManageUserAccountsJPanel;
-import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
+import UserInterface.WorkAreas.AdminRole.ManageRegistrar.ManageRegistrar;
 import UserInterface.WorkAreas.AdminRole.ManageStudent.ManageStudentJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageTeacher.ManageTeacherJPanel;
+import UserInterface.WorkAreas.AdminRole.MyProfile.MyProfileJPanel;
+import UserInterface.WorkAreas.AdminRole.AnalyticsDashboardJPanel;
 import UserInterface.WorkAreas.AdminRole.RegisterPerson.SignUpJPanel;
 
 
@@ -30,15 +34,20 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     javax.swing.JPanel CardSequencePanel;
     Business business;
     Department department;
+    UserAccount useraccount;
+    EmployeeProfile employee;
 
     /**
      * Creates new form UnitRiskWorkArea
      */
 
-    public AdminRoleWorkAreaJPanel(Business b, Department d, JPanel clp) {
+    public AdminRoleWorkAreaJPanel(Business b, Department d, JPanel clp, UserAccount ua, EmployeeProfile emp) {
 
         business = b;
+        this.department = d;
         this.CardSequencePanel = clp;
+        this.useraccount = ua;
+        this.employee = emp;
         initComponents();
 
     }
@@ -213,9 +222,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
-
-
-        ManagePersonsJPanel aos = new ManagePersonsJPanel(business, CardSequencePanel);
+            SignUpJPanel aos = new SignUpJPanel(business, CardSequencePanel);
         CardSequencePanel.add("Manage Persons", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
@@ -232,6 +239,9 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
+        MyProfileJPanel aos = new MyProfileJPanel(CardSequencePanel, useraccount, employee);
+        CardSequencePanel.add("View Profile", aos);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_jButton6IdentifyEventsActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -244,10 +254,18 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
+        
+    ManageRegistrar aos = new ManageRegistrar(business, CardSequencePanel);
+    CardSequencePanel.add("Manage Registrar", aos);
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
+        AnalyticsDashboardJPanel dashboard = new AnalyticsDashboardJPanel(business, department, CardSequencePanel);
+        CardSequencePanel.add("Analytics Dashboard", dashboard);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "Analytics Dashboard");
     }//GEN-LAST:event_jButton11ActionPerformed
 
 

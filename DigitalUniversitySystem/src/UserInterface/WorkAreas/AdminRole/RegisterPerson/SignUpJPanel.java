@@ -264,7 +264,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
             fieldVerPassword.setText("");
             fieldEmail.setText("");
         }}
-    }//GEN-LAST:event_SaveActionPerformed
+    //GEN-LAST:event_SaveActionPerformed
     
     private void RoleComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoleComboActionPerformed
         // TODO add your handling code here:
