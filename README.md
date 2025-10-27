@@ -101,7 +101,7 @@ Faculty: For all interfaces you should only see data for courses assigned to the
   
 Student
 
-Regisrar
+Registrar
 
 <BR>
 <B>9. Challenges & Solutions</B> - TO DO Summarize any difficulties encountered during development.  Highlight the solutions implemented to overcome these challenges.
@@ -116,6 +116,7 @@ Michael Hynes
   - Language: Being the only native English speaker, there were obvious language barrier issues.  This was a challenge during out meetings, our Teams conversations, and in for our code comments.
   - Group Size: Unlike other groups, have a group of four further compnonded the challenges that I stated above.
   - Instructions: In a few places, the intructions were not clear.  An example, "View and update assigned course details (title, description, schedule, capacity)" is an assignement requirement but several of these terms were used to describe the data in course and course schedule.  It also did not make it clear that we were free to add classes and data points as needed.
+  - Group Time Management: With the team's git issues and slow updated to main there was not enough time for end-to-end testing or group QA.
 
 Xieming Geng
 
@@ -153,6 +154,7 @@ Michael Hynes
   - Posted updates in Teams and made myself available to assist other team members.
 
 Xieming Geng
+
 
 
 
