@@ -88,6 +88,11 @@ Registrar
 
 General
 - Making sure the application compiles with no issues.
+- For each user type confirm that they take you to the correct work area for their role.
+  - Admin: User "Admin", Password "****"
+  - Faculty: User "Gina", Password "****"
+  - Student: User "Adam", Password "****"
+  - Registrar: User "Mia", Password "109"
   
 Admin
 
@@ -154,6 +159,7 @@ Michael Hynes
   - Posted updates in Teams and made myself available to assist other team members.
 
 Xieming Geng
+
 
 
 
