@@ -82,10 +82,13 @@ General
   
 Admin
 
-Faculty
+Faculty: For all interfaces you should only see data for courses assigned to the faculty that logged in.
 - Login as "gina"
 - Manage Courses: Select a course and press update.  Update all fields and press Save.  Note that table updates.  Confirm that you get messages when you reduce capactity or enter text in that field.  Press back when testing is complete.
-- Manage Student Profiles: Select Semester "Spring2022", note that course updates.  Select course with students "Data Visualization", note that table updates.  On jframe confirm Class GPA "3.35".  In table select student and press Assignments, note table of assignments appears.  Change assignements and or grades and make sure to leave the field after making an edit and press save, note top table updates with new student and class GPAs.  Press back when testing is complete.
+- Manage Student Profiles: Select Semester "Spring2022", note that course updates.  Select course with students "Data Visualization", note that table updates.  On jframe confirm Class GPA "3.35".  In table select student and press Assignments, note table of assignments appears.  Change assignements and or grades and make sure to leave the field after making an edit and press save, note top table updates with new student and class GPAs.  Press Back when testing is complete.
+- My Profile: Note values.  Press Update, note that fields can now be edited.  Update data and press Save, note that data is saved and fields can no longer be edited.  Press Back when testing is complete.
+- Performance Reports: Select a semester "Spring2022", note that the table updates.  Confirm that data is correct.  Press Export, note that it'll generate a local csv file with the same data that is in the table.  Press Back when testing is complete.
+- Tuition/Enrollment Insight: Review data to confirm the expect courses are displayed and the calculations are correct.  Press Back when testing is complete.
   
 Student
 
@@ -148,6 +151,7 @@ Xieming Geng
 
   TO DO Clearly state each team member’s contributions to the project.
   TO DO Provide details on coding, documentation, testing, and other tasks.
+
 
 
 
