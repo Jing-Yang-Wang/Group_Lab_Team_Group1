@@ -145,13 +145,15 @@ Jing Yang Wang
 
 Michael Hynes
   - Built the initial skeleton of the application by taking the "ProfileWorkareaExample 3.zip" and "Info5100-University-Example-2-18-2024.zip" projects and combining them so they work together.  Modified the initial test data to work with the new combined project.  After completion, proved that to login process worked as expected for the admin, faculty, and student profiles.
-  - Built out all sections related to the Faculty Use Case.
-  - Added new class for Assignments.
-  - Reviewed merged code and fixed issues that prevented the project from compiling.
-  - Worked with the TAs to document the Git process and shared it with the team.
-  - Created inital versions of Readme.txt.
+  - Built out all sections related to the Faculty Use Case other then manage profile.  
+  - Added new class and all code needed to mange Assignments.  
+  - Reviewed merged code and fixed issues that prevented the project from compiling.  This was performed every time another team member commited code until 10/26 8:00 PM.
+  - Worked with the TAs to document the Git process and shared it with the team.  This required multiple TAs, and TAs having me swap git tools twice as well as recreate my branch and manage the project in a new folder.
+  - Versions of Readme.txt until 10/26 8:45 PM.
+  - Posted updates in Teams and made myself available to assist other team members.
 
 Xieming Geng
+
 
 
 
