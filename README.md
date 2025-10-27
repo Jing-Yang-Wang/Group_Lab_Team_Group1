@@ -2,14 +2,11 @@
 
 <B>1. Digital University System</B>
 
-<B>2. Team Information</B>
+<B>2. Team Information</B> - TO DO List all team members along with their assigned roles and responsibilities. Include NUIDs for identification.
 - Hairui Dou
 - Jing Yang Wang
 - Michael Hynes, 76045378: Faculty Use Case
-- Xieming Geng
-
-  TO DO List all team members along with their assigned roles and responsibilities.
-  TO DO Include NUIDs for identification.
+- Xieming Geng  
 
 
 <B>3. Project Overview</B>
@@ -50,24 +47,22 @@ Login: This process is managed by the left actionsidejpanel on ProfileWorkArea. 
 Logout: The login jpanel is always visible on the lefthand side.  There is no logout process other then closing the application or logging in as a different user.
 
 
-<B>6. Features Implemented</B>
+<B>6. Features Implemented</B> - TO DO Detail the functionalities implemented for each role.  Clearly specify which team member was responsible for each feature.
 
 Admin
 
 Faculty: Michael Hynes
-- Mange Course
-- Manage Student Profiles
-- Tuition/Enrollment Insight
-- My Profile Management: Leverage a jframe created by Sophia-Geng.
-- Performance Reporting
+- Initial "ProfileWorkareaExample 3.zip" & "Info5100-University-Example-2-18-2024.zip": Confirmed that it all ran so we had a good starting place.
+- Code Reviews: Fixed code issues introduced during merges.
+- Faculty Manage Course
+- Faculty Manage Student Profiles
+- Faculty Tuition/Enrollment Insight
+- Faculty My Profile Management: Leverage a jframe created by Sophia-Geng.
+- Faculty Performance Reporting
   
 Student
 
 Registrar
-
-  TO DO Detail the functionalities implemented for each role.
-  TO DO Clearly specify which team member was responsible for each feature.
-
 
 <B>7. Usage Instructions</B>
    
@@ -75,7 +70,7 @@ Registrar
   TO DO Include example scenarios for different user roles.
 
 
-<B>8. Testing Guide</B>
+<B>8. Testing Guide</B> -   TO DO Outline how to test the system, including sample test cases.  Explain how to verify that authentication and authorization work correctly.
 
 General
 - Making sure the application compiles with no issues.
@@ -94,11 +89,8 @@ Student
 
 Regisrar
 
-  TO DO Outline how to test the system, including sample test cases.
-  TO DO Explain how to verify that authentication and authorization work correctly.
 
-
-<B>9. Challenges & Solutions</B>
+<B>9. Challenges & Solutions</B> - TO DO Summarize any difficulties encountered during development.  Highlight the solutions implemented to overcome these challenges.
     
 Hairui Dou
 
@@ -112,9 +104,6 @@ Michael Hynes
   - Instructions: In a few places, the intructions were not clear.  An example, "View and update assigned course details (title, description, schedule, capacity)" is an assignement requirement but several of these terms were used to describe the data in course and course schedule.  It also did not make it clear that we were free to add classes and data points as needed.
 
 Xieming Geng
-
- TO DO Summarize any difficulties encountered during development.
-TO DO Highlight the solutions implemented to overcome these challenges.
 
 
 <B>10. Future Enhancements</B>
@@ -133,7 +122,7 @@ Student Related
 Registrar Related
 
 
-<B>11. Contribution Breakdown</B>
+<B>11. Contribution Breakdown</B> - TO DO Clearly state each team member’s contributions to the project.  Provide details on coding, documentation, testing, and other tasks.
 
 Hairui Dou
 
@@ -149,8 +138,7 @@ Michael Hynes
 
 Xieming Geng
 
-  TO DO Clearly state each team member’s contributions to the project.
-  TO DO Provide details on coding, documentation, testing, and other tasks.
+
 
 
 
