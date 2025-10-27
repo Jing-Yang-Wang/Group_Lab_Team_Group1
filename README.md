@@ -8,7 +8,7 @@
 - Michael Hynes, 76045378: Faculty Use Case
 - Xieming Geng  
 
-
+<BR>
 <B>3. Project Overview</B>
 
 The Digital University System allows for university staff, faculty, students, and the registar to manage tasks related to the academic college experence.  This systems allows members of each of the stated roles to view data and complete tasks that are important to them.
@@ -23,7 +23,7 @@ Key features include:
 - Transcript reporting
 - Registrar task management
 
-
+<BR>
 <B>4. Installation & Setup Instructions</B>
 
 Prerequisites
@@ -39,14 +39,14 @@ Run Project
 - Open Project: Select the local folder where the code was placed
 - Select Run Project in NetBeans
 
-
+<BR>
 <B>5. Authentication & Access Control</B>
 
 Login: This process is managed by the left actionsidejpanel on ProfileWorkArea.  When valid user name and password is entered and the Login button pushed, the application checks the user's profile role and sends the user to that roll's workarea. Workareas are in place for Admin, Faculty, Student, and Regisrar roles.
 
 Logout: The login jpanel is always visible on the lefthand side.  There is no logout process other then closing the application or logging in as a different user.
 
-
+<BR>
 <B>6. Features Implemented</B> - TO DO Detail the functionalities implemented for each role.  Clearly specify which team member was responsible for each feature.
 
 Admin
@@ -64,13 +64,27 @@ Student
 
 Registrar
 
-<B>7. Usage Instructions</B>
-   
-  TO DO Provide a step-by-step guide on how to interact with the system.
-  TO DO Include example scenarios for different user roles.
+<BR>
+<B>7. Usage Instructions</B> - TO DO Provide a step-by-step guide on how to interact with the system.  Include example scenarios for different user roles.
+
+Admin
+
+Faculty: Michael Hynes
+- Scenario 1: Before the start of the semester you want to make sure you courses are open for enrollment and add a syllabus.  For this leverage the Manage Courses interface.
+- Scenario 2: During the semester you need to enter grades as assignments are completed as well as check GPAs to see who might need extra help.  For this leverage the Manage Students interface.
+- Scenario 3: During the semester you want to see how a tstudent is doing in other classes.  For this leverage the Transcript interface via the Manage Students interface.
+- Scenario 4: As you prepare for a review, you want to show enrollment information of your courses.  You also want to print out the information to bring it with you.  For this leverage the Performanace Reporting interface.
+- Scenario 5: You have a new phone number and want to document it.  For this leverage the Faculty Profile Management interface.
+- Scenario 6: You have a new phone number and want to document it.  For this leverage the Faculty Profile Management interface.
+- Scenario 7: As you prepare for a review, you want to show how much income you have brought into the university.  For this leverage the Performanace Reporting interface.
+  
+Student
+
+Registrar
 
 
-<B>8. Testing Guide</B> -   TO DO Outline how to test the system, including sample test cases.  Explain how to verify that authentication and authorization work correctly.
+<BR>
+<B>8. Testing Guide</B> - TO DO Outline how to test the system, including sample test cases.  Explain how to verify that authentication and authorization work correctly.
 
 General
 - Making sure the application compiles with no issues.
@@ -89,7 +103,7 @@ Student
 
 Regisrar
 
-
+<BR>
 <B>9. Challenges & Solutions</B> - TO DO Summarize any difficulties encountered during development.  Highlight the solutions implemented to overcome these challenges.
     
 Hairui Dou
@@ -105,23 +119,24 @@ Michael Hynes
 
 Xieming Geng
 
-
+<BR>
 <B>10. Future Enhancements</B>
 
 Admin Related
 
-Faculty Related
+Faculty Related: Michael Hynes
   - The ability to track attendance.
   - Abiltiy to send emails to all students in a class.
   - Ability to add or delete assignments.
   - Ability to copy assignment structure from previous classes.
   - Notifications when student enrollment changes.
+  - Give students a way to see a class syllabus.
 
 Student Related
 
 Registrar Related
 
-
+<BR>
 <B>11. Contribution Breakdown</B> - TO DO Clearly state each team member’s contributions to the project.  Provide details on coding, documentation, testing, and other tasks.
 
 Hairui Dou
@@ -137,6 +152,7 @@ Michael Hynes
   - Created inital versions of Readme.txt.
 
 Xieming Geng
+
 
 
 
