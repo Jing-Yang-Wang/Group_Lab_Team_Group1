@@ -20,6 +20,10 @@ import UserInterface.WorkAreas.AdminRole.ManageStudent.ManageStudentJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageTeacher.ManageTeacherJPanel;
 import UserInterface.WorkAreas.AdminRole.MyProfile.MyProfileJPanel;
 import UserInterface.WorkAreas.AdminRole.AnalyticsDashboardJPanel;
+import UserInterface.WorkAreas.AdminRole.Dashboard.DashboardJPanel;
+
+import UserInterface.WorkAreas.AdminRole.Dashboard.DashboardJPanel;
+
 import UserInterface.WorkAreas.AdminRole.RegisterPerson.SignUpJPanel;
 
 
@@ -263,7 +267,9 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        AnalyticsDashboardJPanel dashboard = new AnalyticsDashboardJPanel(business, department, CardSequencePanel);
+
+        DashboardJPanel dashboard = new DashboardJPanel(business, department, CardSequencePanel);
+
         CardSequencePanel.add("Analytics Dashboard", dashboard);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "Analytics Dashboard");
     }//GEN-LAST:event_jButton11ActionPerformed
