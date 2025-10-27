@@ -111,7 +111,7 @@ Hairui Dou
 Jing Yang Wang
 
 Michael Hynes
-  - GitHub: I worked with multiple TAs who here not able to help me with a fully working and documented process for working with branches.  It was not until Thursday that I had something that was provedn to work.  At that point I shared with the team but the divergance of our branches made the project much harder to complete then nessecary.
+  - GitHub: I worked with multiple TAs who here not able to help me with a fully working and documented process for working with branches.  This process had me trying multiple git tools, rebuilding branches, and rebuilding my local project.  It was not until Thursday that I had something that was provedn to work.  At that point I shared with the team but the divergance of our branches made the project much harder to complete then nessecary.
   - Communication: The team was able to meet on Tuesday to confirm roles and to go over the initial mergerd code that I provided.  We also had a short meeting before out Thursday class.  However, the rest of the team did not involve me in code reviews, answering questions, test planning, or any other planning.  I tried to establish regular communications in the MS Team I established when the group was formed, however I was the only one actively sending messages throughtout the project. For example, between 10/25 2:15 PM and 10/26 7:15 PM I've posted 19 times while no team member making a post or reaction.
   - Language: Being the only native English speaker, there were obvious language barrier issues.  This was a challenge during out meetings, our Teams conversations, and in for our code comments.
   - Group Size: Unlike other groups, have a group of four further compnonded the challenges that I stated above.
@@ -153,6 +153,7 @@ Michael Hynes
   - Posted updates in Teams and made myself available to assist other team members.
 
 Xieming Geng
+
 
 
 
