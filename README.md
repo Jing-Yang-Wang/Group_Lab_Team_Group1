@@ -63,7 +63,7 @@ Faculty: Michael Hynes
   
 Student
 
-Regisrar
+Registrar
 
   TO DO Detail the functionalities implemented for each role.
   TO DO Clearly specify which team member was responsible for each feature.
@@ -148,6 +148,7 @@ Xieming Geng
 
   TO DO Clearly state each team member’s contributions to the project.
   TO DO Provide details on coding, documentation, testing, and other tasks.
+
 
 
 
