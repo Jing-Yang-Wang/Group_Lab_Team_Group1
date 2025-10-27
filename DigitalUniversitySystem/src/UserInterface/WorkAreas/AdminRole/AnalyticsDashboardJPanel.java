@@ -20,7 +20,10 @@ import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ *
+ * @author kal bugrara
+ */
 public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
 
     /**
@@ -46,7 +49,7 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
     }
 
     private void loadUserRoleSummary() {
-       
+        // 清空表格
         int rc = userRoleTable.getRowCount();
         for (int i = rc - 1; i >= 0; i--) {
             ((DefaultTableModel) userRoleTable.getModel()).removeRow(i);
@@ -55,13 +58,13 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
         UserAccountDirectory uad = business.getUserAccountDirectory();
         Map<String, Integer> roleCount = new HashMap<>();
         
-     
+        // 统计各角色用户数量
         for (UserAccount ua : uad.getUserAccountList()) {
             String role = ua.getRole();
             roleCount.put(role, roleCount.getOrDefault(role, 0) + 1);
         }
         
-
+        // 添加到表格
         for (Map.Entry<String, Integer> entry : roleCount.entrySet()) {
             Object[] row = new Object[2];
             row[0] = entry.getKey();
@@ -69,12 +72,12 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
             ((DefaultTableModel) userRoleTable.getModel()).addRow(row);
         }
         
-      
+        // 更新饼图
         userRoleChartPanel.updateData(roleCount);
     }
 
     private void loadCourseSummary() {
-        
+        // 清空表格
         int rc = courseTable.getRowCount();
         for (int i = rc - 1; i >= 0; i--) {
             ((DefaultTableModel) courseTable.getModel()).removeRow(i);
@@ -85,8 +88,6 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
             System.out.println("Warning: Department is null, cannot load course data");
             return;
         }
-
-        
         CourseCatalog catalog = department.getCourseCatalog();
         if (catalog != null) {
             for (Course course : catalog.getCourseList()) {
@@ -100,7 +101,7 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
     }
 
     private void loadEnrollmentSummary() {
-    
+        // 清空表格
         int rc = enrollmentTable.getRowCount();
         for (int i = rc - 1; i >= 0; i--) {
             ((DefaultTableModel) enrollmentTable.getModel()).removeRow(i);
@@ -108,13 +109,13 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
 
         Map<String, Integer> enrollmentData = new HashMap<>();
         
-
+        // 检查department是否为null
         if (department == null) {
             System.out.println("Warning: Department is null, cannot load enrollment data");
             return;
         }
         
-      
+        // 获取课程安排信息
         CourseSchedule schedule = department.getCourseSchedule();
         if (schedule != null) {
             for (CourseOffer offer : schedule.getCourseOfferList()) {
@@ -127,23 +128,24 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
                 row[1] = courseName;
                 row[2] = enrolledStudents;
                 ((DefaultTableModel) enrollmentTable.getModel()).addRow(row);
-              
+                
+                // 为图表准备数据
                 enrollmentData.put(courseNumber, enrolledStudents);
             }
         }
         
-        
+        // 更新柱状图
         courseChartPanel.updateData(enrollmentData);
     }
 
     private void loadRevenueSummary() {
-     
+        // 清空表格
         int rc = revenueTable.getRowCount();
         for (int i = rc - 1; i >= 0; i--) {
             ((DefaultTableModel) revenueTable.getModel()).removeRow(i);
         }
 
-      
+        // 计算学费收入
         double totalRevenue = 0;
         int totalStudents = 0;
         
@@ -151,7 +153,8 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
         for (UserAccount ua : uad.getUserAccountList()) {
             if (ua.getRole().equals("Student") && ua.getAssociatedPersonProfile() instanceof StudentProfile) {
                 StudentProfile student = (StudentProfile) ua.getAssociatedPersonProfile();
-                
+                // 这里需要根据实际的学费计算逻辑来获取学费金额
+                // 假设每个学生每学期学费为5000
                 totalRevenue += 5000;
                 totalStudents++;
             }
@@ -332,27 +335,30 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
     private javax.swing.JButton backBtn;
     private javax.swing.JLabel titleLabel;
     
-  
+    // 用户角色统计
     private javax.swing.JLabel userRoleLabel;
     private javax.swing.JScrollPane userRoleScrollPane;
     private javax.swing.JTable userRoleTable;
     
-    
+    // 课程统计
     private javax.swing.JLabel courseLabel;
     private javax.swing.JScrollPane courseScrollPane;
     private javax.swing.JTable courseTable;
     
-   
+    // 注册统计
     private javax.swing.JLabel enrollmentLabel;
     private javax.swing.JScrollPane enrollmentScrollPane;
     private javax.swing.JTable enrollmentTable;
-   
+    
+    // 收入统计
     private javax.swing.JLabel revenueLabel;
     private javax.swing.JScrollPane revenueScrollPane;
     private javax.swing.JTable revenueTable;
-  
+    
+    // 刷新按钮
     private javax.swing.JButton refreshBtn;
     
+    // 图表面板
     private ChartPanel userRoleChartPanel;
     private ChartPanel courseChartPanel;
     // End of variables declaration//GEN-END:variables
