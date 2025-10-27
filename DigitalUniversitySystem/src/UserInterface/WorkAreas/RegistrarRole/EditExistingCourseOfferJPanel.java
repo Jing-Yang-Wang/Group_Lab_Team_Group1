@@ -279,7 +279,8 @@ public class EditExistingCourseOfferJPanel extends javax.swing.JPanel {
         fieldCapacity.setText(String.valueOf(co.getSeatCount()));
 
         //set faculty comboBox
-        String facultyName = co.getFacultyProfile().getPerson().getPersonId();
+        ////MH 10/26 - Fixes because ID was changed to UniversityID
+        String facultyName = co.getFacultyProfile().getPerson().getUniversityID();
         comboFaculty.setSelectedItem(facultyName);
 
         //set semester comboBox

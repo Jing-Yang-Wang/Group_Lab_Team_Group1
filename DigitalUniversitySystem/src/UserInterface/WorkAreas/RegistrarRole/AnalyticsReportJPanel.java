@@ -157,7 +157,8 @@ public class AnalyticsReportJPanel extends javax.swing.JPanel {
             row[0] = co.getCourseSchedule().getSemester();
             row[1] = co.getCourseNumber();
             row[2] = co.getSubjectCourse().getCourseName();
-            row[3] = co.getFacultyProfile().getPerson().getPersonId(); 
+            //MH 10/26 - Fixes because ID was changed to UniversityID
+            row[3] = co.getFacultyProfile().getPerson().getUniversityID(); 
             row[4] = co.getSeatCount();
             row[5] = co.getEnrolledStudents().size();   
             row[6] = co.getAverageCourseGrade();

@@ -28,10 +28,19 @@ public class Seat {
         return seatAssignment;
     }
 
+       
+    //MH 10/22 - Added because it was missing
+    //MH 10/26 - Removed because a team member also added this.
+    //public SeatAssignment getSeatAssignment() {
+    //    return seatassignment;
+    //}
+
+
     // 获取此座位对应的课程
     public CourseOffer getCourseOffer() {
         return courseOffer;
     }
+
 
     // 获取课程学分
     public int getCourseCredits() {

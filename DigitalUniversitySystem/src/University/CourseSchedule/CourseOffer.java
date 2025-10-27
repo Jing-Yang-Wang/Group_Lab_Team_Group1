@@ -19,6 +19,7 @@ public class CourseOffer {
     private FacultyAssignment facultyassignment; // 教师分配
     private boolean enrollmentOpen = true;//是否开放注册
     private String syllabus = "No syllabus available"; //课程大纲说明
+    private CourseSchedule courseschedule; //MH - Was removed, added it back.
 
     // 构造方法：传入 Course 对象
     public CourseOffer(Course c) {
@@ -108,26 +109,23 @@ public class CourseOffer {
         return (int) course.getCredits();
     }
 
-    public void setCourseSchedule(CourseSchedule cs) {
-        
-    }
-    
     // 生成成绩分布（示例：A=3, B=2, C=1 ...）
     public Map<String, Integer> getGradeDistribution() {
-    Map<String, Integer> distribution = new HashMap<>();
+        Map<String, Integer> distribution = new HashMap<>();
 
-    // 统计所有已占用座位的成绩（Seat 里应该保存每个学生成绩）
-    for (Seat s : seatlist) {
-        if (s.isOccupied()) {
-            String grade = s.getGrade();
-            if (grade != null && !grade.isEmpty()) {
-                distribution.put(grade, distribution.getOrDefault(grade, 0) + 1);
+        // 统计所有已占用座位的成绩（Seat 里应该保存每个学生成绩）
+        for (Seat s : seatlist) {
+            if (s.isOccupied()) {
+                String grade = s.getGrade();
+                if (grade != null && !grade.isEmpty()) {
+                    distribution.put(grade, distribution.getOrDefault(grade, 0) + 1);
+                }
             }
         }
-    }
 
-    return distribution;
-}
+        return distribution;
+    }
+    
      //获取当前课程的总座位数
     public int getSeatCount() {
         //如果 seatlist为空则返回 0，否则返回座位数量
@@ -145,15 +143,17 @@ public class CourseOffer {
         return count;
     }
     
-    public boolean isEnrollmentOpen() {
-        return enrollmentOpen;
-    }
+    //MH 10/26 - Dup.  Fails to compile with this.
+    //public boolean isEnrollmentOpen() {
+    //    return enrollmentOpen;
+    //}
 
     public void setEnrollmentOpen(boolean enrollmentOpen) {
         this.enrollmentOpen = enrollmentOpen;
     }
 
     public String getSyllabus() {
+
         return syllabus;
     }
 
@@ -165,8 +165,31 @@ public class CourseOffer {
     public boolean getEnrollmentOpen() {
         return enrollmentOpen;
     }
+
+
+    public void setEnrollmentOpen(Boolean enrollmentOpen) {
+        this.enrollmentOpen= enrollmentOpen;
+    }
     
-        // 获取所有座位对应的选课记录（SeatAssignments）
+
+    public float getAverageGrade() {        
+        ArrayList<SeatAssignment> enrolledStudents = getEnrolledSeats(); //MH Fixed, needs a seat assignment
+        float total = 0.0f;
+        int count = 0;
+
+        for (SeatAssignment sa : enrolledStudents) {
+                float grade = sa.getGrade();
+                //only calculate when grades are positive numbers
+                if (grade > 0) {
+                    total += grade;
+                    count++;
+            }                
+        }
+        return total / count;
+    }
+
+    
+    // 获取所有座位对应的选课记录（SeatAssignments）
     public ArrayList<SeatAssignment> getSeatAssignments() {
         ArrayList<SeatAssignment> seatAssignments = new ArrayList<>();
 
@@ -182,66 +205,140 @@ public class CourseOffer {
 
     // 根据座位号获取对应的 SeatAssignment（用于查找学生选课记录）
     public SeatAssignment getSeatAssignmentBySeatNumber(int seatNumber) {
-    for (Seat s : seatlist) {
-        // 找到 seatNumber 匹配的座位
-        if (s.getSeatNumber() == seatNumber) {
-            return s.getSeatAssignment();  // 返回这个座位对应的 SeatAssignment
+        for (Seat s : seatlist) {
+            // 找到 seatNumber 匹配的座位
+            if (s.getSeatNumber() == seatNumber) {
+                return s.getSeatAssignment();  // 返回这个座位对应的 SeatAssignment
+            }
         }
+        return null; // 如果找不到对应座位，返回 null
     }
-    return null; // 如果找不到对应座位，返回 null
-}
 
     // 计算该课程的平均成绩
     public double getAverageCourseGrade() {
-    int total = 0;        // 成绩总和
-    int count = 0;        // 学生数量
+        int total = 0;        // 成绩总和
+        int count = 0;        // 学生数量
 
-    for (Seat s : seatlist) {
-        if (s.isOccupied() && s.getSeatAssignment() != null) {
-            SeatAssignment sa = s.getSeatAssignment();
-            total += sa.getGrade();  // 获取 SeatAssignment 中的成绩（数值型）
-            count++;
+        for (Seat s : seatlist) {
+            if (s.isOccupied() && s.getSeatAssignment() != null) {
+                SeatAssignment sa = s.getSeatAssignment();
+                total += sa.getGrade();  // 获取 SeatAssignment 中的成绩（数值型）
+                count++;
+            }
         }
-    }
 
-    // 如果没人选课，避免除以0
-    if (count == 0) {
-        return 0.0;
-    }
+        // 如果没人选课，避免除以0
+        if (count == 0) {
+            return 0.0;
+        }
 
-    // 返回保留两位小数的平均成绩
-    return Math.round(((double) total / count) * 100.0) / 100.0;
-}
+        // 返回保留两位小数的平均成绩
+        return Math.round(((double) total / count) * 100.0) / 100.0;
+    }
 
     public ArrayList<StudentProfile> getEnrolledStudents() {
-    ArrayList<StudentProfile> students = new ArrayList<>();
-    for (Seat s : seatlist) {
-        if (s.isOccupied() && s.getSeatAssignment() != null && s.getSeatAssignment().getStudentProfile() != null) {
-            students.add(s.getSeatAssignment().getStudentProfile());
+        ArrayList<StudentProfile> students = new ArrayList<>();
+        for (Seat s : seatlist) {
+            if (s.isOccupied() && s.getSeatAssignment() != null && s.getSeatAssignment().getStudentProfile() != null) {
+                students.add(s.getSeatAssignment().getStudentProfile());
+            }
         }
+        return students;
     }
-    return students;
-}
+    
+    //MH 10/26 - Put this back in with new name after it was changed.
+    public ArrayList<SeatAssignment> getEnrolledSeats() {        
+    ArrayList<SeatAssignment> enrolled = new ArrayList<>();    
+        for (Seat s : seatlist) {
+            if (s.isOccupied()) {
+                enrolled.add(s.getSeatAssignment());
+            }
+        }
+        return enrolled;
+    }
+    
 
     public String getAverageGradeAsLetter() {
-    double avg = getAverageCourseGrade();
-    if (avg >= 3.7) return "A";
-    else if (avg >= 3.3) return "A-";
-    else if (avg >= 3.0) return "B+";
-    else if (avg >= 2.7) return "B";
-    else if (avg >= 2.3) return "B-";
-    else if (avg >= 2.0) return "C+";
-    else if (avg >= 1.7) return "C";
-    else if (avg >= 1.0) return "D";
-    else return "F";
-}
-    public CourseSchedule getCourseSchedule() {
-    return null;
-}
-
-    
+        double avg = getAverageCourseGrade();
+        if (avg >= 3.7) return "A";
+        else if (avg >= 3.3) return "A-";
+        else if (avg >= 3.0) return "B+";
+        else if (avg >= 2.7) return "B";
+        else if (avg >= 2.3) return "B-";
+        else if (avg >= 2.0) return "C+";
+        else if (avg >= 1.7) return "C";
+        else if (avg >= 1.0) return "D";
+        else return "F";
+    }
+        
     @Override
     public String toString() {
         return course.getCourseNumber() + " - " + course.getCourseName() + " | Seats: " + seatlist.size();
+    }
+    
+    //MH - Put this back from old code.
+    public void setCourseSchedule(CourseSchedule cs) {
+        this.courseschedule = cs;
+    }
+
+    public CourseSchedule getCourseschedule() {
+        return courseschedule;
+    }   
+
+    public CourseSchedule getCourseSchedule() {
+        return courseschedule;
+    }  
+
+    
+    //MH 10/26 - Putting it back with a new name after it was removed.
+    //AI - Helped with this since it was a lot of detail
+    public Map<String, Integer> getGradeDistributionForReport() {
+        // Initialize the distribution map with zero counts for common grades
+        Map<String, Integer> distribution = new HashMap<>();
+        distribution.put("A", 0);
+        distribution.put("A-", 0);
+        distribution.put("B+", 0);
+        distribution.put("B", 0);
+        distribution.put("B-", 0);
+        distribution.put("C+", 0);
+        distribution.put("C", 0);
+        distribution.put("C-", 0);
+        distribution.put("D", 0);
+        distribution.put("F", 0);
+
+        // Reuse existing logic to get all final grades
+        ArrayList<SeatAssignment> assignments = getSeatAssignments();
+
+        for (SeatAssignment sa : assignments) {
+            float grade = sa.getGrade(); // This is the final numeric grade (e.g., 4.0, 3.3, 2.0)
+            String letterGrade;
+
+            // Define the numeric to letter grade mapping (adjust these cutoffs as needed)
+            if (grade >= 4.0f) {
+                letterGrade = "A";
+            } else if (grade >= 3.7f) {
+                letterGrade = "A-";
+            } else if (grade >= 3.3f) {
+                letterGrade = "B+";
+            } else if (grade >= 3.0f) {
+                letterGrade = "B";
+            } else if (grade >= 2.7f) {
+                letterGrade = "B-";
+            } else if (grade >= 2.3f) {
+                letterGrade = "C+";
+            } else if (grade >= 2.0f) {
+                letterGrade = "C";
+            } else if (grade >= 1.7f) {
+                letterGrade = "C-";
+            } else if (grade >= 1.0f) {
+                letterGrade = "D";
+            } else {
+                letterGrade = "F";
+            }
+
+            // Increment the count for the determined letter grade
+            distribution.put(letterGrade, distribution.get(letterGrade) + 1);
+        }
+        return distribution;
     }
 }

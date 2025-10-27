@@ -21,26 +21,33 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * Department 管理学院下的所有课程、人员、课表等。
- * 一个 Department 维护一个 CourseCatalog（课程目录）和多个 CourseSchedule（学期课表）。
  * @author kal bugrara
  */
 public class Department {
 
-    private String name;
-    private CourseCatalog coursecatalog;
-    private PersonDirectory persondirectory;
-    private StudentDirectory studentdirectory;
-    private FacultyDirectory facultydirectory;
-    private EmployeeDirectory employeedirectory;
-    private RegistrarDirectory registrardirectory;
-    private EmployerDirectory employerdirectory;
-    private Degree degree;
 
-    // 每个学期的课表映射表，例如 "Fall2024" → CourseSchedule
+    String name;
+    CourseCatalog coursecatalog;
+    PersonDirectory persondirectory;
+    StudentDirectory studentdirectory;
+    //MH 10/18 - Added for login process
+    FacultyDirectory facultydirectory;
+    EmployeeDirectory employeedirectory;
+    RegistrarDirectory registrardirectory;
+    //UserAccountDirectory useraccountdirectory;
+    //MH 10/18 - For getting all Course Scedules
+    //MH - 10/22 Removed because it is using the Hashmap
+    //MH - 10/26 - But this back for now so team members can fix code issues
+    CourseSchedule courseSchedule;
+    
+    EmployerDirectory employerdirectory;
+    Degree degree;
+
+
+    // Course schedule mapping table for each semester
     private HashMap<String, CourseSchedule> mastercoursecatalog;
 
-    // 构造方法
+   
     public Department(String n) {
         name = n;
         mastercoursecatalog = new HashMap<>();
@@ -91,7 +98,7 @@ public class Department {
         return studentdirectory;
     }
 
-    // 创建新的学期课表（例如 “Fall2024”）
+    // 创建新的学期课表
     public CourseSchedule newCourseSchedule(String semester) {
         CourseSchedule cs = new CourseSchedule(semester, coursecatalog);
         mastercoursecatalog.put(semester, cs);
@@ -119,17 +126,23 @@ public class Department {
         return cs.calculateTotalRevenues();
     }
 
+    
+    //Jing-this method i need to use
+    //MH - 10/26, the course schedule is inside mastercoursecatalog.  We'll need to transition code to this.
+
+
     // 获取学院名称
     public String getName() {
         return name;
     }
 
-    // 获取某学期课表（兼容老逻辑）
+    // 获取某学期课表
+
     public CourseSchedule getCourseSchedule() {
         return mastercoursecatalog.values().stream().findFirst().orElse(null);
     }
 
-    // 获取所有学期开设的课程 Offer（整合 Student & Faculty 逻辑）
+    // 获取所有学期开设的课程 Offer
     public ArrayList<CourseOffer> getAllCourseOffers() {
         ArrayList<CourseOffer> allOffers = new ArrayList<>();
         for (CourseSchedule cs : mastercoursecatalog.values()) {
@@ -154,7 +167,7 @@ public class Department {
         co.assignEmptySeat(cl);
     }
 
-    // Faculty 模块辅助函数：判断教师属于哪个学院
+    
     public Department getDepartmentIfContainsFaculty(FacultyProfile facultyProfile) {
         String id = facultyProfile.getPerson().getUniversityID();
         FacultyProfile foundProfile = facultydirectory.findTeachingFaculty(id);
@@ -165,7 +178,19 @@ public class Department {
         }
     }
 
+    
+    //MH 10/22 - Added so we can have a semester list
+    //AI helped me build this.  Was not sure how to get the key
+    //MH 10/26 - Removed because a team member also added this.
+    //public Set<String> getAllSemesters() {
+    //    return mastercoursecatalog.keySet();
+    //}
+   
+    //MH 10/22 - Added so course offer can be used to update the schedule
+
+
     // 根据课程 Offer 查找对应学期课表
+
     public CourseSchedule findCourseScheduleByCourseOffer(CourseOffer courseOffer) {
         for (CourseSchedule cs : mastercoursecatalog.values()) {
             for (CourseOffer co : cs.getCourseOfferList()) {

@@ -43,6 +43,19 @@ public class RegistrarDirectory {
         registrarList.remove(p);
     }
   
+    public void removeRegistrar(String registrarId) {
+    RegistrarProfile toRemove = null;
+    for (RegistrarProfile rp : registrarList) {
+        if (rp.getPerson().getPersonId().equals(registrarId)) {
+            toRemove = rp;
+            break;
+        }
+    }
+    if (toRemove != null) {
+        registrarList.remove(toRemove);
+    }
+}
+
     // 返回注册员列表
     public ArrayList<RegistrarProfile> getRegistrarList() {
         return registrarList;
@@ -52,7 +65,8 @@ public class RegistrarDirectory {
     //find registrar by ID
     public RegistrarProfile findRegistrarById(String id) {
         for (RegistrarProfile r : registrarList) {
-            if (r.getPerson().getPersonId().equals(id)) {
+            //MH 10/26 - Fixes because ID was changed to UniversityID
+            if (r.getPerson().getUniversityID().equals(id)) {
                 return r;
             }
         }

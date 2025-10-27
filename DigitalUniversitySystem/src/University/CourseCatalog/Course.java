@@ -7,7 +7,7 @@ public class Course {
     private String courseName;     // 课程名称
     private int credits;           // 学分
     private int price = 1500;      // 每学分价格
-
+String name;
     //构造方法
     public Course(String courseNumber, String courseName, int credits) {
         this.courseNumber = courseNumber;
@@ -44,6 +44,30 @@ public class Course {
         return price;
     }
 
+
+    
+    // XM 10/23
+    @Override
+    public String toString() {
+        return name;
+    }
+
+ 
+    //MH 10/26 - Fixed after the names were changed
+
+    public void setNumber(String number) {
+        this.courseNumber = number;
+    }
+
+    public void setName(String name) {
+
+        this.name = name;
+
+
+        this.courseName = name;
+
+    }
+
     public void setPrice(int price) {
         this.price = price;
     }
@@ -51,12 +75,13 @@ public class Course {
     //计算课程总价
     public int getTotalCoursePrice() {
         return price * credits;
+
     }
 
     
     //打印信息
-    @Override
-    public String toString() {
-        return courseNumber + " - " + courseName + " (" + credits + "cr)";
-    }
+//    @Override
+//    public String toString() {
+//        return courseNumber + " - " + courseName + " (" + credits + "cr)";
+//    }
 }

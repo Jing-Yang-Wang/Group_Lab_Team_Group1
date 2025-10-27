@@ -9,6 +9,7 @@ package University;
 
 import University.CourseCatalog.Course;
 import University.CourseCatalog.CourseCatalog;
+import University.CourseSchedule.Assignment;
 import University.CourseSchedule.CourseLoad;
 import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
@@ -92,15 +93,7 @@ public class ConfigureABusiness {
         Course course7 = catalog.newCourse("Data Visualization", "INFO7370", 4); 
         Course course8 = catalog.newCourse("Applied Marketing", "INFO5000", 4);
         Course course9 = catalog.newCourse("Advanced Java", "INFO5001", 4);
-        
-        //New Courses
-        catalog.newCourse("Application Engineering & Development", "INFO5100", 4);
-        catalog.newCourse("Web Design", "INFO5200", 4);
-        catalog.newCourse("Algorithms", "INFO5300", 4);
-        catalog.newCourse("Database Management", "INFO5400", 4);
-        catalog.newCourse("Big Data Systems", "INFO5500", 4);
-
-        
+              
         //Original semester
         CourseSchedule fall2020 = department.newCourseSchedule("Fall2020");
         CourseSchedule spring2021 = department.newCourseSchedule("Spring2021");
@@ -113,27 +106,29 @@ public class ConfigureABusiness {
 
         
         //Original course offerings
-        CourseOffer co1 = fall2020.newCourseOffer("INFO5100"); co1.generateSeats(15);
-        CourseOffer co2 = fall2020.newCourseOffer("INFO6205"); co2.generateSeats(15);
-        CourseOffer co3 = spring2021.newCourseOffer("INFO6210"); co3.generateSeats(20);
-        CourseOffer co4 = spring2021.newCourseOffer("INFO6215"); co4.generateSeats(10);
-        CourseOffer co5 = fall2021.newCourseOffer("INFO6250"); co5.generateSeats(10);
-        CourseOffer co6 = fall2021.newCourseOffer("INFO7245"); co6.generateSeats(20);
-        CourseOffer co7 = spring2022.newCourseOffer("INFO7370"); co7.generateSeats(10);
-        CourseOffer co8 = spring2022.newCourseOffer("INFO5001"); co8.generateSeats(20);
+        CourseOffer co1 = fall2020.newCourseOfferByCourse(course1); co1.generateSeats(15);
+        CourseOffer co2 = fall2020.newCourseOfferByCourse(course2); co2.generateSeats(15);
+        CourseOffer co3 = spring2021.newCourseOfferByCourse(course3); co3.generateSeats(20);
+        CourseOffer co4 = spring2021.newCourseOfferByCourse(course4); co4.generateSeats(10);
+        CourseOffer co5 = fall2021.newCourseOfferByCourse(course5); co5.generateSeats(10);
+        CourseOffer co6 = fall2021.newCourseOfferByCourse(course6); co6.generateSeats(20);
+        CourseOffer co7 = spring2022.newCourseOfferByCourse(course7); co7.generateSeats(10);
+        CourseOffer co8 = spring2022.newCourseOfferByCourse(course8); co8.generateSeats(20);     
         
         //New courses offered
+        /* MH - Removed because we the code above works.
         for (String c : new String[]{"INFO5100","INFO5200","INFO5300","INFO5400","INFO5500"}) {
             CourseOffer sOffer = spring2025.newCourseOffer(c);
             if (sOffer != null) sOffer.generateSeats(20);
             CourseOffer fOffer = fall2025.newCourseOffer(c);
             if (fOffer != null) fOffer.generateSeats(20);
-        }
-
-        //Create a faculty
+        } */
+        
+        //Create emplyee
         EmployeeDirectory employeedirectory = department.getEmployeeDirectory();
         EmployeeProfile employeeprofile0 = employeedirectory.newEmployeeProfile(person001);
 
+        //Create faculty
         FacultyDirectory fd = department.getFacultyDirectory();
         FacultyProfile fp1 = fd.newFacultyProfile(person002);
         FacultyProfile fp2 = fd.newFacultyProfile(person012);
@@ -143,36 +138,47 @@ public class ConfigureABusiness {
         FacultyProfile fp6 = fd.newFacultyProfile(person016);
         FacultyProfile fp7 = fd.newFacultyProfile(person017);
         FacultyProfile fp8 = fd.newFacultyProfile(person018);
+        //Assign faculty to courseoffer 给course offer分配老师
+        FacultyAssignment fa1 = fp1.assignAsTeacher(co1);
+        FacultyAssignment fa2 = fp2.assignAsTeacher(co2);
+        FacultyAssignment fa3 = fp3.assignAsTeacher(co3);
+        FacultyAssignment fa4 = fp4.assignAsTeacher(co4);
+        FacultyAssignment fa5 = fp5.assignAsTeacher(co5);
+        FacultyAssignment fa6 = fp6.assignAsTeacher(co6);
+        FacultyAssignment fa7 = fp1.assignAsTeacher(co7); //MH - Updated to have better test data
+        FacultyAssignment fa8 = fp1.assignAsTeacher(co8); //MH - Updated to have better test data
+        
+        // Registrar ensures faculty info is visible in course offers
+        /* MH - This is being done above
+        courseoffer1.assignAsTeacher(fp1);
+        ourcseoffer2.assignAsTeacher(fp2);
+        courseoffer3.assignAsTeacher(fp3);
+        courseoffer4.assignAsTeacher(fp4);
+        courseoffer5.assignAsTeacher(fp5);
+        courseoffer6.assignAsTeacher(fp6);
+        courseoffer7.assignAsTeacher(fp1);
+        courseoffer8.assignAsTeacher(fp1); 
+        */
 
-        //Assigning teachers to courses
-        FacultyAssignment fa1 = fp1.assignAsTeacher(co1); co1.AssignAsTeacher(fp1);
-        FacultyAssignment fa2 = fp2.assignAsTeacher(co2); co2.AssignAsTeacher(fp2);
-        FacultyAssignment fa3 = fp3.assignAsTeacher(co3); co3.AssignAsTeacher(fp3);
-        FacultyAssignment fa4 = fp4.assignAsTeacher(co4); co4.AssignAsTeacher(fp4);
-        FacultyAssignment fa5 = fp5.assignAsTeacher(co5); co5.AssignAsTeacher(fp5);
-        FacultyAssignment fa6 = fp6.assignAsTeacher(co6); co6.AssignAsTeacher(fp6);
-        FacultyAssignment fa7 = fp7.assignAsTeacher(co7); co7.AssignAsTeacher(fp7);
-        FacultyAssignment fa8 = fp8.assignAsTeacher(co8); co8.AssignAsTeacher(fp8);
-
-        //Create Student
+        //Student profile  给person分配学生角色
         StudentDirectory sd = department.getStudentDirectory();
         
         //Original students
-        StudentProfile sp1 = sd.newStudentProfile(person003);
-        StudentProfile sp2 = sd.newStudentProfile(person010);
-        StudentProfile sp3 = sd.newStudentProfile(person011);
+        StudentProfile s1 = sd.newStudentProfile(person003);
+        StudentProfile s2 = sd.newStudentProfile(person010);
+        StudentProfile s3 = sd.newStudentProfile(person011);
         
         //Add new students
-        StudentProfile s1 = sd.newStudentProfile(person019);
-        StudentProfile s2 = sd.newStudentProfile(person020);
-        StudentProfile s3 = sd.newStudentProfile(person021);
-        StudentProfile s4 = sd.newStudentProfile(person022);
-        StudentProfile s5 = sd.newStudentProfile(person023);
-        StudentProfile s6 = sd.newStudentProfile(person024);
-        StudentProfile s7 = sd.newStudentProfile(person025);
-        StudentProfile s8 = sd.newStudentProfile(person026);
-        StudentProfile s9 = sd.newStudentProfile(person027);
-        StudentProfile s10 = sd.newStudentProfile(person028);
+        StudentProfile s4 = sd.newStudentProfile(person019);
+        StudentProfile s5 = sd.newStudentProfile(person020);
+        StudentProfile s6 = sd.newStudentProfile(person021);
+        StudentProfile s7 = sd.newStudentProfile(person022);
+        StudentProfile s8 = sd.newStudentProfile(person023);
+        StudentProfile s9 = sd.newStudentProfile(person024);
+        StudentProfile s10 = sd.newStudentProfile(person025);
+        StudentProfile s11 = sd.newStudentProfile(person026);
+        StudentProfile s12 = sd.newStudentProfile(person027);
+        StudentProfile s13 = sd.newStudentProfile(person028);
 
         //Set up student majors and degrees
         s1.setMajor("Information Systems"); s1.setDegree("Master of Science");
@@ -189,13 +195,217 @@ public class ConfigureABusiness {
         //Registrar
         RegistrarDirectory rd = department.getRegistrarDirectory();
         RegistrarProfile rp1 = rd.newRegistrarProfile(person009);
+
+
+
+
+//Create Courseloads and set grades for students 给每个学生添加注册的课程和成绩用于展示
+
+        //CreateCourseloads for student 1(person003)   
+        CourseLoad courseloadFirstSemestersp1 = s1.newCourseLoad("Fall2020", s1);
+        CourseLoad courseloadSecondSemestersp1 = s1.newCourseLoad("Spring2021", s1);    
+        //add two seatassignment to student1 in his courseload of first semester
+        SeatAssignment sa1sp1 = courseloadFirstSemestersp1.newSeatAssignment(co1);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa1sp1);
+        //sa1sp1.setGrade(4.0f); //float grade
+        SeatAssignment sa2sp1 = courseloadFirstSemestersp1.newSeatAssignment(co2);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa2sp1);
+        //sa2sp1.setGrade(3.5f);      
+        //add two seatassignment to student1 in his courseload of seconde semester
+        SeatAssignment sa3sp1 = courseloadSecondSemestersp1.newSeatAssignment(co3);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa3sp1);
+        //sa3sp1.setGrade(3.0f);
+        SeatAssignment sa4sp1 = courseloadSecondSemestersp1.newSeatAssignment(co4);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa4sp1);
+        //sa4sp1.setGrade(3.8f);
+     
+        //CreateCourseloads for student 2(person010)
+        CourseLoad courseloadFirstSemestersp2 = s2.newCourseLoad("Fall2020", s2);
+        CourseLoad courseloadSecondSemestersp2 = s2.newCourseLoad("Spring2021", s2);
+        CourseLoad courseloadThirdSemestersp2 = s2.newCourseLoad("Fall2021", s2);     
+        //add two seatassignment to student2 in his courseload of first semester      
+        SeatAssignment sa1sp2 = courseloadFirstSemestersp2.newSeatAssignment(co1);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa1sp2);
+        //sa1sp2.setGrade(4.0f);            
+        SeatAssignment sa2sp2 = courseloadFirstSemestersp2.newSeatAssignment(co2);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa2sp2);
+        //sa2sp2.setGrade(3.0f);       
+        //add two seatassignment to student2 in his courseload of second semester
+        SeatAssignment sa3sp2 = courseloadSecondSemestersp2.newSeatAssignment(co3);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa3sp2);
+        //sa3sp2.setGrade(3.0f);       
+        SeatAssignment sa4sp2 = courseloadSecondSemestersp2.newSeatAssignment(co4);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa4sp2);
+        //sa4sp2.setGrade(3.5f);       
+        //add two seatassignment to student2 in his courseload of third semester
+        SeatAssignment sa5sp2 = courseloadThirdSemestersp2.newSeatAssignment(co5);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa5sp2);
+        //sa5sp2.setGrade(4.0f);     
+        SeatAssignment sa6sp2 = courseloadThirdSemestersp2.newSeatAssignment(co6);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa6sp2);
+        //sa6sp2.setGrade(3.5f);
+              
+        //CreateCourseloads for student 3(person011) 
+        CourseLoad courseloadFirstSemestersp3 = s3.newCourseLoad("Fall2020", s3);
+        CourseLoad courseloadSecondSemestersp3 = s3.newCourseLoad("Spring2022", s3); //MH - Updated to have better test data
+        //add two seatassignment to student3 in his courseload of first semester
+        SeatAssignment sa1sp3 = courseloadFirstSemestersp3.newSeatAssignment(co1);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa1sp3);
+        //sa1sp3.setGrade(3.0f);     
+        SeatAssignment sa2sp3 = courseloadFirstSemestersp3.newSeatAssignment(co2);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa2sp3);
+        //sa2sp3.setGrade(3.9f);       
+        //add two seatassignment to student3 in his courseload of second semester    
+        SeatAssignment sa3sp3 = courseloadSecondSemestersp3.newSeatAssignment(co3);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa3sp3);
+        //sa3sp3.setGrade(4.0f);      
+        SeatAssignment sa4sp3 = courseloadSecondSemestersp3.newSeatAssignment(co7); //MH - Updated to have better test data
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa4sp3);
+        //sa4sp3.setGrade(2.5f);
+     
+        //CreateCourseloads for student 4(person019)
+        CourseLoad courseloadFirstSemestersp4 = s4.newCourseLoad("Fall2020", s4);
+        CourseLoad courseloadSecondSemestersp4 = s4.newCourseLoad("Spring2021", s4);
+        CourseLoad courseloadThirdSemestersp4 = s4.newCourseLoad("Spring2022", s4); //MH - Updated to have better test data     
+        //add two seatassignment to student4 in his courseload of first semester
+        SeatAssignment sa1sp4 = courseloadFirstSemestersp4.newSeatAssignment(co1);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa1sp4);
+        //sa1sp4.setGrade(2.0f);     
+        SeatAssignment sa2sp4 = courseloadFirstSemestersp4.newSeatAssignment(co2);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa2sp4);
+        //sa2sp4.setGrade(3.0f);     
+        //add two seatassignment to student4 in his courseload of seconde semester
+        SeatAssignment sa3sp4 = courseloadSecondSemestersp4.newSeatAssignment(co3);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa3sp4);
+        //sa3sp4.setGrade(3.5f);     
+        SeatAssignment sa4sp4 = courseloadSecondSemestersp4.newSeatAssignment(co4);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa4sp4);
+        //sa4sp4.setGrade(2.1f);       
+        //add two seatassignment to student4 in his courseload of third semester
+        SeatAssignment sa5sp4 = courseloadThirdSemestersp4.newSeatAssignment(co5);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa5sp4);
+        //sa5sp4.setGrade(3.6f);       
+        SeatAssignment sa6sp4 = courseloadThirdSemestersp4.newSeatAssignment(co7); //MH - Updated to have better test data
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa6sp4);
+        //sa6sp4.setGrade(3.2f);
+        
+        
+        //CreateCourseloads for student 5 (person020)
+        CourseLoad courseloadFirstSemestersp5 = s5.newCourseLoad("Fall2020", s5);
+        CourseLoad courseloadSecondSemestersp5 = s5.newCourseLoad("Spring2021", s5);  
+        //add two seatassignment to student5 in his courseload of first semester    
+        SeatAssignment sa1sp5 = courseloadFirstSemestersp5.newSeatAssignment(co1);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa1sp5);
+        SeatAssignment sa2sp5 = courseloadFirstSemestersp5.newSeatAssignment(co2);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa2sp5);
+        //add two seatassignment to student5 in his courseload of second semester
+        SeatAssignment sa3sp5 = courseloadSecondSemestersp5.newSeatAssignment(co3);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa3sp5);     
+        SeatAssignment sa4sp5 = courseloadSecondSemestersp5.newSeatAssignment(co4);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa3sp5);
+        
+     
+        //CreateCourseloads for student 6 (person021)
+        CourseLoad courseloadFirstSemestersp6 = s6.newCourseLoad("Spring2021", s6);
+        CourseLoad courseloadSecondSemestersp6 = s6.newCourseLoad("Fall2021", s6);
+        //add two seatassignment to student6 in his courseload of first semester
+        SeatAssignment sa1sp6 = courseloadFirstSemestersp6.newSeatAssignment(co3);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa1sp6);     
+        SeatAssignment sa2sp6 = courseloadFirstSemestersp6.newSeatAssignment(co4);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa2sp6);
+        //add two seatassignment to student6 in his courseload of second semester
+        SeatAssignment sa3sp6 = courseloadSecondSemestersp6.newSeatAssignment(co5);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa3sp6);      
+        SeatAssignment sa4sp6 = courseloadSecondSemestersp6.newSeatAssignment(co6);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa4sp6);
+        
+        
+        //CreateCourseloads for student 7 (person022)
+        CourseLoad courseloadFirstSemestersp7 = s7.newCourseLoad("Fall2021", s7);
+        CourseLoad courseloadSecondSemestersp7 = s7.newCourseLoad("Spring2022", s7);
+        //add two seatassignment to student7 in his courseload of first semester
+        SeatAssignment sa1sp7 = courseloadFirstSemestersp7.newSeatAssignment(co5);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa1sp7);      
+        SeatAssignment sa2sp7 = courseloadFirstSemestersp7.newSeatAssignment(co6);
+        //MH 10/26 - Added to add assignments & calc grades.     
+        populateAssignment(sa2sp7); 
+        //add two seatassignment to student7 in his courseload of second semester
+        SeatAssignment sa3sp7 = courseloadSecondSemestersp7.newSeatAssignment(co7);
+        //MH 10/26 - Added to add assignments & calc grades.     
+         populateAssignment(sa3sp7);    
+        SeatAssignment sa4sp7 = courseloadSecondSemestersp7.newSeatAssignment(co8);
+        //MH 10/26 - Added to add assignments & calc grades.
+        populateAssignment(sa4sp7);
+        
+        
+        //CreateCourseloads for student 8 (person023)
+        CourseLoad courseloadFirstSemestersp8 = s8.newCourseLoad("Spring2022", s8);
+        //add two seatassignment to student8 in his courseload of first semester
+        SeatAssignment sa1sp8 = courseloadFirstSemestersp8.newSeatAssignment(co7);
+       //MH 10/26 - Added to add assignments & calc grades.
+        populateAssignment(sa1sp8);
+        //sa1sp8.setGrade(2.0f);      
+        SeatAssignment sa2sp8 = courseloadFirstSemestersp8.newSeatAssignment(co8);
+        //MH 10/26 - Added to add assignments & calc grades.
+        populateAssignment(sa2sp8);
+        //sa2sp8.setGrade(4.0f);
+
+
+//Calculate revenue by semester 计算每个学期的总收入
+        int totalRevenueOfFirstSemester = department.calculateRevenuesBySemester("Fall2020");
+        int totalRevenueOfSecondSemester = department.calculateRevenuesBySemester("Spring2021");
+        int totalRevenueOfThirdSemester = department.calculateRevenuesBySemester("Fall2021");
+        int totalRevenueOfFourthSemester = department.calculateRevenuesBySemester("Spring2022");
+
+        //MH 10/20 - Added because a university is made up of departments
+        //MH 10/26 - I think this is old code that was broght back in after a merge
+        //business.addDepartment(department); 
+   
+// Create User accounts that link to specific profiles 创建用户信息和密码
+        UserAccountDirectory uad = business.getUserAccountDirectory();
+        UserAccount ua3 = uad.newUserAccount(employeeprofile0, "admin", "****"); 
+        UserAccount ua4 = uad.newUserAccount(fp1, "gina", "****");       
+        UserAccount ua5 = uad.newUserAccount(s1, "adam", "****"); 
+        UserAccount ua6 = uad.newUserAccount(rp1, "mia", "109");//registrar account
+
+//set the registrar profile demodata  作为registrar需要展示的信息
+
         rp1.setDepartment(department);
         rp1.setOfficeHours("Monday 10:00 a.m - 16:00 p.m.");
         rp1.setEmail("yangwang.j@northeastern.edu");
         rp1.setPhone("207-712-8888");
 
         //Student course registration and grades (original data)
-        setupOriginalStudentData(sp1, sp2, sp3, fall2020, spring2021, fall2021, co1, co2, co3, co4, co5, co6, co7, co8);
+        setupOriginalStudentData(s1, s2, s3, fall2020, spring2021, fall2021, co1, co2, co3, co4, co5, co6, co7, co8);
 
         //Add new student data
         addStudentData(s1, spring2025, fall2025, "INFO5100", "INFO5200");
@@ -210,10 +420,9 @@ public class ConfigureABusiness {
         addStudentData(s10, spring2025, fall2025, "INFO5300", "INFO5400");
 
         //Create a user account
-        UserAccountDirectory uad = business.getUserAccountDirectory();
         uad.newUserAccount(employeeprofile0, "admin", "****"); 
         uad.newUserAccount(fp1, "gina", "****"); 
-        uad.newUserAccount(sp1, "adam", "****"); 
+        uad.newUserAccount(s1, "adam", "****"); 
         uad.newUserAccount(rp1, "mia", "109");
         
         //Add new student accounts
@@ -234,6 +443,37 @@ public class ConfigureABusiness {
         return business;
     }
 
+    
+    //MH 10/26 - Added so we have a better way to manage adding assignements.
+    public static void populateAssignment(SeatAssignment sa) {
+        int seatNumber = sa.getSeat().getNumber(); //Used as a fake random number
+
+        float gradeA1 = roundToTwoDecimals(4.0f - seatNumber / 10.0f);
+        float gradeA2 = roundToTwoDecimals(3.5f - seatNumber / 10.0f);
+        float gradeA3 = roundToTwoDecimals(3.0f - seatNumber / 10.0f);
+
+        // Lab 1
+        Assignment a1 = sa.newAssignment("Lab 1");
+        a1.setGrade(gradeA1); // Set the 2-decimal float grade
+
+        // Lab 2
+        Assignment a2 = sa.newAssignment("Lab 2");
+        a2.setGrade(gradeA2); // Set the 2-decimal float grade
+
+        // Assignment 1
+        Assignment a3 = sa.newAssignment("Assignment 1");
+        a3.setGrade(gradeA3); // Set the 2-decimal float grade
+
+        sa.calculateGrade();
+    }
+
+    //MH 10/26 - Added so we have a better way to manage adding assignements.
+    private static float roundToTwoDecimals(float value) { 
+        return Math.round(value * 100.0f) / 100.0f;
+    }
+
+
+
     // Original student data setting method
     private static void setupOriginalStudentData(StudentProfile sp1, StudentProfile sp2, StudentProfile sp3, 
                                                CourseSchedule fall2020, CourseSchedule spring2021, CourseSchedule fall2021,
@@ -245,13 +485,15 @@ public class ConfigureABusiness {
     //New create student data method
     private static void addStudentData(StudentProfile student, CourseSchedule spring, CourseSchedule fall, String springC1, String springC2) {
         //Spring semester (completed)
-        CourseLoad springLoad = student.newCourseLoad("Spring2025");
+        CourseLoad springLoad = student.newCourseLoad("Spring2025", student);
         CourseOffer c1 = spring.getCourseOfferByNumber(springC1);
         CourseOffer c2 = spring.getCourseOfferByNumber(springC2);
 
         if (c1 != null) {
             SeatAssignment seat1 = c1.assignEmptySeat(springLoad);
-            seat1.setGrade(3.7f);
+            //MH - Use this to handle grades on setup
+            populateAssignment(seat1);
+            //seat1.setGrade(3.7f);
             seat1.setAssignmentName("Project 1");
             seat1.setAssignmentScore(95);
             seat1.setStatus("Submitted");
@@ -259,14 +501,16 @@ public class ConfigureABusiness {
 
         if (c2 != null) {
             SeatAssignment seat2 = c2.assignEmptySeat(springLoad);
-            seat2.setGrade(3.8f);
+            //MH - Use this to handle grades on setup
+            populateAssignment(seat2);
+            //seat2.setGrade(3.8f);
             seat2.setAssignmentName("Homework 2");
             seat2.setAssignmentScore(90);
             seat2.setStatus("Submitted");
         }
 
         //Fall semester (in progress)
-        CourseLoad fallLoad = student.newCourseLoad("Fall2025");
+        CourseLoad fallLoad = student.newCourseLoad("Fall2025", student);
         for (String code : new String[]{"INFO5300", "INFO5400", "INFO5500"}) {
             CourseOffer f = fall.getCourseOfferByNumber(code);
             if (f != null) {
@@ -274,7 +518,9 @@ public class ConfigureABusiness {
                 sa.setAssignmentName("Fall Coursework");
                 sa.setAssignmentScore(85);
                 sa.setStatus("In Progress");
-                
+                //MH - Use this to handle grades on setup
+                populateAssignment(sa);
+                /*
                 float grade = switch (code) {
                     case "INFO5300" -> 3.9f;
                     case "INFO5400" -> 3.6f;
@@ -282,6 +528,7 @@ public class ConfigureABusiness {
                     default -> 3.5f;
                 };
                 sa.setGrade(grade);
+                */
             }
         }
 

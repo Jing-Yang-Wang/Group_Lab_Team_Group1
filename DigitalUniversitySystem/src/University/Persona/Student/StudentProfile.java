@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 //MH 10/18 - Updated so it extend the profile.
 //MH 10/24 - Fixed issue with how person was stored
+
 public class StudentProfile extends Profile {
     private String academicStatus;
     private Transcript transcript;
@@ -59,8 +60,13 @@ public class StudentProfile extends Profile {
 
     public StudentProfile(Person p) {
         super(p);
+        //MH 10/26 - Commenting this out again, StudentProfile extends person
+        //person = p;
+        /*transcript = new Transcript(this);
+        employmenthistory = new EmploymentHistroy();Fixed typo: 'EmploymentHistroy' → 'EmploymentHistory'*/
         this.transcript = new Transcript(this);
         this.employmentHistory = new EmploymentHistory();
+
     }
 
     public boolean isMatch(String id) {
@@ -79,7 +85,7 @@ public class StudentProfile extends Profile {
         return transcript.getCurrentCourseLoad();
     }
 
-    public CourseLoad newCourseLoad(String semester) {
+    public CourseLoad newCourseLoad(String semester, StudentProfile sp1) {
         return transcript.newCourseLoad(semester);
     }
 

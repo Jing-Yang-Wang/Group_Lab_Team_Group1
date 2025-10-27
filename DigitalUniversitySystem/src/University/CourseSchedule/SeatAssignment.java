@@ -142,7 +142,21 @@ public class SeatAssignment {
         return newAssignment;
     }
 
+
+    //MH 10/26 - Removed because a team member also added this.
+    //public float getGrade() {
+    //    return grade;
+    //}
+
+    //MH 10/26 - Removed because a team member also added this.
+    //public void setGrade(float grade) {
+    //    this.grade = grade;
+    //}
+    
+    //MH 10/24 - Calc grade based on assignments
+
     /** 计算平均成绩（来自另一分支） */
+
     public float calculateGrade() {
         if (assignmentlist == null || assignmentlist.isEmpty()) {
             this.grade = 0.0f;
@@ -164,10 +178,15 @@ public class SeatAssignment {
         if (this.courseload != null) {
             return this.courseload.getStudentProfile();
         }
-        return null;
+
+        return null; // Should not happen if objects are linked correctly
     }
+        
+    //check status
+
 
     /** 判断是否已注册或退课 */
+
     public boolean isEnrolled() {
         return enrolled;
     }
