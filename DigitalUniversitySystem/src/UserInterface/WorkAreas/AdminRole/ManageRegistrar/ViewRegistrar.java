@@ -4,6 +4,11 @@
  */
 package UserInterface.WorkAreas.AdminRole.ManageRegistrar;
 
+import University.Business;
+import University.Persona.Registrar.RegistrarProfile;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author DELL
@@ -13,8 +18,17 @@ public class ViewRegistrar extends javax.swing.JPanel {
     /**
      * Creates new form ViewRegistrar
      */
-    public ViewRegistrar() {
+     JPanel MainMenu;
+    Business business;
+    RegistrarProfile registrarProfile;
+    public ViewRegistrar(Business business, JPanel MainMenu, RegistrarProfile registrarProfile) {
         initComponents();
+        this.business = business;
+        this.MainMenu = MainMenu;
+        this.registrarProfile = registrarProfile;
+
+        displayRegistrarInfo();
+        disableEditing();
     }
 
     /**
@@ -63,10 +77,25 @@ public class ViewRegistrar extends javax.swing.JPanel {
         });
 
         jButton1.setText("Save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Update");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Back");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -155,6 +184,43 @@ public class ViewRegistrar extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+         
+        MainMenu.remove(this);
+        CardLayout layout=(CardLayout)MainMenu.getLayout();
+        
+        layout.previous(MainMenu);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        enableEditing();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        
+         String name = jTextField2.getText();
+    String email = jTextField3.getText();
+    String telephone = jTextField4.getText();
+    String officeHour = jTextField5.getText();
+
+    if (name.isBlank() || email.isBlank() || telephone.isBlank() || officeHour.isBlank()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "All fields must be filled!");
+        return;
+    }
+
+    registrarProfile.getPerson().setName(name);
+    registrarProfile.getPerson().setEmail(email);
+    registrarProfile.setPhone(telephone);
+    registrarProfile.setOfficeHours(officeHour);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Registrar information updated successfully!");
+    disableEditing();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -172,4 +238,34 @@ public class ViewRegistrar extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
+
+private void displayRegistrarInfo() {
+    if (registrarProfile != null) {
+        jTextField1.setText(registrarProfile.getPerson().getPersonId()); // ID
+        jTextField2.setText(registrarProfile.getPerson().getName());
+        jTextField3.setText(registrarProfile.getPerson().getEmail());
+        jTextField4.setText(registrarProfile.getPhone());
+        jTextField5.setText(registrarProfile.getOfficeHours());
+    }
+    
+    
+}
+
+private void disableEditing() {
+    jTextField2.setEditable(false);
+    jTextField3.setEditable(false);
+    jTextField4.setEditable(false);
+    jTextField5.setEditable(false);
+    jButton1.setEnabled(false); // Save 按钮
+}
+
+private void enableEditing() {
+    jTextField2.setEditable(true);
+    jTextField3.setEditable(true);
+    jTextField4.setEditable(true);
+    jTextField5.setEditable(true);
+    jButton1.setEnabled(true);
+}
+
+
 }

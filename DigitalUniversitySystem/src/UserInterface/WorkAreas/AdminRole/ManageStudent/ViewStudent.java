@@ -189,7 +189,7 @@ public class ViewStudent extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         CardLayout layout = (CardLayout) mainMenu.getLayout();
-    layout.previous(mainMenu);
+        layout.previous(mainMenu);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

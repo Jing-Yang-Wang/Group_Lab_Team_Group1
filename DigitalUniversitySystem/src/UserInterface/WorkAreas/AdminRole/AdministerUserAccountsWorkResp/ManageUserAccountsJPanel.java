@@ -51,12 +51,18 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
        
 
         for (UserAccount ua : uad.getUserAccountList()) {
-
-            Object[] row = new Object[5];
-            row[0] = ua;
- //           row[1] = ua.getStatus(); //complete this..
- //           row[2] = ua.getLastUpdated()
- //           row[3] = 
+            Object[] row = new Object[4];
+            row[0] = ua.getUserLoginName(); // 用户名
+            
+            // 安全地获取个人档案信息
+            if (ua.getAssociatedPersonProfile() != null && ua.getAssociatedPersonProfile().getPerson() != null) {
+                row[1] = "Active"; // 状态
+            } else {
+                row[1] = "No Profile"; // 状态
+            }
+            
+            row[2] = ua.getLastActivity() != null ? ua.getLastActivity().toString() : "Never"; // 最后活动时间
+            row[3] = ua.getLastUpdate() != null ? ua.getLastUpdate().toString() : "Never"; // 最后更新时间
 
             ((DefaultTableModel) UserAccountTable.getModel()).addRow(row);
         }
@@ -151,22 +157,29 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_NextActionPerformed
 
     private void UserAccountTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserAccountTableMousePressed
-        // Extracts the row (uaser account) in the table that is selected by the user
+        // Extracts the row (user account) in the table that is selected by the user
         int size = UserAccountTable.getRowCount();
         int selectedrow = UserAccountTable.getSelectionModel().getLeadSelectionIndex();
 
         if (selectedrow < 0 || selectedrow > size - 1) {
             return;
         }
-        selecteduseraccount = (UserAccount) UserAccountTable.getValueAt(selectedrow, 0);
+        
+      
+        String selectedUsername = (String) UserAccountTable.getValueAt(selectedrow, 0);
+        UserAccountDirectory uad = business.getUserAccountDirectory();
+        
+        for (UserAccount ua : uad.getUserAccountList()) {
+            if (ua.getUserLoginName().equals(selectedUsername)) {
+                selecteduseraccount = ua;
+                break;
+            }
+        }
+        
         if (selecteduseraccount == null) {
             return;
-        
-        
-            
+        }
     }//GEN-LAST:event_UserAccountTableMousePressed
-    
-    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
