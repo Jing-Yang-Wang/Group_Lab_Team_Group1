@@ -45,6 +45,8 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
         btnView = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        fieldSearch = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 204, 204));
 
@@ -97,6 +99,8 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnSearch.setText("Search");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,29 +114,34 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
                         .addGap(23, 23, 23)
                         .addComponent(btnBack)))
                 .addContainerGap(96, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addComponent(btnView)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDelete)
-                .addGap(162, 162, 162))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDelete)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSearch)
+                        .addGap(70, 70, 70)
+                        .addComponent(fieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(53, 53, 53))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(btnBack)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnView)
-                        .addContainerGap(77, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDelete)
-                        .addGap(66, 66, 66))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnView)
+                    .addComponent(btnDelete))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSearch)
+                    .addComponent(fieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -193,12 +202,19 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
         layout.previous(MainMenu);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        performSearch();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable StudentTbl;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnView;
+    private javax.swing.JTextField fieldSearch;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
@@ -219,5 +235,48 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
                  }
              }
          }
+    }
+    
+    private void performSearch() {
+        String searchText = fieldSearch.getText().trim();
+        
+        // If search text is empty, show all students
+        if (searchText.isEmpty()) {
+            initTable();
+            return;
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) StudentTbl.getModel();
+        model.setRowCount(0);
+        
+        if (studentDirectory != null && studentDirectory.getStudentList() != null) {
+            boolean found = false;
+            for (StudentProfile sp : studentDirectory.getStudentList()) {
+                if (sp != null && sp.getPerson() != null) {
+                    String studentId = sp.getPerson().getUniversityID();
+                    String studentName = sp.getPerson().getName();
+                    
+                    // Search by ID (exact match) or name (partial match)
+                    if (studentId.equalsIgnoreCase(searchText) || 
+                        studentName.toLowerCase().contains(searchText.toLowerCase())) {
+                        
+                        Object[] row = new Object[4]; 
+                        row[0] = sp.getPerson().getUniversityID();
+                        row[1] = sp.getPerson().getName();
+                        row[2] = sp.getPerson().getEmail();
+                        row[3] = sp.getAcademicStatus();
+                        model.addRow(row);
+                        found = true;
+                    }
+                }
+            }
+            
+            if (!found) {
+                JOptionPane.showMessageDialog(this, 
+                    "No students found matching: " + searchText, 
+                    "Search Result", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }
 }

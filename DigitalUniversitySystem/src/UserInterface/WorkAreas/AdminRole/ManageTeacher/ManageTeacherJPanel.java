@@ -47,6 +47,8 @@ public class ManageTeacherJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnView = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        fieldSearch = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 204, 204));
 
@@ -99,24 +101,37 @@ public class ManageTeacherJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(btnBack)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(btnView)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDelete)
-                .addGap(163, 163, 163))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(110, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(btnBack))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDelete)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnView)
+                                .addGap(204, 204, 204)
+                                .addComponent(btnSearch)
+                                .addGap(74, 74, 74)
+                                .addComponent(fieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,19 +139,26 @@ public class ManageTeacherJPanel extends javax.swing.JPanel {
                 .addGap(21, 21, 21)
                 .addComponent(btnBack)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDelete)
-                    .addComponent(btnView))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnView)
+                            .addComponent(btnSearch)
+                            .addComponent(fieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)))
+                .addComponent(btnDelete)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        MainMenu.remove(this);
         CardLayout layout = (CardLayout) MainMenu.getLayout();
-    layout.previous(MainMenu);
+        layout.previous(MainMenu);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -197,12 +219,19 @@ if (selectedRow >= 0) {
 
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        performSearch();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable FacultyTbl;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnView;
+    private javax.swing.JTextField fieldSearch;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
@@ -226,5 +255,51 @@ if (selectedRow >= 0) {
                  }
              }
          }
+    }
+    
+    private void performSearch() {
+        String searchText = fieldSearch.getText().trim();
+        
+        // If search text is empty, show all faculty
+        if (searchText.isEmpty()) {
+            initTable();
+            return;
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) FacultyTbl.getModel();
+        model.setRowCount(0);
+        
+        if (facultyDirectory != null && facultyDirectory.getTeacherlist() != null) {
+            boolean found = false;
+            for (FacultyProfile sp : facultyDirectory.getTeacherlist()) {
+                if (sp != null && sp.getPerson() != null) {
+                    String facultyId = sp.getPerson().getUniversityID();
+                    String facultyName = sp.getPerson().getName();
+                    String department = sp.getDepartment();
+                    
+                    // Search by ID (exact match), name (partial match), or department (partial match)
+                    if (facultyId.equalsIgnoreCase(searchText) || 
+                        facultyName.toLowerCase().contains(searchText.toLowerCase()) ||
+                        (department != null && department.toLowerCase().contains(searchText.toLowerCase()))) {
+                        
+                        Object[] row = new Object[5]; 
+                        row[0] = sp.getPerson().getUniversityID();
+                        row[1] = sp.getPerson().getName();
+                        row[2] = sp.getPerson().getEmail();
+                        row[3] = sp.getDepartment();
+                        row[4] = sp.getTelephone();
+                        model.addRow(row);
+                        found = true;
+                    }
+                }
+            }
+            
+            if (!found) {
+                JOptionPane.showMessageDialog(this, 
+                    "No faculty found matching: " + searchText, 
+                    "Search Result", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }
 }
