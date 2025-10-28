@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,6 +15,7 @@ import University.CourseCatalog.CourseCatalog;
 import University.CourseSchedule.CourseOffer;
 import University.CourseSchedule.CourseSchedule;
 import University.Department.Department;
+import UserInterface.WorkAreas.AdminRole.Dashboard.ChartPanel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
