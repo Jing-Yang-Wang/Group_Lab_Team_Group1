@@ -181,19 +181,35 @@ public class FinancialReportJPanel extends javax.swing.JPanel {
 
     //fill the table with every course offer
     for (CourseOffer co : department.getAllCourseOffers()) {
+        int enrolledCount = 0;
+        //遍历每个 SeatAssignment，只统计仍然 Enrolled 的学生
+        for (University.CourseSchedule.Seat seat : co.getSeatList()) {
+            if (seat.isOccupied() && seat.getSeatAssignment() != null) {
+                if (seat.getSeatAssignment().isEnrolled()) {
+                    enrolledCount++;
+                }
+            }
+        }
+
+        //使用过滤后的 enrolledCount 来计算收入
+        double pricePerCredit = co.getSubjectCourse().getPrice();
+        int creditHours = co.getCreditHours();
+        double courseRevenue = enrolledCount * creditHours * pricePerCredit;
+
         Object[] row = new Object[6];
         row[0] = co.getCourseNumber();
         row[1] = co.getSubjectCourse().getCourseName();
-        row[2] = co.getCreditHours();
-        row[3] = co.getSubjectCourse().getPrice();
-        row[4] = co.getEnrolledStudents().size();   
-        row[5] = co.getTotalCourseRevenues();       
+        row[2] = creditHours;
+        row[3] = pricePerCredit;
+        row[4] = enrolledCount;      
+        row[5] = courseRevenue;      
+
         model.addRow(row);
-        }
     }
+}
 
     private void populateSemesterRevenueTable(Department department) {
-        DefaultTableModel model = (DefaultTableModel) tblSemesterRevenue.getModel();
+    DefaultTableModel model = (DefaultTableModel) tblSemesterRevenue.getModel();
     model.setRowCount(0);
 
         for (String semester : department.getAllSemesters()) {

@@ -88,10 +88,19 @@ public class StudentProfile extends Profile {
     public CourseLoad newCourseLoad(String semester, StudentProfile sp1) {
         return transcript.newCourseLoad(semester);
     }
-
+    //遍历所有semester
     public ArrayList<SeatAssignment> getCourseList() {
-        return transcript.getCourseList();
+    ArrayList<SeatAssignment> allSeats = new ArrayList<>();
+    if (transcript != null) {
+        for (CourseLoad cl : transcript.getAllCourseLoads()) {
+            if (cl != null && cl.getSeatAssignments() != null) {
+                allSeats.addAll(cl.getSeatAssignments());
+            }
+        }
     }
+    return allSeats;
+}
+
 
     // 扩展功能：学位和专业相关
     public String getMajor() {

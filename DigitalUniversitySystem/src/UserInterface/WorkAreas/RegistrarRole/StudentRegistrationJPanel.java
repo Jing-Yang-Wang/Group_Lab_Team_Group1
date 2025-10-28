@@ -53,6 +53,8 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
         tblStudentRegistration = new javax.swing.JTable();
         btnEnroll = new javax.swing.JButton();
         btnDrop = new javax.swing.JButton();
+        lblCourseNumber = new javax.swing.JLabel();
+        comboCourseName = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 204));
 
@@ -66,7 +68,7 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 15)); // NOI18N
         lblTitle.setText("Student Registration Management");
 
-        comboStudentId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Adam Rollen", "David Hannan", "Emily Johnson", "Ethan Clark", "Olivia Martinez", "Liam Thompson", "Sophia Hernandez", "Noah Robinson" }));
+        comboStudentId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Adam Rollen", "David Hannan", "Emily Johnson", "Evelyn Zhao", "Micheal Chen", "Linda Park", "Jason Lee", "Emily Davis", "Kevin Liu", "Sophia Wang", "Daniel Brown", "Olivia Zhang", "William Yang" }));
         comboStudentId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboStudentIdActionPerformed(evt);
@@ -92,6 +94,11 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblStudentRegistration);
 
         btnEnroll.setText("Enroll a course for student");
+        btnEnroll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnrollActionPerformed(evt);
+            }
+        });
 
         btnDrop.setText("Drop a course for student");
         btnDrop.addActionListener(new java.awt.event.ActionListener() {
@@ -100,11 +107,15 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblCourseNumber.setText("Curse Name");
+
+        comboCourseName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Applied Engineering", "Program Structure", "Data Science", "Algorithmics", "Web Development Tools and Methods", "Data Mining", "Data Visualization", "Applied Marketing" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,30 +123,36 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
                     .addComponent(btnBack))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblTitle)
-                        .addGap(142, 142, 142))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnEnroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDrop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(60, 60, 60))))
+                .addGap(48, 48, 48)
+                .addComponent(lblCourseNumber)
+                .addGap(51, 51, 51)
+                .addComponent(comboCourseName, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnEnroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDrop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(60, 60, 60))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitle)
+                .addGap(192, 192, 192))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(btnBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(16, 16, 16)
                 .addComponent(lblTitle)
-                .addGap(34, 34, 34)
+                .addGap(24, 24, 24)
                 .addComponent(comboStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addComponent(btnEnroll)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEnroll)
+                    .addComponent(lblCourseNumber)
+                    .addComponent(comboCourseName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addComponent(btnDrop)
                 .addContainerGap(73, Short.MAX_VALUE))
@@ -169,21 +186,52 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
             int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to drop the selected course?","Warning", JOptionPane.INFORMATION_MESSAGE);
                //delete the row if it is confirmed 
                if(dialogResult == JOptionPane.YES_OPTION){
-                    
+                    //
                     String selectedName = (String) comboStudentId.getSelectedItem();
                     Department department = registrarProfile.getDepartment();
-                    StudentProfile student = department.getStudentDirectory().findStudent(selectedName);
-                    CourseLoad courseLoad = student.getCurrentCourseLoad();
-                    
-                    CourseOffer selectedCourseOffer = (CourseOffer)tblStudentRegistration.getValueAt(selectedRow, 0);
-                    
-                    SeatAssignment seatAssignment = courseLoad.getSeatAssignment(selectedCourseOffer);
-                    if (seatAssignment != null) {
-                        seatAssignment.drop(); 
-                        JOptionPane.showMessageDialog(null, "Course dropped successfully!");
+                    StudentProfile student = null;
+
+            //遍历student profile
+            for (StudentProfile s : department.getStudentDirectory().getStudentList()) {
+                if (s.getPerson().getName().equalsIgnoreCase(selectedName)) {
+                    student = s;
+                    break;
+                }
+            }
+            if (student == null) {
+                JOptionPane.showMessageDialog(null, "Student not found!");
+                return;
+            }
+
+            //get information form selected row
+            Object value = tblStudentRegistration.getValueAt(selectedRow, 0);
+            CourseOffer selectedCourseOffer = null;
+
+            if (value instanceof CourseOffer) {
+                selectedCourseOffer = (CourseOffer) value;
+            } else {
+                // 如果显示的是课程号字符串，则在该学生课程列表中找到对应的 CourseOffer
+                String courseNumber = value.toString();
+                for (SeatAssignment sa : student.getCourseList()) {
+                    if (sa.getCourseOffer().getCourseNumber().equalsIgnoreCase(courseNumber)) {
+                        selectedCourseOffer = sa.getCourseOffer();
+                        break;
                     }
-            //refresh table
-            populateTable(); 
+                }
+            }
+
+  
+            //search the corresponding seat assignments and set it as dropped
+            for (SeatAssignment sa : student.getCourseList()) {
+                if (sa.getCourseOffer() == selectedCourseOffer) {
+                    sa.drop(); 
+                    JOptionPane.showMessageDialog(null, "Course dropped successfully!");
+                    break;
+                }
+            }
+
+            //refreshtable
+            populateTable();
         }
         
         }else{
@@ -195,46 +243,106 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnDropActionPerformed
 
+    private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
+        // TODO add your handling code here:
+                                                  
+    //collect information from fields
+    String studentName = (String) comboStudentId.getSelectedItem();
+    String courseName = (String) comboCourseName.getSelectedItem();
+
+    Department dept = registrarProfile.getDepartment();
+    StudentProfile student = null;
+
+    // 找到学生对象（假设 combo 已经列出所有真实学生名）
+    for (StudentProfile s : dept.getStudentDirectory().getStudentList()) {
+        if (s.getPerson().getName().equalsIgnoreCase(studentName)) {
+            student = s;
+            break;
+        }
+    }
+
+    // 自动找课程的学期（按 courseName 查找 CourseOffer）
+    CourseOffer targetOffer = null;
+    String targetSemester = null;
+
+    for (CourseSchedule cs : dept.getAllCourseSchedules()) {
+        for (CourseOffer co : cs.getSchedule()) {
+            if (co.getSubjectCourse().getCourseName().equalsIgnoreCase(courseName)) {
+                targetOffer = co;
+                targetSemester = cs.getSemester();
+                break;
+            }
+        }
+        if (targetOffer != null) break;
+    }
+
+    //Create new CourseLoad 并注册
+    if (targetOffer != null && student != null) {
+        CourseLoad load = student.getCourseLoadBySemester(targetSemester);
+        if (load == null) {
+            load = student.newCourseLoad(targetSemester, student);
+        }
+        load.newSeatAssignment(targetOffer);
+        JOptionPane.showMessageDialog(this, studentName + " successfully enrolled in " + courseName + " (" + targetSemester + ")");
+        populateTable();
+    }
+
+
+
+    }//GEN-LAST:event_btnEnrollActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDrop;
     private javax.swing.JButton btnEnroll;
+    private javax.swing.JComboBox<String> comboCourseName;
     private javax.swing.JComboBox<String> comboStudentId;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCourseNumber;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblStudentRegistration;
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
         
-    //get the model table and clean i 
+    //get the table model and clean it 
     DefaultTableModel model = (DefaultTableModel) tblStudentRegistration.getModel();
     model.setRowCount(0);  
-    
+
+    //get department
     Department department = registrarProfile.getDepartment();
     if (department == null) return; 
-    
-    String selectedStudent = (String) comboStudentId.getSelectedItem();
-    StudentProfile sp = department.getStudentDirectory().findStudent(selectedStudent);
-    if (sp == null) return;
 
+    //get information from combo box
+    String selectedStudentName = (String) comboStudentId.getSelectedItem();
+    StudentProfile sp = null;  // 在当前方法作用域内声明
+
+    //遍历StudentProfile
+    for (StudentProfile s : department.getStudentDirectory().getStudentList()) {
+        if (s.getPerson().getName().equalsIgnoreCase(selectedStudentName)) {
+            sp = s;
+            break;
+        }
+    }
+
+    if (sp == null) return; 
+
+    //遍历学生的course list
     for (SeatAssignment sa : sp.getCourseList()) {
         CourseOffer co = sa.getCourseOffer();
+        if (co == null) continue;
+
         Object[] row = new Object[7];
-        row[0] = co;
+        row[0] = co.getCourseNumber();
         row[1] = co.getSubjectCourse().getCourseName();
         row[2] = co.getCreditHours();
-        //MH 10/26 - Fixes because ID was changed to UniversityID
-        row[3] = co.getFacultyProfile().getPerson().getUniversityID();
+        row[3] = co.getFacultyProfile().getPerson().getName();
         row[4] = co.getSeatCount();
         row[5] = sa.isEnrolled() ? "Enrolled" : "Dropped"; 
         row[6] = sa.getCourseOffer().getCourseSchedule().getSemester();
 
         model.addRow(row);
     }
-}
-
-
-    
+    } 
 }

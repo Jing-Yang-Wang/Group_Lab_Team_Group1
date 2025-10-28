@@ -212,8 +212,9 @@ public class AddCourseOfferJPanel extends javax.swing.JPanel {
     }
 
     //Create course and courseOffer
-    Course course = new Course(courseName, courseNumber, credits);
-    CourseOffer courseOffer = new CourseOffer(course);
+    Course course = new Course(courseNumber, courseName, credits);
+    CourseSchedule cs = registrarProfile.getDepartment().getCourseSchedule(semester);
+    CourseOffer courseOffer = cs.newCourseOfferByCourse(course);
     
     //Generate seats
     courseOffer.generateSeats(numberOfSeat); 
@@ -221,8 +222,7 @@ public class AddCourseOfferJPanel extends javax.swing.JPanel {
     //Assign teacher
     FacultyProfile selectedFaculty = null;
     for (FacultyProfile fp : registrarProfile.getDepartment().getFacultyDirectory().getTeacherList()) {
-        //MH 10/26 - Fixes because ID was changed to UniversityID
-        if (fp.getPerson().getUniversityID().equalsIgnoreCase(facultyName)) {
+        if (fp.getPerson().getName().equalsIgnoreCase(facultyName)) { // ✅ 改成比对姓名
             selectedFaculty = fp;
             break;
         }
@@ -230,12 +230,6 @@ public class AddCourseOfferJPanel extends javax.swing.JPanel {
     if (selectedFaculty != null) {
         courseOffer.AssignAsTeacher(selectedFaculty);
     } 
-
-    //add course offer into course schedule
-    CourseSchedule cs = registrarProfile.getDepartment().getCourseSchedule(semester);
-    if (cs != null) {
-        cs.getSchedule().add(courseOffer);
-    }
 
     //pop-up successful message
     JOptionPane.showMessageDialog(null, "New Course Offer saved!","Successfully",JOptionPane.INFORMATION_MESSAGE);

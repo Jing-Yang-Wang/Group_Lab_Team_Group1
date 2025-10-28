@@ -215,7 +215,7 @@ public class EditExistingCourseOfferJPanel extends javax.swing.JPanel {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
         //collect information from fields
-    /*String semester = (String) comboSemester.getSelectedItem();
+    String semester = (String) comboSemester.getSelectedItem();
     String courseNumber = fieldCourseNumber.getText();
     String courseName = fieldCourseName.getText();
     String facultyName = (String) comboFaculty.getSelectedItem();
@@ -237,15 +237,46 @@ public class EditExistingCourseOfferJPanel extends javax.swing.JPanel {
         return;
     }
     //set the information to corresponding variable
-    courseOffer.getSubjectCourse().setCourseNumber(courseNumber);
-    courseOffer.getSubjectCourse().setCourseName(courseName);
-    courseOffer.setCreditHours(credits);
-    courseOffer.setSeatCount(numberOfSeat);
-    
+    courseOffer.getCourse().setCourseNumber(courseNumber);
+    courseOffer.getCourse().setCourseName(courseName);
+    courseOffer.getCourse().setCredits(credits);
 
-    JOptionPane.showMessageDialog(null, "Course Offer successfully updated!", "Information", JOptionPane.INFORMATION_MESSAGE);
+    int oldSeats = courseOffer.getSeatCount();
+    if (numberOfSeat != oldSeats) {
+        courseOffer.getSeatList().clear();
+        courseOffer.generateSeats(numberOfSeat);
+    }
+
+    //renew the faculty information
+    University.Persona.Faculty.FacultyProfile selectedFaculty = null;
+    for (University.Persona.Faculty.FacultyProfile fp : registrarProfile.getDepartment().getFacultyDirectory().getTeacherList()) {
+        if (fp.getPerson().getName().equalsIgnoreCase(facultyName)) {
+            selectedFaculty = fp;
+            break;
+        }
+    }
+    if (selectedFaculty != null) {
+        courseOffer.AssignAsTeacher(selectedFaculty);
+    }
+
+    //renew the semester
+    University.CourseSchedule.CourseSchedule newSchedule = registrarProfile.getDepartment().getCourseSchedule(semester);
+    if (newSchedule != null && courseOffer.getCourseSchedule() != newSchedule) {
+        University.CourseSchedule.CourseSchedule oldSchedule = courseOffer.getCourseSchedule();
+        if (oldSchedule != null) {
+            oldSchedule.getSchedule().remove(courseOffer);
+        }
+        newSchedule.getSchedule().add(courseOffer);
+        courseOffer.setCourseSchedule(newSchedule);
+    }
+
+    //pop-up successful message
+    JOptionPane.showMessageDialog(null, "Course Offer successfully updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+    
     setViewMode();
-            */
+
+            
         
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -273,10 +304,13 @@ public class EditExistingCourseOfferJPanel extends javax.swing.JPanel {
         
         CourseOffer co = this.courseOffer; 
         
-        fieldCourseNumber.setText(co.getSubjectCourse().getCourseNumber());
-        fieldCourseName.setText(co.getSubjectCourse().getCourseName());
-        fieldCredits.setText(String.valueOf(co.getCreditHours()));
-        fieldCapacity.setText(String.valueOf(co.getSeatCount()));
+       if (courseOffer == null || courseOffer.getCourse() == null) return;
+
+        fieldCourseNumber.setText(courseOffer.getCourse().getCourseNumber());
+        fieldCourseName.setText(courseOffer.getCourse().getCourseName());
+        fieldCredits.setText(String.valueOf(courseOffer.getCreditHours()));
+        fieldCapacity.setText(String.valueOf(courseOffer.getSeatCount()));
+
 
         //set faculty comboBox
         ////MH 10/26 - Fixes because ID was changed to UniversityID

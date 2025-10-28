@@ -36,6 +36,10 @@ public class CourseOfferingManagementJPanel extends javax.swing.JPanel {
         registrarProfile = rp;
         
         initComponents();
+        //hide row 0 so that other won't see it 
+        tblCourseOffering.getColumnModel().getColumn(0).setMinWidth(0);
+        tblCourseOffering.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblCourseOffering.getColumnModel().getColumn(0).setPreferredWidth(0);
     }
 
     /**
@@ -83,11 +87,11 @@ public class CourseOfferingManagementJPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Course Number", "Course Name", "Credits", "Faculty Name", "Capacity ", "Enrolled Status"
+                "_obj__", "Course Number", "Course Name", "Credits", "Faculty Name", "Capacity ", "Enrolled Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -279,14 +283,17 @@ public class CourseOfferingManagementJPanel extends javax.swing.JPanel {
     
     for (CourseOffer co : cs.getSchedule()) {
     
-        Object[] row = new Object[6];
+        Object[] row = new Object[7];
             row[0] = co;
-            row[1] = co.getSubjectCourse().getCourseName();
-            row[2] = co.getCreditHours();   
+            row[1] = co.getCourseNumber();
+            row[2] = co.getCourseName();
+            row[3] = co.getCreditHours();   
             //MH 10/26 - Fixes because ID was changed to UniversityID
-            row[3] = co.getFacultyProfile().getPerson().getUniversityID();           
-            row[4] = co.getSeatCount();
-            row[5] = co.getEnrolledStudents().size();
+            row[4] = (co.getFacultyProfile() != null && co.getFacultyProfile().getPerson() != null)
+        ? co.getFacultyProfile().getPerson().getName()
+        : "N/A";
+            row[5] = co.getSeatCount();
+            row[6] = co.getEnrollmentCount();
 
         model.addRow(row);
         }

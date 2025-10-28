@@ -79,7 +79,7 @@ public class CourseOffer {
     // 分配座位并生成 SeatAssignment（学生选课）
     public SeatAssignment assignEmptySeat(CourseLoad cl) {
         Seat seat = getEmptySeat(); // 查找空位
-        if (seat == null) return null; // 如果没有空位 → 选课失败
+        if (seat == null) return null; // 
 
         // 创建一条 SeatAssignment 选课记录
         SeatAssignment sa = seat.newSeatAssignment(cl);
@@ -93,7 +93,7 @@ public class CourseOffer {
         int sum = 0;
         for (Seat s : seatlist) {
             if (s.isOccupied()) {
-                sum += course.getTotalCoursePrice(); // ✅ 统一调用标准方法
+                sum += course.getTotalCoursePrice(); 
             }
         }
         return sum;

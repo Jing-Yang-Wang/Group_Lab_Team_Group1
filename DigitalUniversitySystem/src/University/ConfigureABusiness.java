@@ -43,6 +43,8 @@ public class ConfigureABusiness {
 
         //Add to department structure
         business.getCollege().addDepartment(department);
+        department.ensureCourseScheduleInitialized();
+
 
         //Create a person directory
         PersonDirectory persondirectory = department.getPersonDirectory(); 
@@ -69,30 +71,32 @@ public class ConfigureABusiness {
         Person person018 = persondirectory.newPerson("U018", "Jay Chou", "jay.chou@university.edu");                 // faculty8
         
         //10 new students
-        Person person019 = persondirectory.newPerson("S019", "Evelyn Zhao", "evelyn.zhao@northeastern.edu");
-        Person person020 = persondirectory.newPerson("S020", "Michael Chen", "michael.chen@northeastern.edu");
-        Person person021 = persondirectory.newPerson("S021", "Linda Park", "linda.park@northeastern.edu");
-        Person person022 = persondirectory.newPerson("S022", "Jason Lee", "jason.lee@northeastern.edu");
-        Person person023 = persondirectory.newPerson("S023", "Emily Davis", "emily.davis@northeastern.edu");
-        Person person024 = persondirectory.newPerson("S024", "Kevin Liu", "kevin.liu@northeastern.edu");
-        Person person025 = persondirectory.newPerson("S025", "Sophia Wang", "sophia.wang@northeastern.edu");
-        Person person026 = persondirectory.newPerson("S026", "Daniel Brown", "daniel.brown@northeastern.edu");
-        Person person027 = persondirectory.newPerson("S027", "Olivia Zhang", "olivia.zhang@northeastern.edu");
-        Person person028 = persondirectory.newPerson("S028", "William Yang", "william.yang@northeastern.edu");
+        Person person019 = persondirectory.newPerson("S019", "Evelyn Zhao", "evelyn.zhao@northeastern.edu");         //student4
+        Person person020 = persondirectory.newPerson("S020", "Michael Chen", "michael.chen@northeastern.edu");       //student5
+        Person person021 = persondirectory.newPerson("S021", "Linda Park", "linda.park@northeastern.edu");           //student6
+        Person person022 = persondirectory.newPerson("S022", "Jason Lee", "jason.lee@northeastern.edu");             //student7
+        Person person023 = persondirectory.newPerson("S023", "Emily Davis", "emily.davis@northeastern.edu");         //student8
+        Person person024 = persondirectory.newPerson("S024", "Kevin Liu", "kevin.liu@northeastern.edu");             //student9
+        Person person025 = persondirectory.newPerson("S025", "Sophia Wang", "sophia.wang@northeastern.edu");         //student10
+        Person person026 = persondirectory.newPerson("S026", "Daniel Brown", "daniel.brown@northeastern.edu");       //student11
+        Person person027 = persondirectory.newPerson("S027", "Olivia Zhang", "olivia.zhang@northeastern.edu");       //student12
+        Person person028 = persondirectory.newPerson("S028", "William Yang", "william.yang@northeastern.edu");       //student13
 
         
         CourseCatalog catalog = department.getCourseCatalog();
         
-        //Original courses
-        Course course1 = catalog.newCourse("Applied Engineering", "INFO5100", 4); 
-        Course course2 = catalog.newCourse("Program Structure", "INFO6205", 4); 
-        Course course3 = catalog.newCourse("Data Science", "INFO6210", 4); 
-        Course course4 = catalog.newCourse("Algorithmics", "INFO6215", 4); 
-        Course course5 = catalog.newCourse("Web Development Tools and Methods", "INFO6250", 4);
-        Course course6 = catalog.newCourse("Data Mining", "INFO7245", 4);
-        Course course7 = catalog.newCourse("Data Visualization", "INFO7370", 4); 
-        Course course8 = catalog.newCourse("Applied Marketing", "INFO5000", 4);
-        Course course9 = catalog.newCourse("Advanced Java", "INFO5001", 4);
+        //Original course
+        //there are total 9 courses in course catalog but only 8 of them are available 
+        //course 9 is not on available for any semester.
+        Course course1 = catalog.newCourse("INFO5100", "Applied Engineering", 4); 
+        Course course2 = catalog.newCourse("INFO6205", "Program Structure", 4); 
+        Course course3 = catalog.newCourse("INFO6210", "Data Science", 4); 
+        Course course4 = catalog.newCourse("INFO6215", "Algorithmics", 4); 
+        Course course5 = catalog.newCourse("INFO6250", "Web Development Tools and Methods", 4);
+        Course course6 = catalog.newCourse("INFO7245", "Data Mining", 4);
+        Course course7 = catalog.newCourse("INFO7370", "Data Visualization", 4); 
+        Course course8 = catalog.newCourse("INFO5000", "Applied Marketing", 4);
+        Course course9 = catalog.newCourse("INFO5001", "Advanced Java", 4);
               
         //Original semester
         CourseSchedule fall2020 = department.newCourseSchedule("Fall2020");
@@ -139,26 +143,21 @@ public class ConfigureABusiness {
         FacultyProfile fp7 = fd.newFacultyProfile(person017);
         FacultyProfile fp8 = fd.newFacultyProfile(person018);
         //Assign faculty to courseoffer 给course offer分配老师
-        FacultyAssignment fa1 = fp1.assignAsTeacher(co1);
-        FacultyAssignment fa2 = fp2.assignAsTeacher(co2);
-        FacultyAssignment fa3 = fp3.assignAsTeacher(co3);
-        FacultyAssignment fa4 = fp4.assignAsTeacher(co4);
-        FacultyAssignment fa5 = fp5.assignAsTeacher(co5);
-        FacultyAssignment fa6 = fp6.assignAsTeacher(co6);
-        FacultyAssignment fa7 = fp1.assignAsTeacher(co7); //MH - Updated to have better test data
-        FacultyAssignment fa8 = fp1.assignAsTeacher(co8); //MH - Updated to have better test data
+        //this part is one side binding, telling us which professor teaches which course
+        //need to add the side telling us which course is teaching by which professor
+        //so I added the coxx.AssignAsTeacher(fpxx);
+        FacultyAssignment fa1 = fp1.assignAsTeacher(co1); co1.AssignAsTeacher(fp1);
+        FacultyAssignment fa2 = fp2.assignAsTeacher(co2); co2.AssignAsTeacher(fp2);
+        FacultyAssignment fa3 = fp3.assignAsTeacher(co3); co3.AssignAsTeacher(fp3);
+        FacultyAssignment fa4 = fp4.assignAsTeacher(co4); co4.AssignAsTeacher(fp4);
+        FacultyAssignment fa5 = fp5.assignAsTeacher(co5); co5.AssignAsTeacher(fp5);
+        FacultyAssignment fa6 = fp6.assignAsTeacher(co6); co6.AssignAsTeacher(fp6);
+        FacultyAssignment fa7 = fp1.assignAsTeacher(co7); co7.AssignAsTeacher(fp7);
+        FacultyAssignment fa8 = fp1.assignAsTeacher(co8); co8.AssignAsTeacher(fp8);
         
-        // Registrar ensures faculty info is visible in course offers
-        /* MH - This is being done above
-        courseoffer1.assignAsTeacher(fp1);
-        ourcseoffer2.assignAsTeacher(fp2);
-        courseoffer3.assignAsTeacher(fp3);
-        courseoffer4.assignAsTeacher(fp4);
-        courseoffer5.assignAsTeacher(fp5);
-        courseoffer6.assignAsTeacher(fp6);
-        courseoffer7.assignAsTeacher(fp1);
-        courseoffer8.assignAsTeacher(fp1); 
-        */
+        
+
+        
 
         //Student profile  给person分配学生角色
         StudentDirectory sd = department.getStudentDirectory();
@@ -326,7 +325,7 @@ public class ConfigureABusiness {
         populateAssignment(sa3sp5);     
         SeatAssignment sa4sp5 = courseloadSecondSemestersp5.newSeatAssignment(co4);
         //MH 10/26 - Added to add assignments & calc grades.     
-        populateAssignment(sa3sp5);
+        populateAssignment(sa4sp5);
         
      
         //CreateCourseloads for student 6 (person021)
@@ -378,6 +377,84 @@ public class ConfigureABusiness {
         //MH 10/26 - Added to add assignments & calc grades.
         populateAssignment(sa2sp8);
         //sa2sp8.setGrade(4.0f);
+        
+        //CreateCourseloads for student 9 (person024)
+        CourseLoad courseloadFirstSemestersp9 = s9.newCourseLoad("Fall2020", s9);
+        CourseLoad courseloadSecondSemestersp9 = s9.newCourseLoad("Spring2021", s9);
+        //first semester
+        SeatAssignment sa1sp9 = courseloadFirstSemestersp9.newSeatAssignment(co1);
+        populateAssignment(sa1sp9);
+        SeatAssignment sa2sp9 = courseloadFirstSemestersp9.newSeatAssignment(co2);
+        populateAssignment(sa2sp9);
+        //second semester
+        SeatAssignment sa3sp9 = courseloadSecondSemestersp9.newSeatAssignment(co3);
+        populateAssignment(sa3sp9);
+        SeatAssignment sa4sp9 = courseloadSecondSemestersp9.newSeatAssignment(co4);
+        populateAssignment(sa4sp9);
+
+
+
+        //CreateCourseloads for student 10 (person025)
+        CourseLoad courseloadFirstSemestersp10 = s10.newCourseLoad("Fall2021", s10);
+        CourseLoad courseloadSecondSemestersp10 = s10.newCourseLoad("Spring2022", s10);
+        //first semester
+        SeatAssignment sa1sp10 = courseloadFirstSemestersp10.newSeatAssignment(co5);
+        populateAssignment(sa1sp10);
+        SeatAssignment sa2sp10 = courseloadFirstSemestersp10.newSeatAssignment(co6);
+        populateAssignment(sa2sp10);
+        //second semester
+        SeatAssignment sa3sp10 = courseloadSecondSemestersp10.newSeatAssignment(co7);
+        populateAssignment(sa3sp10);
+        SeatAssignment sa4sp10 = courseloadSecondSemestersp10.newSeatAssignment(co8);
+        populateAssignment(sa4sp10);
+
+
+
+        //CreateCourseloads for student 11 (person026)
+        CourseLoad courseloadFirstSemestersp11 = s11.newCourseLoad("Spring2021", s11);
+        CourseLoad courseloadSecondSemestersp11 = s11.newCourseLoad("Fall2021", s11);
+        //first semester
+        SeatAssignment sa1sp11 = courseloadFirstSemestersp11.newSeatAssignment(co3);
+        populateAssignment(sa1sp11);
+        SeatAssignment sa2sp11 = courseloadFirstSemestersp11.newSeatAssignment(co4);
+        populateAssignment(sa2sp11);
+        //second semester
+        SeatAssignment sa3sp11 = courseloadSecondSemestersp11.newSeatAssignment(co5);
+        populateAssignment(sa3sp11);
+        SeatAssignment sa4sp11 = courseloadSecondSemestersp11.newSeatAssignment(co6);
+        populateAssignment(sa4sp11);
+
+
+
+        //CreateCourseloads for student 12 (person027)
+        CourseLoad courseloadFirstSemestersp12 = s12.newCourseLoad("Fall2021", s12);
+        CourseLoad courseloadSecondSemestersp12 = s12.newCourseLoad("Spring2022", s12);
+        //first semester
+        SeatAssignment sa1sp12 = courseloadFirstSemestersp12.newSeatAssignment(co5);
+        populateAssignment(sa1sp12);
+        SeatAssignment sa2sp12 = courseloadFirstSemestersp12.newSeatAssignment(co6);
+        populateAssignment(sa2sp12);
+        //second semester
+        SeatAssignment sa3sp12 = courseloadSecondSemestersp12.newSeatAssignment(co7);
+        populateAssignment(sa3sp12);
+        SeatAssignment sa4sp12 = courseloadSecondSemestersp12.newSeatAssignment(co8);
+        populateAssignment(sa4sp12);
+
+
+
+        //CreateCourseloads for student 13 (person028)
+        CourseLoad courseloadFirstSemestersp13 = s13.newCourseLoad("Spring2021", s13);
+        CourseLoad courseloadSecondSemestersp13 = s13.newCourseLoad("Fall2021", s13);
+        //first semester
+        SeatAssignment sa1sp13 = courseloadFirstSemestersp13.newSeatAssignment(co3);
+        populateAssignment(sa1sp13);
+        SeatAssignment sa2sp13 = courseloadFirstSemestersp13.newSeatAssignment(co4);
+        populateAssignment(sa2sp13);
+        //second semester
+        SeatAssignment sa3sp13 = courseloadSecondSemestersp13.newSeatAssignment(co5);
+        populateAssignment(sa3sp13);
+        SeatAssignment sa4sp13 = courseloadSecondSemestersp13.newSeatAssignment(co6);
+        populateAssignment(sa4sp13);
 
 
 //Calculate revenue by semester 计算每个学期的总收入

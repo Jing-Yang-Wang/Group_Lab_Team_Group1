@@ -153,18 +153,28 @@ public class AnalyticsReportJPanel extends javax.swing.JPanel {
 
         //fill the table with every course offer
         for (CourseOffer co : department.getAllCourseOffers()) {
-            Object[] row = new Object[8];
-            row[0] = co.getCourseSchedule().getSemester();
-            row[1] = co.getCourseNumber();
-            row[2] = co.getSubjectCourse().getCourseName();
-            //MH 10/26 - Fixes because ID was changed to UniversityID
-            row[3] = co.getFacultyProfile().getPerson().getUniversityID(); 
-            row[4] = co.getSeatCount();
-            row[5] = co.getEnrolledStudents().size();   
-            row[6] = co.getAverageCourseGrade();
-            row[7] = co.getAverageGradeAsLetter();
-            
-            model.addRow(row);
+       
+        int enrolledCount = 0;
+        for (University.CourseSchedule.Seat seat : co.getSeatList()) {
+            if (seat.isOccupied() && seat.getSeatAssignment() != null) {
+                if (seat.getSeatAssignment().isEnrolled()) {
+                    enrolledCount++;
+                }
+            }
+        }
+
+        Object[] row = new Object[8];
+        row[0] = co.getCourseSchedule().getSemester();
+        row[1] = co.getCourseNumber();
+        row[2] = co.getSubjectCourse().getCourseName();
+        // MH 10/26 - Fixes because ID was changed to UniversityID
+        row[3] = co.getFacultyProfile().getPerson().getName(); 
+        row[4] = co.getSeatCount();         
+        row[5] = enrolledCount;             
+        row[6] = co.getAverageCourseGrade();
+        row[7] = co.getAverageGradeAsLetter();
+
+        model.addRow(row);
         }
     }
 }
