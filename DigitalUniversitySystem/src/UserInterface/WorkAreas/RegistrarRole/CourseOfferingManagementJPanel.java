@@ -282,8 +282,10 @@ public class CourseOfferingManagementJPanel extends javax.swing.JPanel {
     if (cs == null) return; // schedule 不存在
     
     for (CourseOffer co : cs.getSchedule()) {
+
     
         Object[] row = new Object[7];
+
             row[0] = co;
             row[1] = co.getCourseNumber();
             row[2] = co.getCourseName();
@@ -295,9 +297,25 @@ public class CourseOfferingManagementJPanel extends javax.swing.JPanel {
             row[5] = co.getSeatCount();
             row[6] = co.getEnrollmentCount();
 
+
         model.addRow(row);
         }
 
     }  
+    
+    //MH - Added to fix issue when there is no faculty assigned
+    private String getInstructorByCourseOffer(CourseOffer co) {
+        if (co.getFacultyProfile() == null) {
+            return "None Assigned";
+        }
+        if (co.getFacultyProfile().getPerson() == null) {
+            return "Unnamed";
+        }
+        String instructorName = co.getFacultyProfile().getPerson().getName();
+        if (instructorName == null) {
+            return "Unnamed";
+        }    
+        return instructorName;
+    }
 }   
 

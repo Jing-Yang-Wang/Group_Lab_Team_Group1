@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserInterface.WorkAreas.AdminRole;
+package UserInterface.WorkAreas.AdminRole.Dashboard;
 
 import java.awt.*;
 import java.awt.geom.Arc2D;
@@ -24,7 +24,7 @@ public class ChartPanel extends JPanel {
         this.data = data;
         this.chartType = chartType;
         this.title = title;
-        setPreferredSize(new Dimension(300, 200));
+        setPreferredSize(new Dimension(400, 300));
         setBackground(Color.WHITE);
     }
     
@@ -61,7 +61,7 @@ public class ChartPanel extends JPanel {
     
     private void drawPieChart(Graphics2D g2d) {
         int centerX = getWidth() / 2;
-        int centerY = getHeight() / 2 - 20;
+        int centerY = getHeight() / 2 ;
         int radius = Math.min(getWidth(), getHeight()) / 3;
         
         int total = data.values().stream().mapToInt(Integer::intValue).sum();

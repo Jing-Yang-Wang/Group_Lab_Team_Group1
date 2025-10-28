@@ -13,6 +13,8 @@ public class Assignment {
     SeatAssignment seatassignment; //links back to studentprofile
     String name;
     float grade;
+    String status;//Pending / Submitted / Graded
+
     
     public Assignment (SeatAssignment sa, String n){
         this.seatassignment = sa;
@@ -39,4 +41,14 @@ public class Assignment {
     public SeatAssignment getSeatAssignment() {
         return seatassignment;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
 }

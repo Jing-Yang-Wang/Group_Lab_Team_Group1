@@ -120,13 +120,13 @@ public class ConfigureABusiness {
         CourseOffer co8 = spring2022.newCourseOfferByCourse(course8); co8.generateSeats(20);     
         
         //New courses offered
-        /* MH - Removed because we the code above works.
+        /*MH - Removed because we the code above works.
         for (String c : new String[]{"INFO5100","INFO5200","INFO5300","INFO5400","INFO5500"}) {
             CourseOffer sOffer = spring2025.newCourseOffer(c);
             if (sOffer != null) sOffer.generateSeats(20);
             CourseOffer fOffer = fall2025.newCourseOffer(c);
             if (fOffer != null) fOffer.generateSeats(20);
-        } */
+        }*/
         
         //Create emplyee
         EmployeeDirectory employeedirectory = department.getEmployeeDirectory();
@@ -158,6 +158,18 @@ public class ConfigureABusiness {
         
 
         
+        //MH - Added so the faculty profile has the right class
+        /*
+        co1.setFacultyassignment(fa1);
+        co2.setFacultyassignment(fa2);
+        co3.setFacultyassignment(fa3);
+        co4.setFacultyassignment(fa4);
+        co5.setFacultyassignment(fa5);
+        co6.setFacultyassignment(fa6);
+        co7.setFacultyassignment(fa7);
+        co8.setFacultyassignment(fa8);
+        */
+
 
         //Student profile  给person分配学生角色
         StudentDirectory sd = department.getStudentDirectory();
@@ -532,14 +544,17 @@ public class ConfigureABusiness {
         // Lab 1
         Assignment a1 = sa.newAssignment("Lab 1");
         a1.setGrade(gradeA1); // Set the 2-decimal float grade
+        a1.setStatus("Graded"); 
 
         // Lab 2
         Assignment a2 = sa.newAssignment("Lab 2");
         a2.setGrade(gradeA2); // Set the 2-decimal float grade
+        a2.setStatus("Pending"); 
 
         // Assignment 1
         Assignment a3 = sa.newAssignment("Assignment 1");
         a3.setGrade(gradeA3); // Set the 2-decimal float grade
+        a3.setStatus("Submitted"); 
 
         sa.calculateGrade();
     }

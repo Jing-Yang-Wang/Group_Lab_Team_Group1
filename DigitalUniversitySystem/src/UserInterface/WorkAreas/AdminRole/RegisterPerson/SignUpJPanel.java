@@ -79,7 +79,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
             }
         });
 
-        RoleCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Teacher", "Registrar", "Admin" }));
+        RoleCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Faculty", "Registrar", "Admin" }));
         RoleCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RoleComboActionPerformed(evt);
@@ -207,12 +207,8 @@ public class SignUpJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Email already exists! Registration failed.");
             return;
         } else {     // no email exists, so create a new person
-
-            p=personDirectory.newPerson(email);
-        
-
-            //MH 10/25 - Please update to use the fixed newPerson(String id, String name, String email)
-            //p=personDirectory.newPerson(email);
+            // Create person with username as name and email
+            p = personDirectory.newPerson(username, username, email);
         }
 
         //MH 10/22 - Commented out so app can compile
@@ -254,15 +250,15 @@ public class SignUpJPanel extends javax.swing.JPanel {
         
         
         //3.create UserAccount
-        //MH 10/22 - Commented out so app can compile
-        UserAccountDirectory uaDirectory =business.getUserAccountDirectory();
-        //uaDirectory.newUserAccount(sp, username, password);
+        UserAccountDirectory uaDirectory = business.getUserAccountDirectory();
+        uaDirectory.newUserAccount(sp, username, password);
         JOptionPane.showMessageDialog(this, "Registration successful!");
         
-         Usernamefield.setText("");
-            fieldPassword.setText("");
-            fieldVerPassword.setText("");
-            fieldEmail.setText("");
+        // Clear form fields
+        Usernamefield.setText("");
+        fieldPassword.setText("");
+        fieldVerPassword.setText("");
+        fieldEmail.setText("");
         }}
     //GEN-LAST:event_SaveActionPerformed
     

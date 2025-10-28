@@ -314,6 +314,7 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
     Department department = registrarProfile.getDepartment();
     if (department == null) return; 
 
+
     //get information from combo box
     String selectedStudentName = (String) comboStudentId.getSelectedItem();
     StudentProfile sp = null;  // 在当前方法作用域内声明
@@ -333,6 +334,7 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
         CourseOffer co = sa.getCourseOffer();
         if (co == null) continue;
 
+
         Object[] row = new Object[7];
         row[0] = co.getCourseNumber();
         row[1] = co.getSubjectCourse().getCourseName();
@@ -344,5 +346,7 @@ public class StudentRegistrationJPanel extends javax.swing.JPanel {
 
         model.addRow(row);
     }
+
     } 
 }
+

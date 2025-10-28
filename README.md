@@ -119,9 +119,9 @@ Michael Hynes
   - GitHub: I worked with multiple TAs who here not able to help me with a fully working and documented process for working with branches.  This process had me trying multiple git tools, rebuilding branches, and rebuilding my local project.  It was not until Thursday that I had something that was provedn to work.  At that point I shared with the team but the divergance of our branches made the project much harder to complete then nessecary.
   - Communication: The team was able to meet on Tuesday to confirm roles and to go over the initial mergerd code that I provided.  We also had a short meeting before out Thursday class.  However, the rest of the team did not involve me in code reviews, answering questions, test planning, or any other planning.  I tried to establish regular communications in the MS Team I established when the group was formed, however I was the only one actively sending messages throughtout the project. For example, between 10/25 2:15 PM and 10/26 7:15 PM I've posted 19 times while no team member making a post or reaction.
   - Language: Being the only native English speaker, there were obvious language barrier issues.  This was a challenge during out meetings, our Teams conversations, and in for our code comments.
-  - Group Size: Unlike other groups, have a group of four further compnonded the challenges that I stated above.
-  - Instructions: In a few places, the intructions were not clear.  An example, "View and update assigned course details (title, description, schedule, capacity)" is an assignement requirement but several of these terms were used to describe the data in course and course schedule.  It also did not make it clear that we were free to add classes and data points as needed.
-  - Group Time Management: With the team's git issues and slow updated to main there was not enough time for end-to-end testing or group QA.
+  - Group Size: Unlike other groups, have a group of four further compounnded the challenges that I stated above.
+  - Instructions: In a few places, the intructions were not clear.  An example, "View and update assigned course details (title, description, schedule, capacity)" is an assignement requirement but several of these terms were NEVER used to describe the data in course and course schedule.  The instructions also did not make it clear that we were free to add classes and data points as needed.
+  - Group Time Management: With the team's git issues and slow updated to main there was not enough time for end-to-end testing or group QA. 
 
 Xieming Geng
 
@@ -159,6 +159,8 @@ Michael Hynes
   - Posted updates in Teams and made myself available to assist other team members.
 
 Xieming Geng
+
+
 
 
 

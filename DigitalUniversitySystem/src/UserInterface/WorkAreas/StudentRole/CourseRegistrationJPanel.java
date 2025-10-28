@@ -31,78 +31,75 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
         this.studentProfile = studentProfile;
         this.department = department;
         
+        tblCourseOffer.getTableHeader().setReorderingAllowed(false);
+        tblRegisteredCourse.getTableHeader().setReorderingAllowed(false);
+
         populateAvailableCoursesTable(department.getAllCourseOffers());
         populateRegisteredCoursesTable();
     }
 
     //显示可选课程
-    private void populateAvailableCoursesTable(ArrayList<CourseOffer>courseList){
-        DefaultTableModel model = (DefaultTableModel)tblCourseOffer.getModel();
-        model.setRowCount(0);//把表格行数设置为0，清空所有行。
-        //把courseList里的每一门课，转成JTable的一行，并放进表格里。
-        for (CourseOffer c : courseList){
-            Object[] row = new Object[4];
-            row[0] = c.getCourseNumber();
-            row[1] = c.getSubjectCourse().getCourseName();
-            // 给每门课一个老师名字
-        if (c.getCourseNumber().equals("INFO5100")) {
-            row[2] = "Dr. Smith";
-        } else if (c.getCourseNumber().equals("INFO5200")) {
-            row[2] = "Prof. Johnson";
-        } else if (c.getCourseNumber().equals("INFO5300")) {
-            row[2] = "Dr. Williams";
-        } else if (c.getCourseNumber().equals("INFO5400")) {
-            row[2] = "Prof. Brown";
-        } else if (c.getCourseNumber().equals("INFO5500")) {
-            row[2] = "Dr. Davis";
-        } else {
-            row[2] = "Dr. Rae"; // 老师待分配
-        }
-            row[3] = c.getCreditHours();
-            
-            model.addRow(row);
-        }
+    private void populateAvailableCoursesTable(ArrayList<CourseOffer> courseList) {
+    DefaultTableModel model = (DefaultTableModel) tblCourseOffer.getModel();
+    model.setRowCount(0);
+
+    for (CourseOffer c : courseList) {
+        Object[] row = new Object[4];
+        row[0] = c.getCourseNumber();                    // 课程编号 → 第0列
+        row[1] = c.getSubjectCourse().getCourseName();   // 课程名称 → 第1列
+        row[2] = getInstructorByCourseNumber(c.getCourseNumber()); // 教师姓名
+        row[3] = c.getCreditHours();                     // 学分
+        model.addRow(row);
     }
+}
         
     //显示已注册课程
-    private void populateRegisteredCoursesTable(){
-        DefaultTableModel model = (DefaultTableModel)tblRegisteredCourse.getModel();
-        model.setRowCount(0);
-        if (studentProfile.getRegisteredCourseOffers() != null) { 
-        for(CourseOffer c : studentProfile.getRegisteredCourseOffers()){
-            Object[] row = new Object[4];
-            row[0] = c.getCourseNumber();
-            row[1] = c.getSubjectCourse().getCourseName();
-            if (c.getCourseNumber().equals("INFO5100")) {
-            row[2] = "Dr. Smith";
-        } else if (c.getCourseNumber().equals("INFO5200")) {
-            row[2] = "Prof. Johnson";
-        } else if (c.getCourseNumber().equals("INFO5300")) {
-            row[2] = "Dr. Williams";
-        } else if (c.getCourseNumber().equals("INFO5400")) {
-            row[2] = "Prof. Brown";
-        } else if (c.getCourseNumber().equals("INFO5500")) {
-            row[2] = "Dr. Davis";
-        } else {
-            row[2] = "Dr. Rae"; // 老师待分配
-        }
-            row[3] = c.getCreditHours();
-            
-            model.addRow(row);
-        }
-        } 
-    }
-    
-    //计算当前已注册课程的总学分
-    private int calculateTotalCredits() {
-    int totalCredits = 0;
+    private void populateRegisteredCoursesTable() {
+    DefaultTableModel model = (DefaultTableModel) tblRegisteredCourse.getModel();
+    model.setRowCount(0);
+
     if (studentProfile.getRegisteredCourseOffers() != null) {
         for (CourseOffer c : studentProfile.getRegisteredCourseOffers()) {
-            totalCredits += c.getCreditHours();
+            Object[] row = new Object[4];
+            row[0] = c.getCourseNumber();                    // 课程编号 → 第0列
+            row[1] = c.getSubjectCourse().getCourseName();   // 课程名称 → 第1列
+            row[2] = getInstructorByCourseNumber(c.getCourseNumber());
+            row[3] = c.getCreditHours();
+            model.addRow(row);
         }
     }
-    return totalCredits;
-    } 
+}
+    
+        //计算当前已注册课程的总学分
+       private int calculateTotalCredits() {
+           int totalCredits = 0;
+
+           // 直接从表格计算，而不是从 studentProfile
+           DefaultTableModel model = (DefaultTableModel) tblRegisteredCourse.getModel();
+           for (int i = 0; i < model.getRowCount(); i++) {
+               int credits = (Integer) model.getValueAt(i, 3); // 第3列是学分
+               totalCredits += credits;
+           }
+
+           return totalCredits;
+       }
+    
+        //教师分配方法
+        private String getInstructorByCourseNumber(String courseNumber) {
+        if (courseNumber == null) return "None";
+        String n = courseNumber.trim();
+        if (n.equalsIgnoreCase("INFO5100")) return "Dr. Smith";
+        if (n.equalsIgnoreCase("INFO5200")) return "Prof. Johnson";
+        if (n.equalsIgnoreCase("INFO5300")) return "Dr. Williams";
+        if (n.equalsIgnoreCase("INFO5400")) return "Prof. Brown";
+        if (n.equalsIgnoreCase("INFO5500")) return "Dr. Davis";
+        if (n.equalsIgnoreCase("INFO6205")) return "Dr. Taylor";
+        if (n.equalsIgnoreCase("INFO6210")) return "Prof. Allen";
+        if (n.equalsIgnoreCase("INFO6215")) return "Dr. Parker";
+        if (n.equalsIgnoreCase("INFO7370")) return "Dr. Rae";
+        return "Dr.Sandy";
+    }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -337,96 +334,83 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInstructorActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        String keyword = txtKeyword.getText(); // 读取输入框关键字
-    ArrayList<CourseOffer> resultList = new ArrayList<>(); // 创建一个空的ArrayList，用来存放符合条件的搜索结果
-    
-    // 遍历系统中所有课程
-    for (CourseOffer c : department.getAllCourseOffers()) {
-        // 提前把每门课的基本信息取出来放到变量中，方便后面判断
-        String courseNumber = c.getCourseNumber();
-        String courseName = c.getSubjectCourse().getCourseName();
-        
-        // 修复这里：使用和显示方法一样的教师数据
-        String instructor = "";
-        if (c.getCourseNumber().equals("INFO5100")) {
-            instructor = "Dr. Smith";
-        } else if (c.getCourseNumber().equals("INFO5200")) {
-            instructor = "Prof. Johnson";
-        } else if (c.getCourseNumber().equals("INFO5300")) {
-            instructor = "Dr. Williams";
-        } else if (c.getCourseNumber().equals("INFO5400")) {
-            instructor = "Prof. Brown";
-        } else if (c.getCourseNumber().equals("INFO5500")) {
-            instructor = "Dr. Davis";
-        } else {
-            instructor = "Dr. Rae";
+        String keyword = txtKeyword.getText();
+        ArrayList<CourseOffer> resultList = new ArrayList<>();
+
+        for (CourseOffer c : department.getAllCourseOffers()) {
+            String courseNumber = c.getCourseNumber();
+            String courseName = c.getSubjectCourse().getCourseName();
+            String instructor = getInstructorByCourseNumber(courseNumber);
+
+            if (searchType.equals("CourseNumber") && courseNumber.toLowerCase().contains(keyword.toLowerCase())) {
+                resultList.add(c);
+            } else if (searchType.equals("CourseName") && courseName.toLowerCase().contains(keyword.toLowerCase())) {
+                resultList.add(c);
+            } else if (searchType.equals("Instructor") && instructor.toLowerCase().contains(keyword.toLowerCase())) {
+                resultList.add(c);
+            }
         }
-        
-        // 根据searchType不同来匹配
-        if (searchType.equals("CourseNumber") && courseNumber.toLowerCase().contains(keyword.toLowerCase())) {
-            resultList.add(c);
-        } else if (searchType.equals("CourseName") && courseName.toLowerCase().contains(keyword.toLowerCase())) {
-            resultList.add(c);
-        } else if (searchType.equals("Instructor") && instructor.toLowerCase().contains(keyword.toLowerCase())) {
-            resultList.add(c);
-        }
-    }
-    
-    // 把搜索到的课程显示到表格中
-    populateAvailableCoursesTable(resultList);
-    
-    // 如果没有找到结果，显示提示
-    if (resultList.isEmpty() && !keyword.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No courses found for: " + keyword);
-    }
+
+        populateAvailableCoursesTable(resultList);
+
+        if (resultList.isEmpty() && !keyword.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No courses found for: " + keyword);
+        }               
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
-      int selectedRow = tblCourseOffer.getSelectedRow();
+        int selectedRow = tblCourseOffer.getSelectedRow();
     if (selectedRow < 0) {
         JOptionPane.showMessageDialog(this, "Please select a course to enroll!");
         return;
     }
 
+    // 现在第0列是课程编号，第1列是课程名称
     String courseNumber = (String) tblCourseOffer.getValueAt(selectedRow, 0);
-    String courseName = (String) tblCourseOffer.getValueAt(selectedRow, 1);
-    String instructor = (String) tblCourseOffer.getValueAt(selectedRow, 2);
     int credits = (Integer) tblCourseOffer.getValueAt(selectedRow, 3);
 
-    // 检查是否已存在 - 从表格中检查，而不是从studentProfile
+    // 检查是否已经注册过这门课（用课程编号比较）
     DefaultTableModel registeredModel = (DefaultTableModel) tblRegisteredCourse.getModel();
     for (int i = 0; i < registeredModel.getRowCount(); i++) {
-        if (registeredModel.getValueAt(i, 0).equals(courseNumber)) {
+        String registeredCourseNumber = (String) registeredModel.getValueAt(i, 0);
+        if (registeredCourseNumber.equals(courseNumber)) {
             JOptionPane.showMessageDialog(this, "You already have this course!");
             return;
         }
     }
 
-    // 计算总学分 - 从表格中计算
-    int totalCredits = 0;
-    for (int i = 0; i < registeredModel.getRowCount(); i++) {
-        totalCredits += (Integer) registeredModel.getValueAt(i, 3);
-    }
-
-    // 检查学分限制
+    // 重新计算总学分（添加调试信息）
+    int totalCredits = calculateTotalCredits();
+    System.out.println("当前总学分: " + totalCredits); // 调试用
+    System.out.println("要添加的学分: " + credits);    // 调试用
+    
     if (totalCredits + credits > 8) {
-        JOptionPane.showMessageDialog(this, "You cannot exceed 8 credits! Current credits: " + totalCredits);
+        JOptionPane.showMessageDialog(this, 
+            "You cannot exceed 8 credits! Current credits: " + totalCredits + 
+            ", New course credits: " + credits);
         return;
     }
 
-    // 添加到表格中
-    Object[] row = {courseNumber, courseName, instructor, credits};
+    // 添加到表格
+    Object[] row = {
+        courseNumber,                                    // 课程编号
+        tblCourseOffer.getValueAt(selectedRow, 1),      // 课程名称
+        tblCourseOffer.getValueAt(selectedRow, 2),      // 教师
+        credits                                          // 学分
+    };
     registeredModel.addRow(row);
 
-    // 同时添加到studentProfile
+    // 添加到学生的注册列表
     for (CourseOffer co : department.getAllCourseOffers()) {
         if (co.getCourseNumber().equals(courseNumber)) {
             studentProfile.registerCourseOffer(co);
+            System.out.println("成功注册课程: " + courseNumber); // 调试用
             break;
         }
     }
 
     JOptionPane.showMessageDialog(this, "Successfully enrolled in " + courseNumber + "!");
+
     }//GEN-LAST:event_btnEnrollActionPerformed
 
     private void btnDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDropActionPerformed
@@ -436,21 +420,19 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
         return;
     }
 
+    // 现在第0列是课程编号
     String courseNumber = (String) tblRegisteredCourse.getValueAt(selectedRow, 0);
-
-    // 从表格中移除这一行
+    
+    // 从表格删除
     DefaultTableModel model = (DefaultTableModel) tblRegisteredCourse.getModel();
     model.removeRow(selectedRow);
 
-    // 同时从studentProfile中移除，这样以后才能重新enroll
+    // 从学生注册列表删除
     ArrayList<CourseOffer> courses = studentProfile.getRegisteredCourseOffers();
     if (courses != null) {
-        for (int i = 0; i < courses.size(); i++) {
-            if (courses.get(i).getCourseNumber().equals(courseNumber)) {
-                courses.remove(i);
-                break;
-            }
-        }
+        courses.removeIf(c -> c.getCourseNumber().equals(courseNumber));
+        System.out.println("退课后剩余课程数: " + courses.size()); // 调试用
+        System.out.println("退课后总学分: " + calculateTotalCredits()); // 调试用
     }
 
     JOptionPane.showMessageDialog(this, "You have dropped " + courseNumber + ".");
