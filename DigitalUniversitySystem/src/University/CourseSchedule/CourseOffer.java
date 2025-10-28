@@ -341,4 +341,8 @@ public class CourseOffer {
         }
         return distribution;
     }
+
+    public void setFacultyassignment(FacultyAssignment facultyassignment) {
+        this.facultyassignment = facultyassignment;
+    }       
 }

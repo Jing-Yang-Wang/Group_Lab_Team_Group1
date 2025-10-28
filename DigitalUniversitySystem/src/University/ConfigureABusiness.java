@@ -159,6 +159,16 @@ public class ConfigureABusiness {
         courseoffer7.assignAsTeacher(fp1);
         courseoffer8.assignAsTeacher(fp1); 
         */
+        //MH - Added so the faculty profile has the right class
+        co1.setFacultyassignment(fa1);
+        co2.setFacultyassignment(fa2);
+        co3.setFacultyassignment(fa3);
+        co4.setFacultyassignment(fa4);
+        co5.setFacultyassignment(fa5);
+        co6.setFacultyassignment(fa6);
+        co7.setFacultyassignment(fa7);
+        co8.setFacultyassignment(fa8);
+        
 
         //Student profile  给person分配学生角色
         StudentDirectory sd = department.getStudentDirectory();

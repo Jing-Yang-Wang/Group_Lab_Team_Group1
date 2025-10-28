@@ -278,13 +278,16 @@ public class CourseOfferingManagementJPanel extends javax.swing.JPanel {
     if (cs == null) return; // schedule 不存在
     
     for (CourseOffer co : cs.getSchedule()) {
-    
+        //MH - Added to fix issue when there is no faculty assigned
+        String name = getInstructorByCourseOffer(co);
+        
         Object[] row = new Object[6];
             row[0] = co;
             row[1] = co.getSubjectCourse().getCourseName();
             row[2] = co.getCreditHours();   
             //MH 10/26 - Fixes because ID was changed to UniversityID
-            row[3] = co.getFacultyProfile().getPerson().getUniversityID();           
+            //row[3] = co.getFacultyProfile().getPerson().getName();   
+            row[3] = name;
             row[4] = co.getSeatCount();
             row[5] = co.getEnrolledStudents().size();
 
@@ -292,5 +295,20 @@ public class CourseOfferingManagementJPanel extends javax.swing.JPanel {
         }
 
     }  
+    
+    //MH - Added to fix issue when there is no faculty assigned
+    private String getInstructorByCourseOffer(CourseOffer co) {
+        if (co.getFacultyProfile() == null) {
+            return "None Assigned";
+        }
+        if (co.getFacultyProfile().getPerson() == null) {
+            return "Unnamed";
+        }
+        String instructorName = co.getFacultyProfile().getPerson().getName();
+        if (instructorName == null) {
+            return "Unnamed";
+        }    
+        return instructorName;
+    }
 }   
 

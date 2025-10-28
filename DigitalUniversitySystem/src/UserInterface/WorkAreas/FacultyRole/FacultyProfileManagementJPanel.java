@@ -177,7 +177,7 @@ public class FacultyProfileManagementJPanel extends javax.swing.JPanel {
         //check if fields ara empty 
         if(officeHour.isBlank()|| email.isBlank()||phone.isBlank())
         {
-            JOptionPane.showMessageDialog(null, "All text are mandatory", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "All fields are required.", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         //store the information in a variable
@@ -186,7 +186,7 @@ public class FacultyProfileManagementJPanel extends javax.swing.JPanel {
         facultyProfile.setTelephone(phone);
         
         //pop-up successful message
-            JOptionPane.showMessageDialog(null, "Faculty Profile updated successfully.","Information",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Faculty Profile updated successfully.","Information",JOptionPane.INFORMATION_MESSAGE);
         
         setviewMode();
     }//GEN-LAST:event_btnSaveActionPerformed
