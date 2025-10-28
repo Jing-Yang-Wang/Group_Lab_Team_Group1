@@ -214,8 +214,9 @@ public class EditExistingCourseOfferJPanel extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        //collect information from fields
-    /*String semester = (String) comboSemester.getSelectedItem();
+    //MH - This was commented out.  Uncmmented but commented out the lines that are not working currently.    
+    //collect information from fields
+    String semester = (String) comboSemester.getSelectedItem();
     String courseNumber = fieldCourseNumber.getText();
     String courseName = fieldCourseName.getText();
     String facultyName = (String) comboFaculty.getSelectedItem();
@@ -239,13 +240,13 @@ public class EditExistingCourseOfferJPanel extends javax.swing.JPanel {
     //set the information to corresponding variable
     courseOffer.getSubjectCourse().setCourseNumber(courseNumber);
     courseOffer.getSubjectCourse().setCourseName(courseName);
-    courseOffer.setCreditHours(credits);
-    courseOffer.setSeatCount(numberOfSeat);
+    //courseOffer.setCreditHours(credits);  
+    //courseOffer.setSeatCount(numberOfSeat);
     
 
     JOptionPane.showMessageDialog(null, "Course Offer successfully updated!", "Information", JOptionPane.INFORMATION_MESSAGE);
     setViewMode();
-            */
+            
         
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -280,7 +281,8 @@ public class EditExistingCourseOfferJPanel extends javax.swing.JPanel {
 
         //set faculty comboBox
         ////MH 10/26 - Fixes because ID was changed to UniversityID
-        String facultyName = co.getFacultyProfile().getPerson().getUniversityID();
+        //MH - Added to fix issue when there is no faculty assigned
+        String facultyName = getInstructorByCourseOffer(co);//co.getFacultyProfile().getPerson().getUniversityID();
         comboFaculty.setSelectedItem(facultyName);
 
         //set semester comboBox
@@ -317,6 +319,19 @@ public class EditExistingCourseOfferJPanel extends javax.swing.JPanel {
         
     }
 
-  
+    //MH - Added to fix issue when there is no faculty assigned
+    private String getInstructorByCourseOffer(CourseOffer co) {
+        if (co.getFacultyProfile() == null) {
+            return "None Assigned";
+        }
+        if (co.getFacultyProfile().getPerson() == null) {
+            return "Unnamed";
+        }
+        String instructorName = co.getFacultyProfile().getPerson().getName();
+        if (instructorName == null) {
+            return "Unnamed";
+        }    
+        return instructorName;
+    }  
    
 }
