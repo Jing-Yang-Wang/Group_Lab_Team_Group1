@@ -5,6 +5,7 @@
 package UserInterface.WorkAreas.StudentRole;
 
 import University.Business;
+import University.CourseSchedule.Assignment;
 import University.Persona.Student.StudentProfile;
 import java.awt.CardLayout;
 import java.io.File;
@@ -34,23 +35,38 @@ public class CourseWorkManagementJPanel extends javax.swing.JPanel {
         populateTable();
     }
     
-    //初始化表格***待补充
-    private void populateTable() {
+private void populateTable() {
     DefaultTableModel model = (DefaultTableModel) tblAssignments.getModel();
     model.setRowCount(0);
 
+    // 遍历学生所有学期的课程
     for (var cl : studentProfile.getTranscript().getAllCourseLoads()) {
         for (var sa : cl.getSeatAssignments()) {
-            Object[] row = new Object[4];
-            row[0] = sa.getCourseOffer().getCourseNumber(); //课程编号
-            row[1] = sa.getAssignmentName();//作业名称
-            row[2] = sa.getStatus();//状态
-            row[3] = sa.getAssignmentScore(); //成绩
+            var course = sa.getCourseOffer();
 
-            model.addRow(row);
+            //如果这门课有作业
+            if (sa.getAssignmentlist() != null && !sa.getAssignmentlist().isEmpty()) {
+                for (var a : sa.getAssignmentlist()) {
+                    Object[] row = new Object[4];
+                    row[0] = course.getCourse().getCourseName();  // 显示课程名
+                    row[1] = a.getName();               // 作业名
+                    row[2] = a.getStatus();                       // 提交状态
+                    row[3] = a.getGrade();                        // 成绩
+                    model.addRow(row);
+                }
+            } else {
+                //没有作业时，也显示该课程
+                Object[] row = new Object[4];
+                row[0] = course.getCourse().getCourseName();
+                row[1] = "No assignments";
+                row[2] = "-";
+                row[3] = 0.0;
+                model.addRow(row);
+            }
         }
     }
 }
+
     //从学生的选课CourseLoad→SeatAssignment里，读取所有课程，显示在下拉菜单
     private void populateComboBox() {
     cmbCourse.removeAllItems();
@@ -283,30 +299,33 @@ public class CourseWorkManagementJPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Please choose a file first.");
         return;
     }
-    
+
     String selectedCourseNumber = (String) cmbCourse.getSelectedItem();
     if (selectedCourseNumber == null) {
         JOptionPane.showMessageDialog(this, "Please select a course.");
         return;
     }
-    
-    // 直接从文件名创建作业名称（去掉扩展名）
+
     String fileName = selectedFile.getName();
-    String assignmentName = fileName.contains(".") ? 
+    String assignmentName = fileName.contains(".") ?
         fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
-    
-    // 直接在表格中添加新行
-    DefaultTableModel model = (DefaultTableModel) tblAssignments.getModel();
-    Object[] newRow = new Object[4];
-    newRow[0] = selectedCourseNumber;
-    newRow[1] = assignmentName;
-    newRow[2] = "Submitted";
-    newRow[3] = "0.0"; // 等待评分
-    
-    model.addRow(newRow);
-    
+
+    //在SeatAssignment中真正创建作业对象
+    for (var cl : studentProfile.getTranscript().getAllCourseLoads()) {
+        for (var sa : cl.getSeatAssignments()) {
+            if (sa.getCourseOffer().getCourseNumber().equals(selectedCourseNumber)) {
+                Assignment newAssignment = sa.newAssignment(assignmentName);
+                newAssignment.setStatus("Submitted");
+                newAssignment.setGrade(0.0f);
+            }
+        }
+    }
+
+    //刷新表格
+    populateTable();
     JOptionPane.showMessageDialog(this, "Assignment submitted for " + selectedCourseNumber + "!");
-    selectedFile = null; // 重置文件选择
+    selectedFile = null;
+
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed

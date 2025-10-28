@@ -21,9 +21,7 @@ import UserInterface.WorkAreas.AdminRole.ManageTeacher.ManageTeacherJPanel;
 import UserInterface.WorkAreas.AdminRole.MyProfile.MyProfileJPanel;
 import UserInterface.WorkAreas.AdminRole.Dashboard.DashboardJPanel;
 import UserInterface.WorkAreas.AdminRole.FacultyAssignment.FacultyAssignmentJPanel;
-
 import UserInterface.WorkAreas.AdminRole.Dashboard.DashboardJPanel;
-
 import UserInterface.WorkAreas.AdminRole.RegisterPerson.SignUpJPanel;
 
 
@@ -361,6 +359,8 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
         DashboardJPanel dashboard = new DashboardJPanel(business, department, CardSequencePanel);
         dashboard.setName("Analytics Dashboard");
+
+ 
         CardSequencePanel.add("Analytics Dashboard", dashboard);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "Analytics Dashboard");
     }//GEN-LAST:event_btnDashBoardActionPerformed

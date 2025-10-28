@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
 
 import java.util.HashMap;
 
-
 /**
  *
  * @author DELL
@@ -30,6 +29,9 @@ public class DashboardJPanel extends javax.swing.JPanel {
      * Creates new form DashboardJPanel
      */
 
+    public DashboardJPanel() {
+        initComponents();
+    }
    JPanel CardSequencePanel;
 Business business;
 Department department;
@@ -43,6 +45,7 @@ public DashboardJPanel(Business b, Department d, JPanel clp) {
     loadAnalyticsData(); // 初始化加载数据
 }
 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,7 +55,13 @@ public DashboardJPanel(Business b, Department d, JPanel clp) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnBack = new javax.swing.JButton();
+
+
+
+        setBackground(new java.awt.Color(255, 204, 204));
+
+
+
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -171,10 +180,18 @@ public DashboardJPanel(Business b, Department d, JPanel clp) {
         );
 
 
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+
+            .addGap(0, 740, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 712, Short.MAX_VALUE)
+
 
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -259,6 +276,8 @@ public DashboardJPanel(Business b, Department d, JPanel clp) {
         layout.previous(CardSequencePanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    // Variables declaration - do not modify                     
+    // End of variables declaration                   
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -352,18 +371,15 @@ private void loadRevenueSummary() {
 }
 
     private void initCustomCharts() {
-        // 创建用户角色饼状图
+      
         roleChartPanel = new ChartPanel(null, "pie", "User Role Distribution");
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(roleChartPanel, BorderLayout.CENTER);
         
-        // 创建课程注册柱状图 - 暂时不添加，因为form中没有对应的JPanel
-        // enrollmentChartPanel = new ChartPanel(null, "bar", "Course Enrollment");
-        // enrollmentChartHolder.setLayout(new BorderLayout());
-        // enrollmentChartHolder.add(enrollmentChartPanel, BorderLayout.CENTER);
+ 
     }
     
-    // 刷新数据的方法
+ 
     public void refreshData() {
         loadAnalyticsData();
     }
