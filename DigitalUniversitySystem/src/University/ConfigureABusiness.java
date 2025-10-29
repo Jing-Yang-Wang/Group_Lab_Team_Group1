@@ -142,6 +142,47 @@ public class ConfigureABusiness {
         FacultyProfile fp6 = fd.newFacultyProfile(person016);
         FacultyProfile fp7 = fd.newFacultyProfile(person017);
         FacultyProfile fp8 = fd.newFacultyProfile(person018);
+        
+        // Assign department and telephone to faculty
+        fp1.setDepartment("Computer Science");
+        fp1.setTelephone("617-555-1001");
+        fp1.setEmail("gina@university.edu");
+        fp1.setOfficehours("Monday-Friday 9:00 AM - 5:00 PM");
+        
+        fp2.setDepartment("Information Systems");
+        fp2.setTelephone("617-555-1002");
+        fp2.setEmail("alice@university.edu");
+        fp2.setOfficehours("Monday-Wednesday 10:00 AM - 6:00 PM");
+        
+        fp3.setDepartment("Data Science");
+        fp3.setTelephone("617-555-1003");
+        fp3.setEmail("bob@university.edu");
+        fp3.setOfficehours("Tuesday-Thursday 9:30 AM - 5:30 PM");
+        
+        fp4.setDepartment("Computer Science");
+        fp4.setTelephone("617-555-1004");
+        fp4.setEmail("charlie@university.edu");
+        fp4.setOfficehours("Monday-Friday 8:00 AM - 4:00 PM");
+        
+        fp5.setDepartment("Information Systems");
+        fp5.setTelephone("617-555-1005");
+        fp5.setEmail("diana@university.edu");
+        fp5.setOfficehours("Wednesday-Friday 11:00 AM - 7:00 PM");
+        
+        fp6.setDepartment("Data Science");
+        fp6.setTelephone("617-555-1006");
+        fp6.setEmail("eve@university.edu");
+        fp6.setOfficehours("Monday, Wednesday, Friday 9:00 AM - 3:00 PM");
+        
+        fp7.setDepartment("Computer Science");
+        fp7.setTelephone("617-555-1007");
+        fp7.setEmail("frank@university.edu");
+        fp7.setOfficehours("Tuesday-Thursday 8:30 AM - 4:30 PM");
+        
+        fp8.setDepartment("Information Systems");
+        fp8.setTelephone("617-555-1008");
+        fp8.setEmail("grace@university.edu");
+        fp8.setOfficehours("Monday-Friday 10:00 AM - 6:00 PM");
         //Assign faculty to courseoffer 给course offer分配老师
         //this part is one side binding, telling us which professor teaches which course
         //need to add the side telling us which course is teaching by which professor
@@ -202,10 +243,70 @@ public class ConfigureABusiness {
         s8.setMajor("Information Systems"); s8.setDegree("Master of Science");
         s9.setMajor("Information Systems"); s9.setDegree("Master of Science");
         s10.setMajor("Information Systems"); s10.setDegree("Master of Science");
+        
+        // Assign academic status to students
+        s1.setAcademicStatus("Active");
+        s2.setAcademicStatus("Active");
+        s3.setAcademicStatus("Graduated");
+        s4.setAcademicStatus("Active");
+        s5.setAcademicStatus("On Leave");
+        s6.setAcademicStatus("Active");
+        s7.setAcademicStatus("Active");
+        s8.setAcademicStatus("Probation");
+        s9.setAcademicStatus("Active");
+        s10.setAcademicStatus("Graduated");
+        s11.setAcademicStatus("Active");
+        s12.setAcademicStatus("Active");
+        s13.setAcademicStatus("Active");
 
-        //Registrar
+        //Registrar - Create multiple registrar profiles for testing
         RegistrarDirectory rd = department.getRegistrarDirectory();
+        
+        // Registrar 1 - Mia Yang (person009)
         RegistrarProfile rp1 = rd.newRegistrarProfile(person009);
+        rp1.setDepartment(department);
+        rp1.setOfficeHours("Monday-Friday 9:00 AM - 5:00 PM");
+        rp1.setEmail("mia.yang@university.edu");
+        rp1.setPhone("617-555-0101");
+        
+        // Registrar 2 - Sarah Johnson (person029)
+        Person person029 = persondirectory.newPerson("U029", "Sarah Johnson", "sarah.johnson@university.edu");
+        RegistrarProfile rp2 = rd.newRegistrarProfile(person029);
+        rp2.setDepartment(department);
+        rp2.setOfficeHours("Tuesday-Thursday 10:00 AM - 6:00 PM");
+        rp2.setEmail("sarah.johnson@university.edu");
+        rp2.setPhone("617-555-0102");
+        
+        // Registrar 3 - Michael Chen (person030)
+        Person person030 = persondirectory.newPerson("U030", "Michael Chen", "michael.chen@university.edu");
+        RegistrarProfile rp3 = rd.newRegistrarProfile(person030);
+        rp3.setDepartment(department);
+        rp3.setOfficeHours("Monday, Wednesday, Friday 8:00 AM - 4:00 PM");
+        rp3.setEmail("michael.chen@university.edu");
+        rp3.setPhone("617-555-0103");
+        
+        // Registrar 4 - Lisa Rodriguez (person031)
+        Person person031 = persondirectory.newPerson("U031", "Lisa Rodriguez", "lisa.rodriguez@university.edu");
+        RegistrarProfile rp4 = rd.newRegistrarProfile(person031);
+        rp4.setDepartment(department);
+        rp4.setOfficeHours("Monday-Friday 1:00 PM - 9:00 PM");
+        rp4.setEmail("lisa.rodriguez@university.edu");
+        rp4.setPhone("617-555-0104");
+        
+        // Registrar 5 - David Kim (person032)
+        Person person032 = persondirectory.newPerson("U032", "David Kim", "david.kim@university.edu");
+        RegistrarProfile rp5 = rd.newRegistrarProfile(person032);
+        rp5.setDepartment(department);
+        rp5.setOfficeHours("Tuesday-Saturday 9:30 AM - 5:30 PM");
+        rp5.setEmail("david.kim@university.edu");
+        rp5.setPhone("617-555-0105");
+        
+        
+        business.getRegistrardirectory().newRegistrarProfile(person009);
+        business.getRegistrardirectory().newRegistrarProfile(person029);
+        business.getRegistrardirectory().newRegistrarProfile(person030);
+        business.getRegistrardirectory().newRegistrarProfile(person031);
+        business.getRegistrardirectory().newRegistrarProfile(person032);
 
 
 
@@ -508,23 +609,41 @@ public class ConfigureABusiness {
         addStudentData(s9, spring2025, fall2025, "INFO5200", "INFO5500");
         addStudentData(s10, spring2025, fall2025, "INFO5300", "INFO5400");
 
-        //Create a user account
-        uad.newUserAccount(employeeprofile0, "admin", "****"); 
-        uad.newUserAccount(fp1, "gina", "****"); 
-        uad.newUserAccount(s1, "adam", "****"); 
-        uad.newUserAccount(rp1, "mia", "109");
+        //Create user accounts for all profiles
+        // Admin account
+        uad.newUserAccount(employeeprofile0, "admin", "admin123");
         
-        //Add new student accounts
-        uad.newUserAccount(s1, "student1", "student1");
-        uad.newUserAccount(s2, "student2", "student2");
-        uad.newUserAccount(s3, "student3", "student3");
-        uad.newUserAccount(s4, "student4", "student4");
-        uad.newUserAccount(s5, "student5", "student5");
-        uad.newUserAccount(s6, "student6", "student6");
-        uad.newUserAccount(s7, "student7", "student7");
-        uad.newUserAccount(s8, "student8", "student8");
-        uad.newUserAccount(s9, "student9", "student9");
-        uad.newUserAccount(s10, "student10", "student10");
+        // Faculty accounts
+        uad.newUserAccount(fp1, "gina", "gina123");
+        uad.newUserAccount(fp2, "joshua", "joshua123");
+        uad.newUserAccount(fp3, "megan", "megan123");
+        uad.newUserAccount(fp4, "sarah", "sarah123");
+        uad.newUserAccount(fp5, "michael", "michael123");
+        uad.newUserAccount(fp6, "jessica", "jessica123");
+        uad.newUserAccount(fp7, "laura", "laura123");
+        uad.newUserAccount(fp8, "jay", "jay123");
+        
+        // Student accounts
+        uad.newUserAccount(s1, "adam", "adam123");
+        uad.newUserAccount(s2, "david", "david123");
+        uad.newUserAccount(s3, "emily", "emily123");
+        uad.newUserAccount(s4, "evelyn", "evelyn123");
+        uad.newUserAccount(s5, "michael_student", "michael123");
+        uad.newUserAccount(s6, "linda", "linda123");
+        uad.newUserAccount(s7, "jason", "jason123");
+        uad.newUserAccount(s8, "emily_davis", "emily123");
+        uad.newUserAccount(s9, "kevin", "kevin123");
+        uad.newUserAccount(s10, "sophia", "sophia123");
+        uad.newUserAccount(s11, "daniel", "daniel123");
+        uad.newUserAccount(s12, "olivia", "olivia123");
+        uad.newUserAccount(s13, "william", "william123");
+        
+        // Registrar accounts
+        uad.newUserAccount(rp1, "mia", "mia123");
+        uad.newUserAccount(rp2, "sarah_registrar", "sarah123");
+        uad.newUserAccount(rp3, "michael_registrar", "michael123");
+        uad.newUserAccount(rp4, "lisa", "lisa123");
+        uad.newUserAccount(rp5, "david_registrar", "david123");
 
         //Set Default Student
         business.setDefaultStudent(s1);

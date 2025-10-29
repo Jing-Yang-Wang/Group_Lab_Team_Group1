@@ -160,34 +160,38 @@ public class ViewStudent extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-       if (studentProfile != null) {
-       
-        studentProfile.getPerson().setName(fieldName.getText());
-        studentProfile.getPerson().setEmail(fieldEmail.getText());
-        studentProfile.setAcademicStatus((String) ComboStatus.getSelectedItem());
-
-        JOptionPane.showMessageDialog(this, "Student information updated successfully!", 
-                                      "Success", JOptionPane.INFORMATION_MESSAGE);
-
-        refreshTextFields(); 
-    }
+        // Enable editing mode when Update button is clicked
+        setEditMode();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if (studentProfile != null) {
-        studentProfile.getPerson().setName(fieldName.getText());
-        studentProfile.getPerson().setEmail(fieldEmail.getText());
-        studentProfile.setAcademicStatus((String) ComboStatus.getSelectedItem());
+            // Validate input fields
+            String name = fieldName.getText().trim();
+            String email = fieldEmail.getText().trim();
+            
+            if (name.isEmpty() || email.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Name and Email cannot be empty!", 
+                                            "Validation Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Update student information
+            studentProfile.getPerson().setName(name);
+            studentProfile.getPerson().setEmail(email);
+            studentProfile.setAcademicStatus((String) ComboStatus.getSelectedItem());
 
-        JOptionPane.showMessageDialog(this, "Student information saved successfully!", 
-                                      "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Student information saved successfully!", 
+                                        "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        refreshTextFields();
-    }
+            // Switch back to view mode after saving
+            setViewMode();
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        mainMenu.remove(this);
         CardLayout layout = (CardLayout) mainMenu.getLayout();
         layout.previous(mainMenu);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -219,8 +223,8 @@ private void displayStudentInfo() {
         fieldEmail.setText(studentProfile.getPerson().getEmail());
         ComboStatus.setSelectedItem(studentProfile.getAcademicStatus());
         
-      
-        refreshTextFields();
+        // Start in view mode (fields disabled)
+        setViewMode();
     }
 }
 
@@ -228,22 +232,26 @@ private void displayStudentInfo() {
  
    
 
-  private void refreshTextFields() {
+  private void setViewMode() {
+    // Disable all fields for viewing
     fieldUniversityID.setEnabled(false);
     fieldName.setEnabled(false);
     fieldEmail.setEnabled(false);
     ComboStatus.setEnabled(false);
 
+    // Enable Update button, disable Save button
     btnSave.setEnabled(false);
     btnUpdate.setEnabled(true);
 }
 
-private void setViewMode() {
-    fieldUniversityID.setEnabled(true);
+private void setEditMode() {
+    // Enable editable fields (except University ID which should not be changed)
+    fieldUniversityID.setEnabled(false); // University ID should not be editable
     fieldName.setEnabled(true);
     fieldEmail.setEnabled(true);
     ComboStatus.setEnabled(true);
 
+    // Enable Save button, disable Update button
     btnSave.setEnabled(true);
     btnUpdate.setEnabled(false);
 }

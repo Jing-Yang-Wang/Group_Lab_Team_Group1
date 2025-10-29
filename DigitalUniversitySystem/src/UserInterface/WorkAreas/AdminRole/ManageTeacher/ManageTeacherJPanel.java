@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.UserAccount;
+import University.Business;
+import University.Department.Department;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 
@@ -23,14 +25,24 @@ public class ManageTeacherJPanel extends javax.swing.JPanel {
      */
      private JPanel MainMenu;              
      private FacultyDirectory facultyDirectory; 
-      private UserAccount useraccount;
+     private UserAccount useraccount;
+     private Business business;
+     private Department department;
  
-    public ManageTeacherJPanel(JPanel mainPanel, FacultyDirectory facultyDirectory, UserAccount useraccount) {
+    public ManageTeacherJPanel(JPanel mainPanel, FacultyDirectory facultyDirectory, UserAccount useraccount, Business business, Department department) {
         initComponents();
         this.MainMenu = mainPanel;
         this.facultyDirectory = facultyDirectory;
         this.useraccount = useraccount;
+        this.business = business;
+        this.department = department;
         initTable();
+          this.addComponentListener(new java.awt.event.ComponentAdapter() {
+        @Override
+        public void componentShown(java.awt.event.ComponentEvent evt) {
+            initTable();
+        }
+    });
     }
 
     /**
@@ -170,7 +182,7 @@ if (selectedRow >= 0) {
 
     FacultyProfile selected = facultyDirectory.findTeachingFaculty(id);
     if (selected != null) {
-        ViewTeacher panel = new ViewTeacher(MainMenu, selected,useraccount);
+        ViewTeacher panel = new ViewTeacher(MainMenu, selected, useraccount, business, department);
         MainMenu.add("ViewFaculty", panel);
         CardLayout layout = (CardLayout) MainMenu.getLayout();
         layout.next(MainMenu);

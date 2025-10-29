@@ -5,6 +5,7 @@
 package UserInterface.WorkAreas.AdminRole.ManageRegistrar;
 
 import University.Business;
+import University.Department.Department;
 import University.Persona.Registrar.RegistrarProfile;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -22,10 +23,12 @@ public class ManageRegistrar extends javax.swing.JPanel {
      */
     JPanel CardSequencePanel;
     Business business;
-    public ManageRegistrar(Business b,JPanel clp) {
+    Department department;
+    public ManageRegistrar(Business b, Department d, JPanel clp) {
         initComponents();
         
         business = b;
+        this.department = d;
         this.CardSequencePanel = clp;
         populateTable(); 
     }
@@ -143,7 +146,7 @@ public class ManageRegistrar extends javax.swing.JPanel {
         }
 
         String registrarId = (String) jTable1.getValueAt(selectedRow, 0);
-        RegistrarProfile selectedRegistrar = business.getRegistrardirectory().findRegistrarById(registrarId);
+        RegistrarProfile selectedRegistrar = department.getRegistrarDirectory().findRegistrarById(registrarId);
 
         if (selectedRegistrar == null) {
             JOptionPane.showMessageDialog(this, "Registrar not found!");
@@ -172,7 +175,7 @@ public class ManageRegistrar extends javax.swing.JPanel {
         int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this Registrar?", "Confirm", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             String registrarId = (String) jTable1.getValueAt(selectedRow, 0);
-            business.getRegistrardirectory().removeRegistrar(registrarId);
+            department.getRegistrarDirectory().removeRegistrar(registrarId);
             populateTable();
             JOptionPane.showMessageDialog(this, "Registrar deleted successfully!");
         }
@@ -192,11 +195,11 @@ public class ManageRegistrar extends javax.swing.JPanel {
         model.setRowCount(0); 
 
        
-        for (RegistrarProfile rp : business.getRegistrardirectory().getRegistrarList()) {
+        for (RegistrarProfile rp : department.getRegistrarDirectory().getRegistrarList()) {
             Object[] row = new Object[5];
-            row[0] = rp.getPerson().getPersonId();
+            row[0] = rp.getPerson().getUniversityID();  // Use UniversityID instead of PersonId
             row[1] = rp.getPerson().getName();
-            row[2] = rp.getPerson().getEmail();
+            row[2] = rp.getEmail();  // Use registrar's email instead of person's email
             row[3] = rp.getPhone();
             row[4] = rp.getOfficeHours();
             model.addRow(row);

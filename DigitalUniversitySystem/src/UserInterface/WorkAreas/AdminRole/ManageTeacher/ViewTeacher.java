@@ -7,6 +7,10 @@ package UserInterface.WorkAreas.AdminRole.ManageTeacher;
 import University.Persona.Faculty.FacultyDirectory;
 import University.Persona.Faculty.FacultyProfile;
 import University.Persona.UserAccount;
+import University.Business;
+import University.Department.Department;
+import University.College.College;
+import University.CourseCatalog.Course;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,12 +27,28 @@ public class ViewTeacher extends javax.swing.JPanel {
     private JPanel mainMenu;    
     private FacultyProfile facultyProfile;
     private UserAccount useraccount;
-    public ViewTeacher(JPanel mainMenu, FacultyProfile facultyProfile, UserAccount useraccount) {
+    private Business business;
+    private Department department;
+    
+    public ViewTeacher(JPanel mainMenu, FacultyProfile facultyProfile, UserAccount useraccount, Business business, Department department) {
         initComponents();
         this.mainMenu = mainMenu;
-       
         this.facultyProfile = facultyProfile;
         this.useraccount = useraccount;
+        this.business = business;
+        this.department = department;
+        
+     
+        populateDepartmentCombo();
+        populateCourseCombo();
+        
+      
+        if (facultyProfile != null) {
+            populateFormData();
+        }
+
+  
+        setReadOnlyMode();
     }
 
     /**
@@ -197,64 +217,46 @@ public class ViewTeacher extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-       if (facultyProfile != null) {
-    
-    facultyProfile.getPerson().setName(fieldName.getText().trim());
-    facultyProfile.getPerson().setEmail(fieldEmail.getText().trim());
-    
-    facultyProfile.getPerson().setUniversityID(fieldUniversityID.getText().trim());
-   
-    facultyProfile.setTelephone(fieldTelephone.getText().trim());
-    facultyProfile.setDepartment((String) Combodepartment.getSelectedItem());
-    //MH 10/26 - A teach can teach multipe courses, see ArrayList <FacultyAssignment> facultyassignments; 
-    //facultyProfile.setCourse((String) ComboCourse.getSelectedItem());
+        if (facultyProfile != null) {
+            // 持久化修改
+            facultyProfile.getPerson().setName(fieldName.getText().trim());
+            facultyProfile.getPerson().setEmail(fieldEmail.getText().trim());
+            // UniversityID 一般不可编辑，不从界面写回
+            facultyProfile.setTelephone(fieldTelephone.getText().trim());
+            facultyProfile.setDepartment((String) Combodepartment.getSelectedItem());
+            //MH 10/26 - A teacher can teach multiple courses; skipping single selection write-back
 
-   
-    JOptionPane.showMessageDialog(this,
-        "Faculty information updated successfully!",
-        "Success",
-        JOptionPane.INFORMATION_MESSAGE
-    );
+            // 记录最后更新时间
+            java.time.LocalDateTime now = java.time.LocalDateTime.now();
+            if (useraccount != null) {
+                useraccount.setLastUpdate(now);
+            }
 
-    
-    refreshTextFields();
+            JOptionPane.showMessageDialog(this,
+                "Faculty information saved.",
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE
+            );
 
-} else {
-    JOptionPane.showMessageDialog(this,
-        "No faculty profile found to update!",
-        "Error",
-        JOptionPane.ERROR_MESSAGE
-    );
-}
+            // 切回只读模式
+            setReadOnlyMode();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "No faculty profile found to update!",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-       if (facultyProfile != null) {
-
-    
-    facultyProfile.getPerson().setName(fieldName.getText());
-    facultyProfile.getPerson().setEmail(fieldEmail.getText());
-    facultyProfile.setTelephone(fieldTelephone.getText().trim());
-  
-    facultyProfile.setDepartment((String) Combodepartment.getSelectedItem());
-    //MH 10/26 - A teach can teach multipe courses, see ArrayList <FacultyAssignment> facultyassignments; 
-    //facultyProfile.setCourse((String) ComboCourse.getSelectedItem());
-    
-    
-    java.time.LocalDateTime now = java.time.LocalDateTime.now();
-        useraccount.setLastUpdate(now);
-        
-        
-    JOptionPane.showMessageDialog(this, "Faculty information updated successfully!",
-        "Success", JOptionPane.INFORMATION_MESSAGE);
-
-    refreshTextFields();
-}
-
+        // 进入可编辑模式（不立即保存）
+        setEditMode();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        mainMenu.remove(this);
         CardLayout layout = (CardLayout) mainMenu.getLayout();
         layout.previous(mainMenu);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -297,24 +299,74 @@ public class ViewTeacher extends javax.swing.JPanel {
  
    
 
-  private void refreshTextFields() {
-    fieldUniversityID.setEnabled(false);
-    fieldName.setEnabled(false);
-    fieldEmail.setEnabled(false);
-    Combodepartment.setEnabled(false);
+  private void setReadOnlyMode() {
+      fieldUniversityID.setEnabled(false); // 始终只读
+      fieldName.setEnabled(false);
+      fieldEmail.setEnabled(false);
+      fieldTelephone.setEnabled(false);
+      Combodepartment.setEnabled(false);
+      ComboCourse.setEnabled(false);
 
-    btnSave.setEnabled(false);
-    btnUpdate.setEnabled(true);
+      btnSave.setEnabled(false);
+      btnUpdate.setEnabled(true);
+  }
+
+  private void setEditMode() {
+      fieldUniversityID.setEnabled(false); // 不允许修改学号
+      fieldName.setEnabled(true);
+      fieldEmail.setEnabled(true);
+      fieldTelephone.setEnabled(true);
+      Combodepartment.setEnabled(true);
+      ComboCourse.setEnabled(true);
+
+      btnSave.setEnabled(true);
+      btnUpdate.setEnabled(false);
+  }
+
+
+private void populateDepartmentCombo() {
+    Combodepartment.removeAllItems();
+    if (business != null && business.getCollege() != null) {
+        for (Department dept : business.getCollege().getDepartments()) {
+         
+            try {
+                java.lang.reflect.Field nameField = Department.class.getDeclaredField("name");
+                nameField.setAccessible(true);
+                String deptName = (String) nameField.get(dept);
+                Combodepartment.addItem(deptName);
+            } catch (Exception e) {
+             
+                Combodepartment.addItem("Department " + (Combodepartment.getItemCount() + 1));
+            }
+        }
+    }
 }
 
-private void setViewMode() {
-    fieldUniversityID.setEnabled(true);
-    fieldName.setEnabled(true);
-    fieldEmail.setEnabled(true);
-    Combodepartment.setEnabled(true);
 
-    btnSave.setEnabled(true);
-    btnUpdate.setEnabled(false);
+private void populateCourseCombo() {
+    ComboCourse.removeAllItems();
+    if (department != null && department.getCourseCatalog() != null) {
+        for (Course course : department.getCourseCatalog().getCourseList()) {
+            ComboCourse.addItem(course.getCourseNumber() + " - " + course.getCourseName());
+        }
+    }
+}
+
+
+private void populateFormData() {
+    if (facultyProfile != null) {
+        fieldUniversityID.setText(facultyProfile.getPerson().getUniversityID());
+        fieldName.setText(facultyProfile.getPerson().getName());
+        fieldEmail.setText(facultyProfile.getPerson().getEmail());
+        fieldTelephone.setText(facultyProfile.getTelephone());
+        
+ 
+        if (facultyProfile.getDepartment() != null) {
+            Combodepartment.setSelectedItem(facultyProfile.getDepartment());
+        }
+        
+       
+    }
 }
 
 

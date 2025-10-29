@@ -5,35 +5,37 @@
 package UserInterface.WorkAreas.AdminRole.FacultyAssignment;
 
 import University.Business;
-import University.Department.Department;
-import University.Persona.Faculty.FacultyProfile;
-import University.Persona.Faculty.FacultyDirectory;
 import University.CourseSchedule.CourseOffer;
-import University.CourseCatalog.Course;
 import University.CourseSchedule.CourseSchedule;
+import University.Department.Department;
+import University.Persona.Faculty.FacultyDirectory;
+import University.Persona.Faculty.FacultyProfile;
 import java.awt.CardLayout;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Admin
+ * @author DELL
  */
 public class FacultyAssignmentJPanel extends javax.swing.JPanel {
 
+    /**
+     * Creates new form FacultyAssignmentJPanel
+     */
+    
     private JPanel CardSequencePanel;
     private Business business;
     private Department department;
     private FacultyDirectory facultyDirectory;
-    
     public FacultyAssignmentJPanel(Business b, Department d, JPanel clp) {
         initComponents();
         this.business = b;
         this.department = d;
         this.CardSequencePanel = clp;
         this.facultyDirectory = d.getFacultyDirectory();
+        populateSemesters();
         initTables();
     }
 
@@ -47,27 +49,31 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        facultyTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        courseTable = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCourse = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        assignmentTable = new javax.swing.JTable();
-        assignButton = new javax.swing.JButton();
-        removeButton = new javax.swing.JButton();
-        backButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblAssignment = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        semesterCombo = new javax.swing.JComboBox<>();
-        refreshButton = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblSemester = new javax.swing.JTable();
+        btnBack = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        btnAssign = new javax.swing.JButton();
+        btnRemove = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 204, 204));
+        setForeground(new java.awt.Color(242, 242, 242));
 
         jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 24)); // NOI18N
         jLabel1.setText("Faculty Course Assignment Management");
 
-        facultyTable.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        jLabel2.setText("Available Course");
+
+        tblCourse.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -75,120 +81,99 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Faculty ID", "Name", "Department", "Status"
+                "Course ID", "Name", "Credits", "Status"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
-        jScrollPane1.setViewportView(facultyTable);
+        jScrollPane1.setViewportView(tblCourse);
 
-        jLabel2.setText("Available Courses:");
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        jLabel3.setText("Current Assignment");
 
-        courseTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblAssignment.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Course ID", "Course Name", "Credits", "Current Faculty"
+                "Course ID", "Course Name", "Faculty ID", "Faculty Name", "Semester"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
-        jScrollPane2.setViewportView(courseTable);
+        jScrollPane2.setViewportView(tblAssignment);
 
-        jLabel3.setText("Current Assignments:");
+        jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
+        jLabel4.setText("Faculty");
 
-        assignmentTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblSemester.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Faculty", "Course", "Semester", "Status"
+                "Faculty ID", "Faculty Name", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
-        jScrollPane3.setViewportView(assignmentTable);
+        jScrollPane3.setViewportView(tblSemester);
 
-        assignButton.setText("Assign Faculty to Course");
-        assignButton.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                assignButtonActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
-        removeButton.setText("Remove Assignment");
-        removeButton.addActionListener(new java.awt.event.ActionListener() {
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeButtonActionPerformed(evt);
+                btnRefreshActionPerformed(evt);
             }
         });
 
-        backButton.setText("Back");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
+                jComboBox1ActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Semester:");
-
-        semesterCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fall2024", "Spring2025", "Fall2025" }));
-        semesterCombo.addActionListener(new java.awt.event.ActionListener() {
+        btnAssign.setText("Assign Faculty to Course");
+        btnAssign.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                semesterComboActionPerformed(evt);
+                btnAssignActionPerformed(evt);
             }
         });
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+        btnRemove.setText("Remove Assignment");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshButtonActionPerformed(evt);
+                btnRemoveActionPerformed(evt);
             }
         });
 
@@ -197,65 +182,90 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnAssign, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(116, 116, 116)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(19, 19, 19)
+                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(89, 89, 89)
+                                                .addComponent(btnRefresh))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(65, 65, 65)
+                                                .addComponent(btnBack))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel4)
+                                                .addGap(149, 149, 149))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(125, 125, 125)
+                                        .addComponent(jLabel3)))
+                                .addGap(30, 30, 30)))
+                        .addContainerGap(8, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addContainerGap(20, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(backButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(semesterCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(refreshButton)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(assignButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(removeButton)
-                        .addGap(20, 20, 20))))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addGap(20, 20, 20)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backButton)
-                    .addComponent(semesterCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(refreshButton)
-                    .addComponent(assignButton)
-                    .addComponent(removeButton))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRefresh))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnAssign)
+                        .addGap(46, 46, 46)
+                        .addComponent(btnRemove))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(340, 340, 340))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void assignButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignButtonActionPerformed
-        int facultyRow = facultyTable.getSelectedRow();
-        int courseRow = courseTable.getSelectedRow();
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+           refreshTables();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnAssignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignActionPerformed
+        // TODO add your handling code here:
+        
+        
+          int facultyRow = tblSemester.getSelectedRow();
+        int courseRow = tblCourse.getSelectedRow();
         
         if (facultyRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select a faculty member", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -267,9 +277,9 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
             return;
         }
         
-        String facultyId = (String) facultyTable.getValueAt(facultyRow, 0);
-        String courseId = (String) courseTable.getValueAt(courseRow, 0);
-        String semester = (String) semesterCombo.getSelectedItem();
+        String facultyId = (String) tblSemester.getValueAt(facultyRow, 0);
+        String courseId = (String) tblCourse.getValueAt(courseRow, 0);
+        String semester = (String) jComboBox1.getSelectedItem();
         
         // Find faculty and course
         FacultyProfile faculty = facultyDirectory.findTeachingFaculty(facultyId);
@@ -307,19 +317,23 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
         
         JOptionPane.showMessageDialog(this, "Faculty assigned successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
         refreshTables();
-    }//GEN-LAST:event_assignButtonActionPerformed
+    }//GEN-LAST:event_btnAssignActionPerformed
 
-    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        int assignmentRow = assignmentTable.getSelectedRow();
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        // TODO add your handling code here:
+        
+        int assignmentRow = tblAssignment.getSelectedRow();
         
         if (assignmentRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select an assignment to remove", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        String facultyName = (String) assignmentTable.getValueAt(assignmentRow, 0);
-        String courseName = (String) assignmentTable.getValueAt(assignmentRow, 1);
-        String semester = (String) assignmentTable.getValueAt(assignmentRow, 2);
+        String courseId = (String) tblAssignment.getValueAt(assignmentRow, 0);
+        String courseName = (String) tblAssignment.getValueAt(assignmentRow, 1);
+        String facultyId = (String) tblAssignment.getValueAt(assignmentRow, 2);
+        String facultyName = (String) tblAssignment.getValueAt(assignmentRow, 3);
+        String semester = (String) tblAssignment.getValueAt(assignmentRow, 4);
         
         int result = JOptionPane.showConfirmDialog(this, 
             "Are you sure you want to remove this assignment?", "Confirm Removal", JOptionPane.YES_NO_OPTION);
@@ -329,9 +343,10 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
             CourseSchedule courseSchedule = department.getCourseSchedule(semester);
             if (courseSchedule != null) {
                 for (CourseOffer co : courseSchedule.getCourseOfferList()) {
-                    if (co.getCourseName().equals(courseName) && co.getFacultyProfile() != null && 
-                        co.getFacultyProfile().getPerson().getName().equals(facultyName)) {
-                        co.AssignAsTeacher(null); // Remove assignment
+                    if (co.getCourseNumber().equals(courseId) && co.getCourseName().equals(courseName) && co.getFacultyProfile() != null && 
+                        co.getFacultyProfile().getPerson().getUniversityID().equals(facultyId)) {
+                        // 清除教师分配
+                        co.setFacultyassignment(null);
                         break;
                     }
                 }
@@ -340,23 +355,40 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Assignment removed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             refreshTables();
         }
-    }//GEN-LAST:event_removeButtonActionPerformed
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        CardSequencePanel.remove(this);
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+         CardSequencePanel.remove(this);
         CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
         layout.previous(CardSequencePanel);
-    }//GEN-LAST:event_backButtonActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
 
-    private void semesterComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_semesterComboActionPerformed
-        refreshTables();
-    }//GEN-LAST:event_semesterComboActionPerformed
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+         refreshTables();
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        refreshTables();
-    }//GEN-LAST:event_refreshButtonActionPerformed
 
-    private void initTables() {
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAssign;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnRemove;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable tblAssignment;
+    private javax.swing.JTable tblCourse;
+    private javax.swing.JTable tblSemester;
+    // End of variables declaration//GEN-END:variables
+
+   private void initTables() {
         refreshTables();
     }
     
@@ -367,17 +399,29 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
     }
     
     private void refreshFacultyTable() {
-        DefaultTableModel model = (DefaultTableModel) facultyTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblSemester.getModel();
         model.setRowCount(0);
         
+        String semester = (String) jComboBox1.getSelectedItem();
+        java.util.Set<String> assignedFacultyIds = new java.util.HashSet<>();
+        if (semester != null) {
+            CourseSchedule cs = department.getCourseSchedule(semester);
+            if (cs != null) {
+                for (CourseOffer co : cs.getCourseOfferList()) {
+                    if (co.getFacultyProfile() != null) {
+                        assignedFacultyIds.add(co.getFacultyProfile().getPerson().getUniversityID());
+                    }
+                }
+            }
+        }
+
         if (facultyDirectory != null && facultyDirectory.getTeacherlist() != null) {
             for (FacultyProfile faculty : facultyDirectory.getTeacherlist()) {
                 if (faculty != null && faculty.getPerson() != null) {
-                    Object[] row = new Object[4];
+                    Object[] row = new Object[3];
                     row[0] = faculty.getPerson().getUniversityID();
                     row[1] = faculty.getPerson().getName();
-                    row[2] = faculty.getDepartment();
-                    row[3] = faculty.getFacultystatus() != null ? faculty.getFacultystatus() : "Active";
+                    row[2] = assignedFacultyIds.contains(faculty.getPerson().getUniversityID()) ? "Assigned" : "Available";
                     model.addRow(row);
                 }
             }
@@ -385,10 +429,10 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
     }
     
     private void refreshCourseTable() {
-        DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblCourse.getModel();
         model.setRowCount(0);
         
-        String semester = (String) semesterCombo.getSelectedItem();
+        String semester = (String) jComboBox1.getSelectedItem();
         CourseSchedule courseSchedule = department.getCourseSchedule(semester);
         
         if (courseSchedule != null && courseSchedule.getCourseOfferList() != null) {
@@ -399,7 +443,7 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
                     row[1] = courseOffer.getCourseName();
                     row[2] = courseOffer.getCourse().getCredits();
                     row[3] = courseOffer.getFacultyProfile() != null ? 
-                        courseOffer.getFacultyProfile().getPerson().getName() : "Unassigned";
+                        ("Assigned ") : "Unassigned";
                     model.addRow(row);
                 }
             }
@@ -407,41 +451,35 @@ public class FacultyAssignmentJPanel extends javax.swing.JPanel {
     }
     
     private void refreshAssignmentTable() {
-        DefaultTableModel model = (DefaultTableModel) assignmentTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblAssignment.getModel();
         model.setRowCount(0);
         
-        String semester = (String) semesterCombo.getSelectedItem();
+        String semester = (String) jComboBox1.getSelectedItem();
         CourseSchedule courseSchedule = department.getCourseSchedule(semester);
         
         if (courseSchedule != null && courseSchedule.getCourseOfferList() != null) {
             for (CourseOffer courseOffer : courseSchedule.getCourseOfferList()) {
                 if (courseOffer != null && courseOffer.getFacultyProfile() != null) {
-                    Object[] row = new Object[4];
-                    row[0] = courseOffer.getFacultyProfile().getPerson().getName();
+                    Object[] row = new Object[5];
+                    row[0] = courseOffer.getCourseNumber();
                     row[1] = courseOffer.getCourseName();
-                    row[2] = semester;
-                    row[3] = "Active";
+                    row[2] = courseOffer.getFacultyProfile().getPerson().getUniversityID();
+                    row[3] = courseOffer.getFacultyProfile().getPerson().getName();
+                    row[4] = semester;
                     model.addRow(row);
                 }
             }
         }
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable assignmentTable;
-    private javax.swing.JButton assignButton;
-    private javax.swing.JButton backButton;
-    private javax.swing.JTable courseTable;
-    private javax.swing.JTable facultyTable;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton refreshButton;
-    private javax.swing.JButton removeButton;
-    private javax.swing.JComboBox<String> semesterCombo;
-    // End of variables declaration//GEN-END:variables
+    private void populateSemesters() {
+        jComboBox1.removeAllItems();
+        java.util.Set<String> semesters = department.getAllSemesters();
+        if (semesters != null && !semesters.isEmpty()) {
+            for (String s : semesters) {
+                jComboBox1.addItem(s);
+            }
+            jComboBox1.setSelectedIndex(0);
+        }
+    }
 }

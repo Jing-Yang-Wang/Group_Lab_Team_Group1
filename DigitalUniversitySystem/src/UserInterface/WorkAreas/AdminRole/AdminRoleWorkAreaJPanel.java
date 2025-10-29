@@ -14,6 +14,7 @@ import University.Business;
 import University.Department.Department;
 import University.Persona.UserAccount;
 import University.Persona.Employee.EmployeeProfile;
+import UserInterface.WorkAreas.AdminRole.FacultyAssignment.FacultyAssignmentJPanel;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.ManageUserAccountsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageRegistrar.ManageRegistrar;
 import UserInterface.WorkAreas.AdminRole.ManageStudent.ManageStudentJPanel;
@@ -318,7 +319,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 //            }
 //        }
     
-        ManageTeacherJPanel aos = new ManageTeacherJPanel(CardSequencePanel, business.getFacultyDirectoryFromDepartment(), null);
+        ManageTeacherJPanel aos = new ManageTeacherJPanel(CardSequencePanel, business.getFacultyDirectoryFromDepartment(), null, business, department);
         aos.setName("Manage Teachers");
         CardSequencePanel.add("Manage Teachers", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "Manage Teachers");
@@ -337,7 +338,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 //                break;
 //            }
 //        }
-         FacultyAssignmentJPanel assignmentPanel = new FacultyAssignmentJPanel(business, department, CardSequencePanel);
+        FacultyAssignmentJPanel assignmentPanel = new FacultyAssignmentJPanel(business, department, CardSequencePanel);
         assignmentPanel.setName("Faculty Assignment");
         CardSequencePanel.add("Faculty Assignment", assignmentPanel);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "Faculty Assignment");
@@ -385,7 +386,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageRegistrarActionPerformed
         // TODO add your handling code here:
-         ManageRegistrar aos = new ManageRegistrar(business, CardSequencePanel);
+         ManageRegistrar aos = new ManageRegistrar(business, department, CardSequencePanel);
         aos.setName("Manage Registrar");
         CardSequencePanel.add("Manage Registrar", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "Manage Registrar");

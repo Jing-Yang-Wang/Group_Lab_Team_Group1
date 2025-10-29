@@ -348,7 +348,7 @@ public class AnalyticsDashboardJPanel extends javax.swing.JPanel {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed

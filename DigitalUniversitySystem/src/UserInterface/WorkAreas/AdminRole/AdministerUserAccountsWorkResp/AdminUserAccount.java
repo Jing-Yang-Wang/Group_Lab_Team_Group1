@@ -75,14 +75,14 @@ public class AdminUserAccount extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
 
     }//GEN-LAST:event_BackActionPerformed
 
     private void Back1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back1ActionPerformed
         // TODO add your handling code here:
          CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
 
 
     }//GEN-LAST:event_Back1ActionPerformed

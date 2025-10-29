@@ -18,7 +18,7 @@ public class ViewRegistrar extends javax.swing.JPanel {
     /**
      * Creates new form ViewRegistrar
      */
-     JPanel MainMenu;
+    JPanel MainMenu;
     Business business;
     RegistrarProfile registrarProfile;
     public ViewRegistrar(Business business, JPanel MainMenu, RegistrarProfile registrarProfile) {

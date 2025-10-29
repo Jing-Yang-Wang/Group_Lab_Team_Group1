@@ -29,6 +29,13 @@ public class ManageStudentJPanel extends javax.swing.JPanel {
         this.MainMenu = mainPanel;
         this.studentDirectory = studentDirectory;
         initTable(); 
+        
+        this.addComponentListener(new java.awt.event.ComponentAdapter() {
+        @Override
+        public void componentShown(java.awt.event.ComponentEvent evt) {
+            initTable();
+        }
+    });
     }
 
     /**

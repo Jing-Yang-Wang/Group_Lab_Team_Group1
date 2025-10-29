@@ -54,13 +54,13 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             Object[] row = new Object[4];
             row[0] = ua.getUserLoginName(); // 用户名
             
-            // 安全地获取个人档案信息
-            if (ua.getAssociatedPersonProfile() != null && ua.getAssociatedPersonProfile().getPerson() != null) {
-                row[1] = "Active"; // 状态
-            } else {
-                row[1] = "No Profile"; // 状态
+            // 获取角色
+            String role = "Unknown";
+            if (ua.getAssociatedPersonProfile() != null) {
+                role = ua.getAssociatedPersonProfile().getRole();
             }
             
+            row[1] = role; // 角色
             row[2] = ua.getLastActivity() != null ? ua.getLastActivity().toString() : "Never"; // 最后活动时间
             row[3] = ua.getLastUpdate() != null ? ua.getLastUpdate().toString() : "Never"; // 最后更新时间
 
@@ -80,7 +80,6 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         Back = new javax.swing.JButton();
-        Next = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -96,16 +95,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(30, 300, 76, 32);
-
-        Next.setText("Next >>");
-        Next.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NextActionPerformed(evt);
-            }
-        });
-        add(Next);
-        Next.setBounds(500, 300, 80, 32);
+        Back.setBounds(30, 300, 80, 23);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("User Accounts");
@@ -115,7 +105,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Manage User Accounts");
         add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        jLabel2.setBounds(21, 20, 550, 28);
 
         UserAccountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -125,7 +115,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "User Name", "Status", "Last Activity", "Last Updated"
+                "User Name", "Role", "Last Activity", "Last Updated"
             }
         ));
         UserAccountTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -142,19 +132,10 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
  //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
 
     }//GEN-LAST:event_BackActionPerformed
-
-    private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
-        // TODO add your handling code here:
-        if(selecteduseraccount==null) return;
-        AdminUserAccount mppd = new AdminUserAccount(selecteduseraccount, CardSequencePanel);
-        CardSequencePanel.add(mppd);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
-    }//GEN-LAST:event_NextActionPerformed
 
     private void UserAccountTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserAccountTableMousePressed
         // Extracts the row (user account) in the table that is selected by the user
@@ -184,7 +165,6 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
-    private javax.swing.JButton Next;
     private javax.swing.JTable UserAccountTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

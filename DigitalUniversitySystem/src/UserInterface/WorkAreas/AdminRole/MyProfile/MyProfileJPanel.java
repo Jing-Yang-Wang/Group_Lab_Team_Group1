@@ -31,7 +31,9 @@ public class MyProfileJPanel extends javax.swing.JPanel {
 
         initComponents();  
         populateFields();  
-          setFieldsEditable(false);  
+        setFieldsEditable(false);  
+        btnUpdate.setEnabled(true);
+        btnSave.setEnabled(false);
     }
 
     /**
@@ -176,10 +178,24 @@ public class MyProfileJPanel extends javax.swing.JPanel {
         String email = fieldEmail.getText();
         String phone = fieldTele.getText();
 
-        JOptionPane.showMessageDialog(this, "Profile updated successfully!");
-        setFieldsEditable(false);
-        btnSave.setEnabled(false);
-        btnUpdate.setEnabled(true);
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields must be filled!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+   
+    if (employee != null && employee.getPerson() != null) {
+        employee.getPerson().setName(name);
+        employee.getPerson().setEmail(email);
+        employee.setTelephone(phone);
+    }
+
+    JOptionPane.showMessageDialog(this, "Profile updated successfully!");
+    
+   
+    setFieldsEditable(false);
+    btnSave.setEnabled(false);
+    btnUpdate.setEnabled(true);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -187,6 +203,8 @@ public class MyProfileJPanel extends javax.swing.JPanel {
         setFieldsEditable(true);
         btnUpdate.setEnabled(false);
         btnSave.setEnabled(true);
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        useraccount.setLastUpdate(now);
     }//GEN-LAST:event_btnUpdateActionPerformed
          private void setFieldsEditable(boolean editable) {
         fieldID.setEditable(false); 

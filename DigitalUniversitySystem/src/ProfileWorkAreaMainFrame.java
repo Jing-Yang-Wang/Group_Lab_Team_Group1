@@ -178,7 +178,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
         }
         
-        if (profile instanceof StudentProfile) {
+        else if (profile instanceof StudentProfile) {
             StudentProfile spp = (StudentProfile) profile;
             
             // 使用统一的构造函数调用
@@ -188,7 +188,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
         }
 
-        if (profile instanceof FacultyProfile) {
+        else if (profile instanceof FacultyProfile) {
            
             FacultyProfile fpp = (FacultyProfile) profile;         
             facultyworkarea = new FacultyWorkAreaJPanel(business, fpp, CardSequencePanel);
@@ -198,7 +198,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         }
        
-        if (profile instanceof RegistrarProfile) {
+        else if (profile instanceof RegistrarProfile) {
            
             RegistrarProfile rp = (RegistrarProfile) profile;         
             registrarworkarea = new RegistrarWorkAreaJPanel(business, rp, CardSequencePanel);
