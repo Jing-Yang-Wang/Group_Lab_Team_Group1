@@ -62,13 +62,14 @@ Faculty: Michael Hynes
   
 Student
 
-Course Offering Management Panel – Displays all course offerings by semester (two per term). Registrar can review instructor, capacity, and schedule.
-Add Course Offering Panel – Creates new course offerings for specific semesters. Registrar selects an existing course and defines instructor, schedule, and capacity.
-Edit Existing Course Offering Panel – Updates existing course details such as instructor, schedule, or capacity.
-Registrar Profile Management Panel – Allows updating of registrar information including work hours, email, and phone number.
-Student Registration Management Panel – Shows all student registrations with enrollment status; enables manual add/drop of courses.
-Financial Report Panel – Contains two tables summarizing total income by course offering and total income by semester.
-Analytics Report Panel – Displays analytics across semesters including faculty, capacity, number of registrations, and average grade.
+Registrar: Jing Yang Wang
+- Course Offering Management Panel: displays all course offerings by semester (two per term). Registrar can review instructor, capacity, and schedule.
+- Add Course Offering Panel: creates new course offerings for specific semesters. Registrar selects an existing course and defines instructor, schedule, and capacity.
+- Edit Existing Course Offering Panel: updates existing course details such as instructor, schedule, or capacity.
+- Registrar Profile Management Panel: allows updating of registrar information including work hours, email, and phone number.
+- Student Registration Management Panel: shows all student registrations with enrollment status; enables manual add/drop of courses.
+- Financial Report Panel: contains two tables summarizing total income by course offering and total income by semester.
+- Analytics Report Panel: displays analytics across semesters including faculty, capacity, number of registrations, and average grade.
 
 <BR>
 <B>7. Usage Instructions</B> - TO DO Provide a step-by-step guide on how to interact with the system.  Include example scenarios for different user roles.
@@ -118,7 +119,6 @@ Faculty: For all interfaces you should only see data for courses assigned to the
 Student
 
 Registrar
-Testing Steps
 Login Validation
  - Username: Mia Password: 109
  - Verify that login directs to the Registrar Work Area.
@@ -144,13 +144,13 @@ Profile Management Tests
 Hairui Dou
 
 Jing Yang Wang
-Complex Data Relationships – Managing links between students, courses, and grades was challenging.
+-Complex Data Relationships: managing links between students, courses, and grades was challenging.
 Solution: Introduced a StudentCourseDirectory to store and update registrations consistently.
-UI Refresh Issues – Tables did not update after changes.
+-UI Refresh Issues: tables did not update after changes.
 Solution: Added populateTable() calls after each update action.
-Role Access Control – Registrar initially had access to Faculty views.
+-Role Access Control: registrar initially had access to Faculty views.
 Solution: Implemented strict role-based login routing.
-Git Synchronization – Merge conflicts arose during team integration.
+-Git Synchronization: merge conflicts arose during team integration.
 Solution: Adopted consistent branching and pull-before-commit workflow.
 
 Michael Hynes
@@ -207,6 +207,7 @@ Michael Hynes
   - Posted updates in Teams and made myself available to assist other team members.
 
 Xieming Geng
+
 
 
 
