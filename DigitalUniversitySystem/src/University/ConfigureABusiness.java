@@ -193,8 +193,8 @@ public class ConfigureABusiness {
         FacultyAssignment fa4 = fp4.assignAsTeacher(co4); co4.AssignAsTeacher(fp4);
         FacultyAssignment fa5 = fp5.assignAsTeacher(co5); co5.AssignAsTeacher(fp5);
         FacultyAssignment fa6 = fp6.assignAsTeacher(co6); co6.AssignAsTeacher(fp6);
-        FacultyAssignment fa7 = fp1.assignAsTeacher(co7); co7.AssignAsTeacher(fp7);
-        FacultyAssignment fa8 = fp1.assignAsTeacher(co8); co8.AssignAsTeacher(fp8);
+        FacultyAssignment fa7 = fp1.assignAsTeacher(co7); co7.AssignAsTeacher(fp1);
+        FacultyAssignment fa8 = fp1.assignAsTeacher(co8); co8.AssignAsTeacher(fp1);
         
         
 
