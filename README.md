@@ -62,7 +62,13 @@ Faculty: Michael Hynes
   
 Student
 
-Registrar
+Course Offering Management Panel – Displays all course offerings by semester (two per term). Registrar can review instructor, capacity, and schedule.
+Add Course Offering Panel – Creates new course offerings for specific semesters. Registrar selects an existing course and defines instructor, schedule, and capacity.
+Edit Existing Course Offering Panel – Updates existing course details such as instructor, schedule, or capacity.
+Registrar Profile Management Panel – Allows updating of registrar information including work hours, email, and phone number.
+Student Registration Management Panel – Shows all student registrations with enrollment status; enables manual add/drop of courses.
+Financial Report Panel – Contains two tables summarizing total income by course offering and total income by semester.
+Analytics Report Panel – Displays analytics across semesters including faculty, capacity, number of registrations, and average grade.
 
 <BR>
 <B>7. Usage Instructions</B> - TO DO Provide a step-by-step guide on how to interact with the system.  Include example scenarios for different user roles.
@@ -81,6 +87,11 @@ Faculty: Michael Hynes
 Student
 
 Registrar
+- Scenario 1:View and Manage Course Offerings，Log in as Mia (password 109).Select Course Offering Management to view all offerings.Click Add Course Offer to create a new offering.Click Edit Existing Course Offer to update details.Press Save to confirm changes.
+- Scenario 2: Manage Student Registrations，Open Student Registration Panel.Select a student to see their registered courses.Click Add Registration to enroll or Drop Course to withdraw.Check that course capacity updates automatically.
+- Scenario 3: Generate Financial Reports，Open Financial Report Panel.Review course-level and semester-level income tables.
+- Scenario 4: Analyze Course Performance.Go to Analytics Report Panel.View faculty, capacity, registered students, and average grades for each course.
+- Scenario 5: Update Registrar ProfileSelect Profile Management Panel.Click Update, edit email, phone, or work hours, then Save.
 
 
 <BR>
@@ -107,13 +118,40 @@ Faculty: For all interfaces you should only see data for courses assigned to the
 Student
 
 Registrar
-
+Testing Steps
+Login Validation
+ - Username: Mia Password: 109
+ - Verify that login directs to the Registrar Work Area.
+Course Offering Tests
+ - Confirm two courses per semester display properly.
+ - Add a new course offer → verify table update.
+ - Edit an existing offer → save and refresh.
+Student Registration Tests
+ - Add a course to a student → capacity reduces by 1.
+ - Drop a course → capacity increases again.
+ - Check status column updates correctly.
+Financial Report Tests
+ - Ensure each course income = enrollments × tuition.
+ - Confirm semester totals match sum of courses.
+Analytics Report Tests
+ - Validate faculty, capacity, registration count, and average grade values.
+Profile Management Tests
+ - Edit contact info, save, log out/in, and verify persistence.
+ 
 <BR>
 <B>9. Challenges & Solutions</B> - TO DO Summarize any difficulties encountered during development.  Highlight the solutions implemented to overcome these challenges.
     
 Hairui Dou
 
 Jing Yang Wang
+Complex Data Relationships – Managing links between students, courses, and grades was challenging.
+Solution: Introduced a StudentCourseDirectory to store and update registrations consistently.
+UI Refresh Issues – Tables did not update after changes.
+Solution: Added populateTable() calls after each update action.
+Role Access Control – Registrar initially had access to Faculty views.
+Solution: Implemented strict role-based login routing.
+Git Synchronization – Merge conflicts arose during team integration.
+Solution: Adopted consistent branching and pull-before-commit workflow.
 
 Michael Hynes
   - GitHub: I worked with multiple TAs who here not able to help me with a fully working and documented process for working with branches.  This process had me trying multiple git tools, rebuilding branches, and rebuilding my local project.  It was not until Thursday that I had something that was provedn to work.  At that point I shared with the team but the divergance of our branches made the project much harder to complete then nessecary.
@@ -148,6 +186,16 @@ Registrar Related
 Hairui Dou
 
 Jing Yang Wang
+-Designed and implemented the Registrar module including:
+  - Course Offering Management
+  - Add/Edit Course Offer
+  - Student Registration Management
+  - Financial and Analytics Reports
+  - Registrar Profile Management
+-Integrated Registrar data with Admin and Faculty modules to maintain consistency.
+-Performed comprehensive testing of Registrar authentication and data flows.
+-Wrote documentation for Registrar features, usage instructions, and testing guide.
+-Collaborated in team debugging sessions to resolve data and UI issues.
 
 Michael Hynes
   - Built the initial skeleton of the application by taking the "ProfileWorkareaExample 3.zip" and "Info5100-University-Example-2-18-2024.zip" projects and combining them so they work together.  Modified the initial test data to work with the new combined project.  After completion, proved that to login process worked as expected for the admin, faculty, and student profiles.
@@ -159,6 +207,7 @@ Michael Hynes
   - Posted updates in Teams and made myself available to assist other team members.
 
 Xieming Geng
+
 
 
 
