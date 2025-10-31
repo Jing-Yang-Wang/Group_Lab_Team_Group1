@@ -3,7 +3,7 @@
 <B>1. Digital University System</B>
 
 <B>2. Team Information</B> - TO DO List all team members along with their assigned roles and responsibilities. Include NUIDs for identification.
-- Hairui Dou
+- Hairui Dou, Student Use Case
 - Jing Yang Wang
 - Michael Hynes, 76045378: Faculty Use Case
 - Xieming Geng  
@@ -60,7 +60,14 @@ Faculty: Michael Hynes
 - Faculty My Profile Management: Leverage a jframe created by Sophia-Geng.
 - Faculty Performance Reporting
   
-Student
+Student: Hairui Dou
+- Course Registration Panel: Search, enroll, and drop courses with credit limit validation (max 8 credits).
+- Coursework Management Panel: Submit assignments via file upload and view academic progress metrics.
+- Financial Management Panel: Tuition payment and refund processing, payment history tracking, transcript access control.
+- Graduation Audit Panel: Program requirements display, credit summary tracking, graduation eligibility determination.
+- Profile Management Panel: Student information viewing and editing with data persistence.
+- Transcript Review Panel: Semester-based grade viewing, term and overall GPA calculations, academic standing determination.
+- Student Work Area Dashboard: Main navigation interface with feature buttons.
 
 Registrar: Jing Yang Wang
 - Course Offering Management Panel: displays all course offerings by semester (two per term). Registrar can review instructor, capacity, and schedule.
@@ -85,7 +92,56 @@ Faculty: Michael Hynes
 - Scenario 6: You have a new phone number and want to document it.  For this leverage the Faculty Profile Management interface.
 - Scenario 7: As you prepare for a review, you want to show how much income you have brought into the university.  For this leverage the Performanace Reporting interface.
   
-Student
+Student: Hairui Dou
+- Scenario 1: Register for Courses
+  - Log in as student
+  - Click "Course Registration" from the student dashboard
+  - Select search type (By CourseNumber, By CourseName, or By CourseType)
+  - Enter keyword in search field and click "Search"
+  - Select a course from the Available Course Offer table
+  - Click "Enroll" to register (system validates credit limits - max 8 credits total)
+  - View enrolled courses in the Registered Courses table
+  - To drop a course, select it from Registered Courses and click "Drop"
+
+- Scenario 2: Submit Assignments and Track Progress
+  - From the dashboard, click "Coursework Management"
+  - Select your course from the dropdown menu
+  - Click "Choose File" to select an assignment file from your computer
+  - Click "Submit" to upload the assignment (status changes to "Submitted")
+  - View all submitted assignments in the table showing course, assignment name, status, and grade
+  - Review Academic Progress metrics: Term GPA, Credits Completed, Completion Rate, and Academic Standing
+
+- Scenario 3: Manage Finances and Access Transcript
+  - Click "Financial Management" from the dashboard
+  - Review Account Summary showing Current Balance, Outstanding Tuition, and Paid Amount
+  - To pay tuition: Click "Pay Tuition", enter amount, and confirm (validates sufficient balance)
+  - To request refund: Click "Refund Tuition", enter amount, and confirm (validates against paid amount)
+  - View all transactions in the Payment History table
+  - Click "View Transcript" to access grades (only available when tuition is fully paid)
+
+- Scenario 4: Check Graduation Requirements
+  - Click "Graduation Audit" from the dashboard
+  - Review Program Information showing degree program and required credits
+  - Check Credit Summary: Core Course credits, Elective Credits, and Total Credits Completed
+  - View detailed Course List with all courses, credits, and completion status
+  - Read Graduation Status message indicating eligibility or remaining credits needed
+
+- Scenario 5: Update Profile Information
+  - Click "Profile Management" from the dashboard
+  - Review current information: Name, Student ID, Email, Major, and Degree
+  - Edit any fields that need updating
+  - Click "Save" to store changes (confirmation message appears)
+  - Click "Back" to return to the dashboard
+
+- Scenario 6: Review Academic Transcript
+  - From Financial Management, click "View Transcript" (after paying tuition)
+  - Or access directly via "Transcript Review" button on dashboard
+  - View student name and ID at the top
+  - Select a semester from the dropdown to view courses for that term
+  - Table displays: Course Number, Course Name, Grade, Credits, and GPA Points
+  - Review Term GPA for selected semester
+  - Check Overall GPA across all semesters
+  - View Academic Standing status (Excellent, Good, Average, or Probation)
 
 Registrar
 - Scenario 1:View and Manage Course Offerings，Log in as Mia (password 109).Select Course Offering Management to view all offerings.Click Add Course Offer to create a new offering.Click Edit Existing Course Offer to update details.Press Save to confirm changes.
@@ -103,7 +159,7 @@ General
 - For each user type confirm that they take you to the correct work area for their role.
   - Admin: User "Admin", Password "****"
   - Faculty: User "Gina", Password "****"
-  - Student: User "Adam", Password "****"
+  - Student: User "student1", Password "student1"
   - Registrar: User "Mia", Password "109"
   
 Admin
@@ -117,6 +173,68 @@ Faculty: For all interfaces you should only see data for courses assigned to the
 - Tuition/Enrollment Insight: Review data to confirm the expect courses are displayed and the calculations are correct.  Press Back when testing is complete.
   
 Student
+- Login as "student1" (Password: "student1")
+
+Course Registration Tests:
+- Search by CourseNumber: Enter "INFO5100" → verify course appears
+- Search by CourseName: Enter "Application" → verify matching courses display
+- Search by CourseType: Enter "Required" → verify only required courses show
+- Enroll in 4-credit course → verify it appears in Registered Courses
+- Enroll in second 4-credit course → verify total credits = 8
+- Try enrolling in third 4-credit course → verify error message: "cannot exceed 8 credits"
+- Try enrolling in already-registered course → verify error: "You already have this course!"
+- Drop a course → verify it's removed from Registered Courses table
+- Verify table columns display correctly: CourseNumber, CourseName, CourseType, Credits
+
+Coursework Management Tests:
+- Select course from dropdown → verify course list populates
+- Click "Choose File" → select any file → verify file name confirmation
+- Click "Submit" without choosing file → verify error: "Please choose a file first"
+- Submit assignment → verify it appears in table with "Submitted" status
+- Verify Academic Progress calculations:
+  - Term GPA displays as decimal (e.g., 3.45)
+  - Credits Completed shows total integer
+  - Completion Rate shows percentage (e.g., 85.0%)
+  - Academic Standing shows correct status based on GPA
+
+Financial Management Tests:
+- Verify Account Summary displays all three balance fields
+- Pay Tuition with insufficient balance → verify error message
+- Pay Tuition with valid amount → verify balance decreases, paid amount increases
+- Verify payment appears in Payment History table with date, type, amount, status
+- Request Refund greater than paid amount → verify error
+- Successful refund → verify balances update correctly
+- Try "View Transcript" with outstanding tuition → verify access denied message
+- Pay remaining tuition → verify "View Transcript" button now works
+
+Graduation Audit Tests:
+- Verify Program Information shows "Information Systems, MS" and "32" required credits
+- Verify Credit Summary calculates correctly
+- Verify Course List table displays all courses with status
+- With < 32 credits → verify status shows remaining credits needed
+- With ≥ 32 credits → verify "Eligible for Graduation!" message
+
+Profile Management Tests:
+- Verify all fields populate with current student data
+- Edit Name field → click Save → verify success message
+- Edit multiple fields → Save → logout/login → verify persistence
+
+Transcript Review Tests:
+- Verify student name and ID display correctly at top
+- Select different semesters from dropdown → verify table updates
+- Verify table shows: Term, Course Number, Course Name, Grade, Credits
+- Verify Term GPA calculation matches displayed courses
+- Take multiple courses across semesters → verify Overall GPA is correct average
+- Verify Academic Standing matches GPA thresholds:
+  - ≥ 3.7 = "Excellent"
+  - ≥ 3.0 = "Good"
+  - ≥ 2.0 = "Average"
+  - < 2.0 = "Probation"
+
+Navigation Tests:
+- From each panel, click "Back" button → verify returns to Student Work Area
+- From dashboard, test all six navigation buttons → verify each opens correct panel
+- Verify CardLayout properly switches between views without errors
 
 Registrar
 Login Validation
@@ -142,6 +260,17 @@ Profile Management Tests
 <B>9. Challenges & Solutions</B> - TO DO Summarize any difficulties encountered during development.  Highlight the solutions implemented to overcome these challenges.
     
 Hairui Dou
+- Credit Limit Validation: Ensuring students couldn't exceed 8 total credits while allowing enrollment and drops required careful state management.
+  Solution: Implemented calculateTotalCredits() method that dynamically sums credits from the Registered Courses table before each enrollment attempt, providing real-time validation.
+
+- Duplicate Course Prevention: Students could accidentally register for the same course multiple times.
+  Solution: Added duplicate check in btnEnrollActionPerformed() that compares course numbers before enrollment and displays appropriate error message.
+
+- Financial Access Control: Needed to restrict transcript access until tuition was fully paid.
+  Solution: Implemented validation in btnViewTranscriptActionPerformed() that checks studentProfile.getOutstandingTuition() and blocks access with clear error message if balance remains.
+
+- Payment Record Management: Needed to track both payments and refunds with proper history.
+  Solution: Created PaymentRecord class with date, amount (negative for refunds), note, and status fields; maintained payment history list in StudentProfile.
 
 Jing Yang Wang
 -Complex Data Relationships: managing links between students, courses, and grades was challenging.
@@ -176,7 +305,10 @@ Faculty Related: Michael Hynes
   - Notifications when student enrollment changes.
   - Give students a way to see a class syllabus.
 
-Student Related
+Student Related: Hairui Dou
+- Add waitlist functionality for full courses.
+- Create a course evaluation/rating system for completed courses.
+- Add assignment due date reminders and calendar integration.
 
 Registrar Related
 
@@ -184,6 +316,17 @@ Registrar Related
 <B>11. Contribution Breakdown</B> - TO DO Clearly state each team member’s contributions to the project.  Provide details on coding, documentation, testing, and other tasks.
 
 Hairui Dou
+- Designed and implemented the complete Student module including:
+  - Course Registration Panel with search, enrollment, and drop functionality
+  - Coursework Management Panel with assignment submission and academic progress tracking
+  - Financial Management Panel with tuition payment, refunds, and transcript access control
+  - Graduation Audit Panel with program requirements and eligibility tracking
+  - Profile Management Panel for student information editing
+  - Transcript Review Panel with GPA calculations and academic standing
+  - Student Work Area Dashboard with navigation to all features
+- Created PaymentRecord class for transaction tracking
+- Implemented validation logic for credit limits, duplicates, and payment processing
+- Integrated student module with existing system data structures
 
 Jing Yang Wang
 -Designed and implemented the Registrar module including:
@@ -207,6 +350,7 @@ Michael Hynes
   - Posted updates in Teams and made myself available to assist other team members.
 
 Xieming Geng
+
 
 
 
